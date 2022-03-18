@@ -1,7 +1,17 @@
 [
   {
-    "command": "hello:org",
-    "plugin": "@salesforce/plugin-template",
-    "flags": ["apiversion", "force", "json", "loglevel", "name", "targetdevhubusername", "targetusername"]
+    "command": "force:org:shape:create",
+    "plugin": "@salesforce/plugin-signups",
+    "flags": ["apiversion", "json", "loglevel", "targetusername"]
+  },
+  {
+    "command": "force:org:shape:delete",
+    "plugin": "@salesforce/plugin-signups",
+    "flags": ["apiversion", "json", "loglevel", "noprompt", "targetusername"]
+  },
+  {
+    "command": "force:org:shape:list",
+    "plugin": "@salesforce/plugin-signups",
+    "flags": ["json", "loglevel", "verbose"]
   }
 ]
