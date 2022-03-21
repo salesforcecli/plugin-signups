@@ -6,7 +6,7 @@
  */
 
 import { basename, join } from 'path';
-import { AuthInfo, fs, Global, Org, Logger, Aliases } from '@salesforce/core';
+import { AuthInfo, fs, Global, Org, Logger, Aliases, Connection } from '@salesforce/core';
 
 interface OrgShape {
   Id: string;
@@ -106,3 +106,14 @@ export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<OrgShapeLi
   const shapes = await Promise.all(authInfos.map((authInfo) => getAllShapesFromOrg(authInfo)));
   return shapes.flat().map((item) => ({ ...item, alias: aliases.getKeysByValue(item.username)?.[0] }));
 };
+
+/**
+ * Check if the ShapeExportPilot preference is enabled.
+ */
+export async function isShapeEnabled(conn: Connection): Promise<boolean> {
+  const prefValue = await conn.tooling.query<{ IsShapeExportPrefEnabled: boolean }>(
+    `SELECT IsShapeExportPrefEnabled FROM ${'DevHubSettings'}`
+  );
+  // no records are returned if ShapeExportPilot perm is disabled
+  return prefValue.totalSize > 0 && prefValue.records?.[0]?.IsShapeExportPrefEnabled;
+}

@@ -5,15 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-// This is the legacy converted command file. Ignoring code-coverage since this is generated.
-// THIS SHOULD BE REMOVED WHEN CONVERTED TO EXTEND SfdxCommand
-/* istanbul ignore file */
-
 import { EOL } from 'os';
 import { SfdxCommand } from '@salesforce/command';
-import { SfdxError, Messages } from '@salesforce/core';
+import { SfdxError, Messages, Connection } from '@salesforce/core';
 import { RecordResult } from 'jsforce';
-import { ShapeRepresentationApi } from '../../../../shared/shapeRepApi';
+import { isShapeEnabled } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
@@ -27,16 +23,23 @@ export interface ShapeCreateResult {
   errors: [];
 }
 
+interface JsForceError extends Error {
+  errorCode: string;
+  fields: string[];
+}
+
 export class OrgShapeCreateCommand extends SfdxCommand {
   public static readonly description = messages.getMessage('create_shape_command_description');
   public static readonly examples = messages.getMessage('create_shape_command_help').split(EOL);
   public static readonly requiresUsername = true;
   public static readonly varargs = true;
+  private conn: Connection;
 
   public async run(): Promise<ShapeCreateResult> {
-    const api = new ShapeRepresentationApi(this.org);
-    if (!(await api.isFeatureEnabled())) {
-      throw new SfdxError(messages.getMessage('create_shape_command_no_access', [this.org.getUsername()]), 'noAccess');
+    this.conn = this.org.getConnection();
+
+    if (!(await isShapeEnabled(this.conn))) {
+      throw SfdxError.create('@salesforce/plugin-signups', 'shape.create', 'create_shape_command_no_access');
     }
 
     let timeoutID;
@@ -46,12 +49,12 @@ export class OrgShapeCreateCommand extends SfdxCommand {
         reject(messages.getMessage('shapeCreateFailedMessage'));
       }, commandTimeOutInMS);
     });
-    const createShapeResponse = (await Promise.race([api.create(), timeout])) as RecordResult;
+    const createShapeResponse = (await Promise.race([this.createShapeOrg(), timeout])) as RecordResult;
     clearTimeout(timeoutID);
 
     if (createShapeResponse['success'] !== true) {
       this.logger.error('Shape create failed', createShapeResponse['errors']);
-      throw Promise.reject(new SfdxError(messages.getMessage('shape_create_failed_message')));
+      throw SfdxError.create('@salesforce/plugin-signups', 'shape.create', 'shape_create_failed_message');
     }
     const output: ShapeCreateResult = {
       shapeId: createShapeResponse.id,
@@ -66,5 +69,20 @@ export class OrgShapeCreateCommand extends SfdxCommand {
       this.ux.log(messages.getMessage('create_shape_command_success_id', [output.shapeId]));
     }
     return output;
+  }
+
+  private createShapeOrg(): Promise<RecordResult> {
+    try {
+      return this.conn.sobject('ShapeRepresentation').create({
+        Description: '',
+      });
+    } catch (err) {
+      const JsForceErr = err as JsForceError;
+      if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
+        throw SfdxError.wrap(messages.getMessage('create_shape_command_no_crud_access'));
+      } else {
+        throw JsForceErr;
+      }
+    }
   }
 }
