@@ -6,7 +6,7 @@
  */
 
 import { basename, join } from 'path';
-import { AuthInfo, fs, Global, Org, Logger, Aliases, Connection } from '@salesforce/core';
+import { AuthInfo, fs, Global, Org, Logger, Connection } from '@salesforce/core';
 
 interface OrgShape {
   Id: string;
@@ -32,7 +32,7 @@ interface JsForceError extends Error {
   fields: string[];
 }
 
-const getNonScratchOrgs = async (fileNames: string[]): Promise<AuthInfo[]> => {
+export async function getNonScratchOrgs(fileNames: string[]): Promise<AuthInfo[]> {
   const orgFileNames = (await fs.readdir(Global.DIR)).filter((filename) => filename.match(/^00D.{15}\.json$/g));
 
   const allAuths: AuthInfo[] = await Promise.all(
@@ -69,9 +69,9 @@ const getNonScratchOrgs = async (fileNames: string[]): Promise<AuthInfo[]> => {
     })
   );
   return allAuths.filter((auth) => !!auth).filter((auth) => !auth.getFields().devHubUsername);
-};
+}
 
-const getAllShapesFromOrg = async (authInfo: AuthInfo): Promise<OrgShapeListResult[]> => {
+export async function getAllShapesFromOrg(authInfo: AuthInfo): Promise<OrgShapeListResult[]> {
   const org = await Org.create({ aliasOrUsername: authInfo.getFields().username });
   const conn = org.getConnection();
   const logger = await Logger.child(`getAllShapesFromOrg, ${authInfo.getFields().username}`);
@@ -98,14 +98,7 @@ const getAllShapesFromOrg = async (authInfo: AuthInfo): Promise<OrgShapeListResu
       throw JsForceErr;
     }
   }
-};
-
-export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<OrgShapeListResult[]> => {
-  const aliases = await Aliases.create(Aliases.getDefaultOptions());
-  const authInfos = await getNonScratchOrgs(await AuthInfo.listAllAuthFiles());
-  const shapes = await Promise.all(authInfos.map((authInfo) => getAllShapesFromOrg(authInfo)));
-  return shapes.flat().map((item) => ({ ...item, alias: aliases.getKeysByValue(item.username)?.[0] }));
-};
+}
 
 /**
  * Check if the ShapeExportPilot preference is enabled.

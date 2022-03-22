@@ -7,9 +7,9 @@
 
 import { EOL } from 'os';
 import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
-import { Messages } from '@salesforce/core';
+import { Messages, Aliases, AuthInfo } from '@salesforce/core';
 import * as chalk from 'chalk';
-import { getAllOrgShapesFromAuthenticatedOrgs, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
+import { getNonScratchOrgs, getAllShapesFromOrg, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
@@ -34,7 +34,7 @@ export class OrgShapeListCommand extends SfdxCommand {
   };
 
   public async run(): Promise<OrgShapeListResult[]> {
-    const shapes = await getAllOrgShapesFromAuthenticatedOrgs();
+    const shapes = await this.getAllOrgShapesFromAuthenticatedOrgs();
     if (shapes.length === 0) {
       this.ux.log(messages.getMessage('noOrgShapes'));
       return shapes;
@@ -46,5 +46,12 @@ export class OrgShapeListCommand extends SfdxCommand {
       { columns: orgShapeColumns }
     );
     return shapes;
+  }
+
+  public async getAllOrgShapesFromAuthenticatedOrgs(): Promise<OrgShapeListResult[]> {
+    const aliases = await Aliases.create(Aliases.getDefaultOptions());
+    const authInfos = await getNonScratchOrgs(await AuthInfo.listAllAuthFiles());
+    const shapes = await Promise.all(authInfos.map((authInfo) => getAllShapesFromOrg(authInfo)));
+    return shapes.flat().map((item) => ({ ...item, alias: aliases.getKeysByValue(item.username)?.[0] }));
   }
 }
