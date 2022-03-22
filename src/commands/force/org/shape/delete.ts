@@ -55,6 +55,7 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
     const deletedShapesIds = await this.deleteAll();
     if (deletedShapesIds.length === 0) {
       this.ux.log(messages.getMessage('noShapesHumanSuccess', [this.org.getOrgId()]));
+      return;
     }
     this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
     return {

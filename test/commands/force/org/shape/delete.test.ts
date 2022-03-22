@@ -106,6 +106,7 @@ describe('org:shape:delete', () => {
 
     const command = await deleteShapeCommand(['--noprompt']);
     await command.runIt();
+    expect(uxLogStub.calledOnce).to.be.true;
     expect(uxLogStub.firstCall.args[0]).to.equal(
       "Can't delete org shape. No org shape found for org 00D000000000000004."
     );
