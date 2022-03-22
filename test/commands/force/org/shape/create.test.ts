@@ -18,8 +18,6 @@ import * as sinon from 'sinon';
 import { OrgShapeCreateCommand } from '../../../../../src/commands/force/org/shape/create';
 
 describe('org:shape:create', () => {
-  const username = 'me@my.org';
-
   const sandbox = sinon.createSandbox();
   const oclifConfigStub = fromStub(stubInterface<IConfig.IConfig>(sandbox));
 
@@ -48,25 +46,6 @@ describe('org:shape:create', () => {
     return cmd;
   }
 
-  beforeEach(() => {
-    // TODO: delete this, each UT is stubbing its conn
-    hubOrgStub.getConnection.returns({
-      tooling: {
-        query: queryShapeEnabled,
-      },
-      sobject: sinon
-        .stub()
-        .withArgs('ShapeDescription')
-        .returns({
-          create: sinon.stub().returns({
-            id: '3SR000000000123',
-            success: true,
-          } as RecordResult),
-        }),
-    } as unknown as Connection);
-    hubOrgStub.getUsername.returns(username);
-  });
-
   afterEach(() => {
     sandbox.restore();
   });
@@ -81,6 +60,21 @@ describe('org:shape:create', () => {
     });
 
   it('creates a new shape org', async () => {
+    hubOrgStub.getConnection.returns({
+      tooling: {
+        query: queryShapeEnabled,
+      },
+      sobject: sinon
+        .stub()
+        .withArgs('ShapeDescription')
+        .returns({
+          create: sinon.stub().returns({
+            id: '3SR000000000123',
+            success: true,
+          } as RecordResult),
+        }),
+    } as unknown as Connection);
+
     const command = await createShapeCommand([]);
     await command.runIt();
     expect(uxLogStub.firstCall.args[0]).to.equal('Successfully created org shape for 3SR000000000123.');
