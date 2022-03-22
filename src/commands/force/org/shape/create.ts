@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { SfdxCommand } from '@salesforce/command';
 import { SfdxError, Messages, Connection } from '@salesforce/core';
 import { RecordResult } from 'jsforce';
-import { isShapeEnabled } from '../../../../shared/orgShapeListUtils';
+import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
@@ -21,11 +21,6 @@ export interface ShapeCreateResult {
   shapeFile: string;
   success: boolean;
   errors: [];
-}
-
-interface JsForceError extends Error {
-  errorCode: string;
-  fields: string[];
 }
 
 export class OrgShapeCreateCommand extends SfdxCommand {

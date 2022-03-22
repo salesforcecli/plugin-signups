@@ -27,7 +27,7 @@ export interface OrgShapeListResult {
   createdDate: string;
 }
 
-interface JsForceError extends Error {
+export interface JsForceError extends Error {
   errorCode: string;
   fields: string[];
 }

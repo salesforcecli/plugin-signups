@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
 import { SfdxError, Messages, Connection } from '@salesforce/core';
 import { RecordResult } from 'jsforce';
-import { isShapeEnabled } from '../../../../shared/orgShapeListUtils';
+import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
@@ -22,11 +22,6 @@ interface ShapeRepresentation {
   Settings: string;
   CreatedDate: string;
   Description: string;
-}
-
-interface JsForceError extends Error {
-  errorCode: string;
-  fields: string[];
 }
 
 export interface OrgShapeDeleteResult {
