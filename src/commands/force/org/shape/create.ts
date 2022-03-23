@@ -27,7 +27,6 @@ export class OrgShapeCreateCommand extends SfdxCommand {
   public static readonly description = messages.getMessage('create_shape_command_description');
   public static readonly examples = messages.getMessage('create_shape_command_help').split(EOL);
   public static readonly requiresUsername = true;
-  public static readonly varargs = true;
   private conn: Connection;
 
   public async run(): Promise<ShapeCreateResult> {
