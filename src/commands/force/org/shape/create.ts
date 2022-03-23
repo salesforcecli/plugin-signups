@@ -14,8 +14,6 @@ import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUti
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
 
-const commandTimeOutInMS = 30e3;
-
 export interface ShapeCreateResult {
   shapeId: string;
   shapeFile: string;
@@ -36,17 +34,9 @@ export class OrgShapeCreateCommand extends SfdxCommand {
       throw SfdxError.create('@salesforce/plugin-signups', 'shape.create', 'create_shape_command_no_access');
     }
 
-    let timeoutID;
+    const createShapeResponse = await this.createShapeOrg();
 
-    const timeout = new Promise((_, reject) => {
-      timeoutID = setTimeout(() => {
-        reject(messages.getMessage('shapeCreateFailedMessage'));
-      }, commandTimeOutInMS);
-    });
-    const createShapeResponse = (await Promise.race([this.createShapeOrg(), timeout])) as RecordResult;
-    clearTimeout(timeoutID);
-
-    if (createShapeResponse['success'] !== true) {
+    if (createShapeResponse.success !== true) {
       this.logger.error('Shape create failed', createShapeResponse['errors']);
       throw SfdxError.create('@salesforce/plugin-signups', 'shape.create', 'shape_create_failed_message');
     }
