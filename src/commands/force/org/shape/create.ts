@@ -16,7 +16,6 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.crea
 
 export interface ShapeCreateResult {
   shapeId: string;
-  shapeFile: string;
   success: boolean;
   errors: [];
 }
@@ -42,16 +41,11 @@ export class OrgShapeCreateCommand extends SfdxCommand {
     }
     const output: ShapeCreateResult = {
       shapeId: createShapeResponse.id,
-      shapeFile: undefined,
       success: true,
       errors: [],
     };
-    // this doesn't seem to be used anymore;
-    if (typeof output.shapeFile != 'undefined' && output.shapeFile) {
-      this.ux.log(messages.getMessage('create_shape_command_success_file', [output.shapeFile]));
-    } else {
-      this.ux.log(messages.getMessage('create_shape_command_success_id', [output.shapeId]));
-    }
+
+    this.ux.log(messages.getMessage('create_shape_command_success_id', [output.shapeId]));
     return output;
   }
 

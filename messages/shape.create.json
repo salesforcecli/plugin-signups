@@ -1,7 +1,6 @@
 {
   "create_shape_command_no_crud_access": "Can't create org shape. Contact the org admin to grant you access to the ShapeRepresentation object. Then try again.",
   "create_shape_command_success_id": "Successfully created org shape for %s.",
-  "create_shape_command_success_file": "Successfully created scratch org definition file in the project's config directory for %s.",
   "shape_create_failed_message": "Error creating scratch definition file. Please contact Salesforce support.",
   "delete_shape_command_no_access": "The org with name: %s needs to be enabled for org shape before shapes can be deleted.",
   "shape_get_not_a_shape_id": "the value passed in was not a shape id",
