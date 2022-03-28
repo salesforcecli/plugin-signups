@@ -57,12 +57,14 @@ describe('org:shape:delete', () => {
   });
 
   afterEach(() => {
+    queryShapeEnabled.resetHistory();
     sandbox.restore();
   });
 
   const queryShapeEnabled = sandbox
     .stub()
     .withArgs(`SELECT IsShapeExportPrefEnabled FROM ${'DevHubSettings'}`)
+    .onFirstCall()
     .returns({
       done: true,
       totalSize: 1,
