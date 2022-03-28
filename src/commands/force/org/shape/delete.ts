@@ -8,7 +8,6 @@
 import { EOL } from 'os';
 import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
 import { SfdxError, Messages, Connection } from '@salesforce/core';
-import { RecordResult } from 'jsforce';
 import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -24,10 +23,20 @@ interface ShapeRepresentation {
   Description: string;
 }
 
-export interface OrgShapeDeleteResult {
-  orgId: string;
-  shapeIds: string[];
+interface FailureMsg {
+  shapeId: string;
+  message: string;
 }
+
+interface DeleteAllResult {
+  shapeIds: string[];
+  failures: FailureMsg[];
+}
+
+export interface OrgShapeDeleteResult extends DeleteAllResult {
+  orgId: string;
+}
+
 export class OrgShapeDeleteCommand extends SfdxCommand {
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('help').split(EOL);
@@ -52,16 +61,43 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
     if (!(await isShapeEnabled(this.conn))) {
       throw new SfdxError(messages.getMessage('noAccess', [this.org.getUsername()]));
     }
-    const deletedShapesIds = await this.deleteAll();
-    if (deletedShapesIds.length === 0) {
+
+    const deleteRes = await this.deleteAll();
+
+    if (deleteRes.shapeIds.length === 0) {
       this.ux.log(messages.getMessage('noShapesHumanSuccess', [this.org.getOrgId()]));
       return;
     }
-    this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
+
+    if (deleteRes.failures.length > 0 && deleteRes.shapeIds.length > 0) {
+      this.setExitCode(68);
+
+      this.ux.styledHeader('Partial Success');
+      this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
+      this.ux.log('');
+      this.ux.styledHeader('Failures');
+      this.ux.table(deleteRes.failures, {
+        columns: [
+          { key: 'shapeId', label: 'Shape ID' },
+          { key: 'message', label: 'Error Message' },
+        ],
+      });
+    } else if (deleteRes.failures.length > 0) {
+      this.setExitCode(1);
+    } else if (deleteRes.shapeIds.length > 0) {
+      this.setExitCode(0);
+      this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
+    }
+
     return {
       orgId: this.org.getOrgId(),
-      shapeIds: deletedShapesIds,
+      shapeIds: deleteRes.shapeIds,
+      failures: deleteRes.failures,
     };
+  }
+
+  protected setExitCode(code: number): void {
+    process.exitCode = code;
   }
 
   /**
@@ -69,32 +105,46 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
    *
    * @return List of SR IDs that were deleted
    */
-  private async deleteAll(): Promise<string[]> {
-    let shapeIds = [];
+  private async deleteAll(): Promise<DeleteAllResult> {
+    const deleteAllResult = {
+      shapeIds: [],
+      failures: [],
+    };
+
+    let shapeIds: string[] = [];
+
     try {
       const result = await this.conn.query<ShapeRepresentation>('SELECT Id FROM ShapeRepresentation');
+      if (result.totalSize === 0) {
+        return deleteAllResult;
+      }
       shapeIds = result.records.map((shape) => shape.Id);
     } catch (err) {
       const JsForceErr = err as JsForceError;
       if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
         // ShapeExportPref is not enabled, or user does not have CRUD access
-        throw SfdxError.wrap(messages.getMessage('delete_shape_command_no_access', shapeIds));
+        throw SfdxError.wrap(messages.getMessage('noAccess', [this.org.getUsername()]));
       }
       // non-access error
       throw JsForceErr;
     }
 
-    return Promise.all(
+    await Promise.allSettled(
       shapeIds.map(async (id) => {
         try {
-          const delResult: RecordResult = await this.conn.sobject('ShapeRepresentation').delete(id);
+          const delResult = await this.conn.sobject('ShapeRepresentation').delete(id);
           if (delResult.success) {
-            return delResult.id;
+            deleteAllResult.shapeIds.push(id);
           }
         } catch (err) {
-          return Promise.reject(err);
+          deleteAllResult.failures.push({
+            shapeId: id,
+            message: err instanceof Error ? err.message : 'error contained no message',
+          });
         }
       })
     );
+
+    return deleteAllResult;
   }
 }

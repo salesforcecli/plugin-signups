@@ -25,6 +25,8 @@ describe('org:shape:delete', () => {
 
   // stubs
   let uxLogStub: sinon.SinonStub;
+  let uxTableStub: sinon.SinonStub;
+  let uxStyledHeaderStub: sinon.SinonStub;
   let cmd: TestCreate;
   const hubOrgStub = sinon.createStubInstance(Org);
 
@@ -42,6 +44,8 @@ describe('org:shape:delete', () => {
     cmd = new TestCreate(params, oclifConfigStub);
 
     uxLogStub = stubMethod(sandbox, UX.prototype, 'log');
+    uxStyledHeaderStub = stubMethod(sandbox, UX.prototype, 'styledHeader');
+    uxTableStub = stubMethod(sandbox, UX.prototype, 'table');
     stubMethod(sandbox, cmd, 'assignOrg').callsFake(() => {
       cmd.setOrg(hubOrgStub);
     });
@@ -99,8 +103,40 @@ describe('org:shape:delete', () => {
     expect(uxLogStub.firstCall.args[0]).to.equal('Successfully deleted org shape for 00D000000000000004.');
   });
 
+  it('partial success', async () => {
+    hubOrgStub.getConnection.returns({
+      tooling: {
+        query: queryShapeEnabled,
+      },
+    } as unknown as Connection);
+
+    stubMethod(sandbox, OrgShapeDeleteCommand.prototype, 'deleteAll').resolves({
+      shapeIds: ['3SR000000000123'],
+      failures: [{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }],
+    });
+
+    hubOrgStub.getOrgId.returns('00D000000000000004');
+
+    const command = await deleteShapeCommand(['--noprompt']);
+    await command.runIt();
+    expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Partial Success');
+    expect(uxLogStub.firstCall.args[0]).to.equal('Successfully deleted org shape for 00D000000000000004.');
+    expect(uxLogStub.secondCall.args[0]).to.equal('');
+    expect(uxStyledHeaderStub.secondCall.args[0]).to.equal('Failures');
+    expect(uxTableStub.firstCall.args[0]).to.deep.equal([{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }]);
+    expect(uxTableStub.firstCall.args[1]).to.deep.equal({
+      columns: [
+        { key: 'shapeId', label: 'Shape ID' },
+        { key: 'message', label: 'Error Message' },
+      ],
+    });
+  });
+
   it('no shapes', async () => {
-    stubMethod(sandbox, OrgShapeDeleteCommand.prototype, 'deleteAll').resolves([]);
+    stubMethod(sandbox, OrgShapeDeleteCommand.prototype, 'deleteAll').resolves({
+      shapeIds: [],
+      failures: [],
+    });
 
     hubOrgStub.getOrgId.returns('00D000000000000004');
 
