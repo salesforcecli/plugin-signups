@@ -73,7 +73,7 @@ describe('org:shape commands', () => {
         ensureExitCode: 0,
       }
     ).jsonOutput.result;
-    expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds']);
+    expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds', 'failures']);
     expect(deleteResult.shapeIds).to.include(newShapeId);
   });
 
