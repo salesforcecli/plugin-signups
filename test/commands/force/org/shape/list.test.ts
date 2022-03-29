@@ -4,7 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect, IConfig } from '@salesforce/command/lib/test';
+
+import { Config } from '@oclif/core';
 import * as chalk from 'chalk';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
@@ -18,9 +19,11 @@ import * as sinon from 'sinon';
 import { OrgShapeListCommand } from '../../../../../src/commands/force/org/shape/list';
 import { OrgShapeListResult } from '../../../../../src/shared/orgShapeListUtils';
 
+const expect = chai.expect;
+
 describe('org:shape:list', () => {
   const sandbox = sinon.createSandbox();
-  const oclifConfigStub = fromStub(stubInterface<IConfig.IConfig>(sandbox));
+  const oclifConfigStub = fromStub(stubInterface<Config>(sandbox));
 
   // stubs
   let uxLogStub: sinon.SinonStub;
@@ -95,15 +98,12 @@ describe('org:shape:list', () => {
       shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape))
     );
     expect(uxTableStub.firstCall.args[1]).to.deep.equal({
-      columns: [
-        { key: 'defaultMarker', label: '' },
-        { key: 'alias', label: 'ALIAS' },
-        { key: 'username', label: 'USERNAME' },
-        { key: 'orgId', label: 'ORG ID' },
-        { key: 'status', label: 'SHAPE STATUS' },
-        { key: 'createdBy', label: 'CREATED BY' },
-        { key: 'createdDate', label: 'CREATED DATE' },
-      ],
+      alias: { header: 'ALIAS' },
+      username: { header: 'USERNAME' },
+      orgId: { header: 'ORG ID' },
+      status: { header: 'SHAPE STATUS' },
+      createdBy: { header: 'CREATED BY' },
+      createdDate: { header: 'CREATED DATE' },
     });
   });
 });

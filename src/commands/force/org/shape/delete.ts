@@ -7,7 +7,7 @@
 
 import { EOL } from 'os';
 import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
-import { SfdxError, Messages, Connection } from '@salesforce/core';
+import { Messages, Connection } from '@salesforce/core';
 import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -59,7 +59,11 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
     this.conn = this.org.getConnection();
 
     if (!(await isShapeEnabled(this.conn))) {
-      throw new SfdxError(messages.getMessage('noAccess', [this.org.getUsername()]));
+      const err = messages.createError('noAccess', [this.org.getUsername()]);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore override readonly .name field
+      err.name = 'noAccess';
+      throw err;
     }
 
     const deleteRes = await this.deleteAll();
@@ -76,12 +80,11 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
       this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
       this.ux.log('');
       this.ux.styledHeader('Failures');
-      this.ux.table(deleteRes.failures, {
-        columns: [
-          { key: 'shapeId', label: 'Shape ID' },
-          { key: 'message', label: 'Error Message' },
-        ],
-      });
+      const columns = {
+        shapeId: { header: 'Shape ID' },
+        message: { header: 'Error Message' },
+      };
+      this.ux.table(deleteRes.failures, columns);
     } else if (deleteRes.failures.length > 0) {
       this.setExitCode(1);
     } else if (deleteRes.shapeIds.length > 0) {
@@ -123,7 +126,11 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
       const JsForceErr = err as JsForceError;
       if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
         // ShapeExportPref is not enabled, or user does not have CRUD access
-        throw SfdxError.wrap(messages.getMessage('noAccess', [this.org.getUsername()]));
+        const e = messages.createError('noAccess', [this.org.getUsername()]);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore override readonly .name field
+        e.name = 'noAccess';
+        throw e;
       }
       // non-access error
       throw JsForceErr;

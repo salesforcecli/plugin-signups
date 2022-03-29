@@ -4,24 +4,27 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect, IConfig } from '@salesforce/command/lib/test';
+
+import { Config } from '@oclif/core';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
-import { Connection, Org, SfdxError } from '@salesforce/core';
+import { Connection, Org } from '@salesforce/core';
 import { UX } from '@salesforce/command';
 import { fromStub, stubInterface, stubMethod } from '@salesforce/ts-sinon';
-import { RecordResult } from 'jsforce';
+import { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
 import { OrgShapeDeleteCommand } from '../../../../../src/commands/force/org/shape/delete';
+
+const expect = chai.expect;
 
 describe('org:shape:delete', () => {
   const username = 'me@my.org';
 
   const sandbox = sinon.createSandbox();
-  const oclifConfigStub = fromStub(stubInterface<IConfig.IConfig>(sandbox));
+  const oclifConfigStub = fromStub(stubInterface<Config>(sandbox));
 
   // stubs
   let uxLogStub: sinon.SinonStub;
@@ -94,7 +97,7 @@ describe('org:shape:delete', () => {
             .returns({
               id: '3SR000000000123',
               success: true,
-            } as RecordResult),
+            } as SaveResult),
         }),
     } as unknown as Connection);
 
@@ -127,10 +130,8 @@ describe('org:shape:delete', () => {
     expect(uxStyledHeaderStub.secondCall.args[0]).to.equal('Failures');
     expect(uxTableStub.firstCall.args[0]).to.deep.equal([{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }]);
     expect(uxTableStub.firstCall.args[1]).to.deep.equal({
-      columns: [
-        { key: 'shapeId', label: 'Shape ID' },
-        { key: 'message', label: 'Error Message' },
-      ],
+      shapeId: { header: 'Shape ID' },
+      message: { header: 'Error Message' },
     });
   });
 
@@ -156,7 +157,7 @@ describe('org:shape:delete', () => {
         query: queryShapeEnabled,
       },
       query: sandbox.stub().withArgs('SELECT Id FROM ShapeRepresentation').throws({
-        name: 'INVALID_TYPE',
+        errorCode: 'INVALID_TYPE',
         message: "sObject type 'ShapeRepresentation' is not supported",
       }),
     } as unknown as Connection);
@@ -165,9 +166,7 @@ describe('org:shape:delete', () => {
       const command = await deleteShapeCommand(['--noprompt']);
       await command.runIt();
     } catch (e) {
-      const err = e as SfdxError;
-      expect(err.name).to.equal('INVALID_TYPE');
-      expect(err.message).to.equal("sObject type 'ShapeRepresentation' is not supported");
+      expect(e).to.have.property('name', 'noAccess');
     }
   });
 });

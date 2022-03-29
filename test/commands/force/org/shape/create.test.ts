@@ -4,22 +4,25 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect, IConfig } from '@salesforce/command/lib/test';
+
+import { Config } from '@oclif/core';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
-import { Connection, Org, SfdxError } from '@salesforce/core';
+import { Connection, Org } from '@salesforce/core';
 import { UX } from '@salesforce/command';
 import { fromStub, stubInterface, stubMethod } from '@salesforce/ts-sinon';
-import { RecordResult } from 'jsforce';
+import { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
 import { OrgShapeCreateCommand } from '../../../../../src/commands/force/org/shape/create';
 
+const expect = chai.expect;
+
 describe('org:shape:create', () => {
   const sandbox = sinon.createSandbox();
-  const oclifConfigStub = fromStub(stubInterface<IConfig.IConfig>(sandbox));
+  const oclifConfigStub = fromStub(stubInterface<Config>(sandbox));
 
   // stubs
   let uxLogStub: sinon.SinonStub;
@@ -73,7 +76,7 @@ describe('org:shape:create', () => {
           create: sinon.stub().returns({
             id: '3SR000000000123',
             success: true,
-          } as RecordResult),
+          } as SaveResult),
         }),
     } as unknown as Connection);
 
@@ -99,8 +102,7 @@ describe('org:shape:create', () => {
       const command = await createShapeCommand([]);
       await command.runIt();
     } catch (e) {
-      const err = e as SfdxError;
-      expect(err.name).to.equal('create_shape_command_no_access');
+      expect(e).to.have.property('name', 'noAccess');
     }
   });
 
@@ -115,8 +117,8 @@ describe('org:shape:create', () => {
         .returns({
           create: sinon.stub().returns({
             success: false,
-            errors: ['Failed to create shape org.'],
-          } as RecordResult),
+            errors: [{ message: 'Failed to create shape org.' }],
+          } as SaveResult),
         }),
     } as unknown as Connection);
 
@@ -124,8 +126,7 @@ describe('org:shape:create', () => {
       const command = await createShapeCommand([]);
       await command.runIt();
     } catch (e) {
-      const err = e as SfdxError;
-      expect(err.name).to.equal('shape_create_failed_message');
+      expect(e).to.have.property('name', 'shape_create_failed_message');
     }
   });
 });

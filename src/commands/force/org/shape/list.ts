@@ -7,22 +7,22 @@
 
 import { EOL } from 'os';
 import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
-import { Messages, Aliases, AuthInfo } from '@salesforce/core';
+import { Messages, AuthInfo } from '@salesforce/core';
 import * as chalk from 'chalk';
-import { getNonScratchOrgs, getAllShapesFromOrg, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
+import { getAllShapesFromOrg, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
+
 // default columns for the shape list
-const orgShapeColumns = [
-  { key: 'defaultMarker', label: '' },
-  { key: 'alias', label: 'ALIAS' },
-  { key: 'username', label: 'USERNAME' },
-  { key: 'orgId', label: 'ORG ID' },
-  { key: 'status', label: 'SHAPE STATUS' },
-  { key: 'createdBy', label: 'CREATED BY' },
-  { key: 'createdDate', label: 'CREATED DATE' },
-];
+const orgShapeColumns = {
+  alias: { header: 'ALIAS' },
+  username: { header: 'USERNAME' },
+  orgId: { header: 'ORG ID' },
+  status: { header: 'SHAPE STATUS' },
+  createdBy: { header: 'CREATED BY' },
+  createdDate: { header: 'CREATED DATE' },
+};
 
 export class OrgShapeListCommand extends SfdxCommand {
   public static readonly description = messages.getMessage('description');
@@ -43,15 +43,14 @@ export class OrgShapeListCommand extends SfdxCommand {
     this.ux.styledHeader('Org Shapes');
     this.ux.table(
       shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape)),
-      { columns: orgShapeColumns }
+      orgShapeColumns
     );
     return shapes;
   }
 
   public async getAllOrgShapesFromAuthenticatedOrgs(): Promise<OrgShapeListResult[]> {
-    const aliases = await Aliases.create(Aliases.getDefaultOptions());
-    const authInfos = await getNonScratchOrgs(await AuthInfo.listAllAuthFiles());
-    const shapes = await Promise.all(authInfos.map((authInfo) => getAllShapesFromOrg(authInfo)));
-    return shapes.flat().map((item) => ({ ...item, alias: aliases.getKeysByValue(item.username)?.[0] }));
+    const devHubs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && orgAuth.isDevHub);
+    const shapes = await Promise.all(devHubs.map((dh) => getAllShapesFromOrg(dh)));
+    return shapes.flat();
   }
 }

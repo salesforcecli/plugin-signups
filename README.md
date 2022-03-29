@@ -78,42 +78,100 @@ sfdx plugins
 
 <!-- commands -->
 
-- [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapecreate--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapedelete--p--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:list [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapelist---verbose---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-print a greeting and your org IDs
+Create a scratch org configuration (shape) based on the specified source org
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
-OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
-
-  -u, --targetusername=targetusername                                               username or alias for the target
+FLAGS
+  -u, --targetusername=<value>                                                      username or alias for the target
                                                                                     org; overrides default target org
-
-  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
-                                                                                    org; overrides default dev hub org
-
-  --apiversion=apiversion                                                           override the api version used for
+  --apiversion=<value>                                                              override the api version used for
                                                                                     api requests made by this command
-
   --json                                                                            format output as json
-
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
-EXAMPLES
-  $ sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-     Hello world! This is org: MyOrg and I will be around until Tue Mar 20 2018!
-     My hub org id is: 00Dxx000000001234
+DESCRIPTION
+  Create a scratch org configuration (shape) based on the specified source org
 
-  $ sfdx hello:org --name myname --targetusername myOrg@example.com
-     Hello myname! This is org: MyOrg and I will be around until Tue Mar 20 2018!
+EXAMPLES
+  $ sfdx force:org:shape:create -u me@my.org
+
+  $ sfdx force:org:shape:create -u me@my.org --json --loglevel debug
 ```
+
+_See code: [src/commands/force/org/shape/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/create.ts)_
+
+## `sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+delete all org shapes for a target org
+
+```
+USAGE
+  $ sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+FLAGS
+  -p, --noprompt                                                                    do not prompt for confirmation
+  -u, --targetusername=<value>                                                      username or alias for the target
+                                                                                    org; overrides default target org
+  --apiversion=<value>                                                              override the api version used for
+                                                                                    api requests made by this command
+  --json                                                                            format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+DESCRIPTION
+  delete all org shapes for a target org
+
+EXAMPLES
+  $ sfdx force:org:shape:delete -u me@my.org
+
+  $ sfdx force:org:shape:delete -u MyOrgAlias -p
+
+  $ sfdx force:org:shape:delete -u me@my.org --json
+
+  $ sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json
+```
+
+_See code: [src/commands/force/org/shape/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/delete.ts)_
+
+## `sfdx force:org:shape:list [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+list all org shapes you’ve created
+
+```
+USAGE
+  $ sfdx force:org:shape:list [--verbose] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+FLAGS
+  --json                                                                            format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+  --verbose                                                                         list more information about each org
+                                                                                    shape
+
+DESCRIPTION
+  list all org shapes you’ve created
+
+EXAMPLES
+  $ sfdx force:org:shape:list
+
+  $ sfdx force:org:shape:list --json
+
+  $ sfdx force:org:shape:list --json > tmp/MyOrgShapeList.json
+```
+
+_See code: [src/commands/force/org/shape/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/list.ts)_
 
 <!-- commandsstop -->

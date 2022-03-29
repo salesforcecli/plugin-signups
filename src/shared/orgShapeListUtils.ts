@@ -5,8 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { basename, join } from 'path';
-import { AuthInfo, fs, Global, Org, Logger, Connection } from '@salesforce/core';
+import { OrgAuthorization, Org, Logger, Connection } from '@salesforce/core';
 
 interface OrgShape {
   Id: string;
@@ -32,58 +31,19 @@ export interface JsForceError extends Error {
   fields: string[];
 }
 
-export async function getNonScratchOrgs(fileNames: string[]): Promise<AuthInfo[]> {
-  const orgFileNames = (await fs.readdir(Global.DIR)).filter((filename) => filename.match(/^00D.{15}\.json$/g));
-
-  const allAuths: AuthInfo[] = await Promise.all(
-    fileNames.map(async (fileName) => {
-      try {
-        const orgUsername = basename(fileName, '.json');
-        const auth = await AuthInfo.create({ username: orgUsername });
-
-        const userId = auth?.getFields().userId;
-
-        // no userid?  Definitely an org primary user
-        if (!userId) {
-          return auth;
-        }
-        const orgId = auth.getFields().orgId;
-
-        const orgFileName = `${orgId}.json`;
-        // if userId, it could be created from password:generate command.  If <orgId>.json doesn't exist, it's also not a secondary user auth file
-        if (orgId && !orgFileNames.includes(orgFileName)) {
-          return auth;
-        }
-        // Theory: within <orgId>.json, if the userId is the first entry, that's the primary username.
-        if (orgFileNames.includes(orgFileName)) {
-          const usernames = ((await fs.readJson(join(Global.DIR, orgFileName))) as { usernames: string[] }).usernames;
-          if (usernames && usernames[0] === auth.getFields().username) {
-            return auth;
-          }
-        }
-      } catch (error) {
-        const logger = await Logger.child('getNonScratchOrgs');
-        logger.warn(`Problem reading file: ${fileName} skipping`);
-      }
-      return undefined;
-    })
-  );
-  return allAuths.filter((auth) => !!auth).filter((auth) => !auth.getFields().devHubUsername);
-}
-
-export async function getAllShapesFromOrg(authInfo: AuthInfo): Promise<OrgShapeListResult[]> {
-  const org = await Org.create({ aliasOrUsername: authInfo.getFields().username });
+export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<OrgShapeListResult[]> {
+  const org = await Org.create({ aliasOrUsername: orgAuth.username });
   const conn = org.getConnection();
-  const logger = await Logger.child(`getAllShapesFromOrg, ${authInfo.getFields().username}`);
-  logger.info(`Query org: ${authInfo.getFields().username} for shapes`);
+  const logger = await Logger.child(`getAllShapesFromOrg, ${orgAuth.username}`);
+  logger.info(`Query org: ${orgAuth.username} for shapes`);
   try {
     const shapesFound = await conn.query<OrgShape>(
       "SELECT Id, Status, CreatedBy.Username, CreatedDate FROM ShapeRepresentation WHERE Status IN ( 'Active', 'InProgress' )"
     );
     return shapesFound.records.map((shape) => ({
-      orgId: authInfo.getFields().orgId,
-      username: authInfo.getFields().username,
-      alias: authInfo.getFields().alias,
+      orgId: orgAuth.orgId,
+      username: orgAuth.username,
+      alias: orgAuth.aliases?.[0],
       shapeId: shape.Id,
       status: shape.Status,
       createdBy: shape.CreatedBy.Username,

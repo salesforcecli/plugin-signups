@@ -12,5 +12,5 @@
   ],
   "create_shape_command_username": "a username or alias for the target org",
   "create_shape_command_username_long": "Username or alias of the previously authorized org from which you want to create an org shape.",
-  "create_shape_command_no_access": "The org needs to be enabled for org shape before one can be created."
+  "noAccess": "The org needs to be enabled for org shape before one can be created. %s"
 }
