@@ -12,7 +12,7 @@ import * as chaiAsPromised from 'chai-as-promised';
 
 chai.use(chaiAsPromised);
 
-import { Org } from '@salesforce/core';
+import { Org, AuthInfo } from '@salesforce/core';
 import { UX } from '@salesforce/command';
 import { fromStub, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import * as sinon from 'sinon';
@@ -105,5 +105,16 @@ describe('org:shape:list', () => {
       createdBy: { header: 'CREATED BY' },
       createdDate: { header: 'CREATED DATE' },
     });
+  });
+
+  it('no devhub org', async () => {
+    const listAllAuthSpy = stubMethod(sandbox, AuthInfo, 'listAllAuthorizations').resolves([]);
+    try {
+      const command = await listShapeCommand([]);
+      await command.runIt();
+    } catch (e) {
+      expect(e).to.have.property('name', 'noAuthFound');
+    }
+    expect(listAllAuthSpy.callCount).to.be.equal(1);
   });
 });
