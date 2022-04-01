@@ -7,7 +7,7 @@
 
 import { EOL } from 'os';
 import { SfdxCommand } from '@salesforce/command';
-import { SfError, Messages, Connection } from '@salesforce/core';
+import { Messages, Connection } from '@salesforce/core';
 import { SaveResult } from 'jsforce';
 import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
@@ -65,8 +65,11 @@ export class OrgShapeCreateCommand extends SfdxCommand {
     } catch (err) {
       const JsForceErr = err as JsForceError;
       if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
-        const errMessage = messages.getMessage('create_shape_command_no_crud_access');
-        throw new SfError(errMessage);
+        const e = messages.createError('create_shape_command_no_crud_access');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore override readonly .name field
+        e.name = 'create_shape_command_no_crud_access';
+        throw e;
       } else {
         throw JsForceErr;
       }
