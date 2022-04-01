@@ -62,6 +62,7 @@ workflows:
           os: windows
           requires:
             - release-management/test-package
+            - nuts-on-linux
       - release-management/release-package:
           sign: true
           github-release: true
