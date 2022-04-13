@@ -49,15 +49,15 @@ export class OrgShapeListCommand extends SfdxCommand {
   }
 
   public async getAllOrgShapesFromAuthenticatedOrgs(): Promise<OrgShapeListResult[]> {
-    const devHubs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && orgAuth.isDevHub);
-    if (devHubs.length === 0) {
+    const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
+    if (orgs.length === 0) {
       const e = messages.createError('noAuthFound');
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore override readonly .name field
       e.name = 'noAuthFound';
       throw e;
     }
-    const shapes = await Promise.all(devHubs.map((dh) => getAllShapesFromOrg(dh)));
+    const shapes = await Promise.all(orgs.map((o) => getAllShapesFromOrg(o)));
     return shapes.flat();
   }
 }
