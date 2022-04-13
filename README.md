@@ -1,28 +1,8 @@
-### Use the [lerna template](https://github.com/salesforcecli/lerna-template) if you need a library and plugin
+# plugin-signups
 
-### This template is useful if the library is already in another repository or the plugin is a wrapper around an API.
+[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-signups.svg?label=@salesforce/plugin-signups)](https://www.npmjs.com/package/@salesforce/plugin-signups) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-signups/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-signups/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-signups.svg)](https://npmjs.org/package/@salesforce/plugin-signups) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-signups/main/LICENSE.txt)
 
-# plugin-&lt;REPLACE ME&gt;
-
-[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-template.svg?label=@salesforce/plugin-template)](https://www.npmjs.com/package/@salesforce/plugin-template) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-template/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-template/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-template.svg)](https://npmjs.org/package/@salesforce/plugin-template) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-template/main/LICENSE.txt)
-
-Change above to <REPLACE_ME> before finalizing
-
-&lt;REPLACE ME DESCRIPTION START&gt;
-
-This repository provides a template for creating a plugin for the Salesforce CLI. To convert this template to a working plugin:
-
-1. Clone this repo
-2. Delete the .git folder
-3. Replace filler values
-   a) Every instance of `<REPLACE_ME>` can be directly substitued for the name of the new plugin. However beware, things like github paths are for the salesforcecli Github organization
-   b) Search for case-matching `REPLACE` to find other filler values, such as for the plugin description
-4. Use `git init` to set up the desired git information
-5. Follow the getting started steps below until the `sfdx hello:org` commmand is functioning
-
-&lt;REPLACE ME DESCRIPTION END&gt;
-
-## Learn about the plugin-template
+## Learn about the plugin-signups
 
 Salesforce CLI plugins are based on the [oclif plugin framework](<(https://oclif.io/docs/introduction.html)>). Read the [plugin developer guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_plugins.meta/sfdx_cli_plugins/cli_plugins_architecture_sf_cli.htm) to learn about Salesforce CLI plugin development.
 
@@ -39,7 +19,7 @@ We always recommend using the latest version of these commands bundled with the 
 ## Install
 
 ```bash
-sfdx plugins:install <REPLACE_ME>@x.y.z
+sfdx plugins:install signups@x.y.z
 ```
 
 ## Issues
@@ -71,7 +51,7 @@ To build the plugin locally, make sure to have yarn installed and run the follow
 
 ```bash
 # Clone the repository
-git clone git@github.com:salesforcecli/plugin-<REPLACE_ME>
+git clone git@github.com:salesforcecli/plugin-signups
 
 # Install the dependencies and compile
 yarn install
@@ -82,7 +62,7 @@ To use your plugin, run using the local `./bin/run` or `./bin/run.cmd` file.
 
 ```bash
 # Run using local run file.
-./bin/run <REPLACE_ME>
+./bin/run force:org:shape
 ```
 
 There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
@@ -98,42 +78,100 @@ sfdx plugins
 
 <!-- commands -->
 
-- [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapecreate--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapedelete--p--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+- [`sfdx force:org:shape:list [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-forceorgshapelist---verbose---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+## `sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
-print a greeting and your org IDs
+Create a scratch org configuration (shape) based on the specified source org
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sfdx force:org:shape:create [-u <string>] [--apiversion <string>] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
-OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
-
-  -u, --targetusername=targetusername                                               username or alias for the target
+FLAGS
+  -u, --targetusername=<value>                                                      username or alias for the target
                                                                                     org; overrides default target org
-
-  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
-                                                                                    org; overrides default dev hub org
-
-  --apiversion=apiversion                                                           override the api version used for
+  --apiversion=<value>                                                              override the api version used for
                                                                                     api requests made by this command
-
   --json                                                                            format output as json
-
   --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
                                                                                     this command invocation
 
-EXAMPLES
-  $ sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-     Hello world! This is org: MyOrg and I will be around until Tue Mar 20 2018!
-     My hub org id is: 00Dxx000000001234
+DESCRIPTION
+  Create a scratch org configuration (shape) based on the specified source org
 
-  $ sfdx hello:org --name myname --targetusername myOrg@example.com
-     Hello myname! This is org: MyOrg and I will be around until Tue Mar 20 2018!
+EXAMPLES
+  $ sfdx force:org:shape:create -u me@my.org
+
+  $ sfdx force:org:shape:create -u me@my.org --json --loglevel debug
 ```
+
+_See code: [src/commands/force/org/shape/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/create.ts)_
+
+## `sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+delete all org shapes for a target org
+
+```
+USAGE
+  $ sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+FLAGS
+  -p, --noprompt                                                                    do not prompt for confirmation
+  -u, --targetusername=<value>                                                      username or alias for the target
+                                                                                    org; overrides default target org
+  --apiversion=<value>                                                              override the api version used for
+                                                                                    api requests made by this command
+  --json                                                                            format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+DESCRIPTION
+  delete all org shapes for a target org
+
+EXAMPLES
+  $ sfdx force:org:shape:delete -u me@my.org
+
+  $ sfdx force:org:shape:delete -u MyOrgAlias -p
+
+  $ sfdx force:org:shape:delete -u me@my.org --json
+
+  $ sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json
+```
+
+_See code: [src/commands/force/org/shape/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/delete.ts)_
+
+## `sfdx force:org:shape:list [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
+
+list all org shapes you’ve created
+
+```
+USAGE
+  $ sfdx force:org:shape:list [--verbose] [--json] [--loglevel
+    trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+
+FLAGS
+  --json                                                                            format output as json
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+  --verbose                                                                         list more information about each org
+                                                                                    shape
+
+DESCRIPTION
+  list all org shapes you’ve created
+
+EXAMPLES
+  $ sfdx force:org:shape:list
+
+  $ sfdx force:org:shape:list --json
+
+  $ sfdx force:org:shape:list --json > tmp/MyOrgShapeList.json
+```
+
+_See code: [src/commands/force/org/shape/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.0.0/src/commands/force/org/shape/list.ts)_
 
 <!-- commandsstop -->
