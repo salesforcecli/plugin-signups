@@ -43,7 +43,7 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
     return shapesFound.records.map((shape) => ({
       orgId: orgAuth.orgId,
       username: orgAuth.username,
-      alias: orgAuth.aliases?.[0],
+      alias: orgAuth.aliases?.[0] || '',
       shapeId: shape.Id,
       status: shape.Status,
       createdBy: shape.CreatedBy.Username,

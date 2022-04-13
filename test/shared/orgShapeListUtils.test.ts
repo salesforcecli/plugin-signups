@@ -55,7 +55,7 @@ describe('shape list utils', () => {
 
     const shapes = await getAllShapesFromOrg(joe);
     expect(shapes[0]).to.deep.equal({
-      alias: joe.aliases?.[0],
+      alias: '',
       createdBy: joe.username,
       createdDate: '2022-03-21T19:04:53.000+0000',
       orgId: joe.orgId,
