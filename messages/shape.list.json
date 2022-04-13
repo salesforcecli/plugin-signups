@@ -1,5 +1,5 @@
 {
-  "description": "list all org shapes you’ve created",
+  "description": "List all org shapes you’ve created",
   "longDescription": "Lists all org shapes that you’ve created using the Salesforce CLI.",
   "verbose": "list more information about each org shape",
   "verboseLong": "Lists more information about each org shape.",

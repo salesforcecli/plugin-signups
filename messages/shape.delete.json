@@ -1,5 +1,5 @@
 {
-  "description": "delete all org shapes for a target org",
+  "description": "Delete all org shapes for a target org",
   "longDescription": "Deletes all org shapes that you’ve created for an org using the Salesforce CLI.",
   "verbose": "list more information about each org shape",
   "verboseLong": "Lists more information about each org shape.",
