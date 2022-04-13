@@ -16,7 +16,10 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list
 
 // default columns for the shape list
 const orgShapeColumns = {
-  alias: { header: 'ALIAS' },
+  alias: {
+    header: 'ALIAS',
+    get: (data: OrgShapeListResult): string => data.alias ?? '',
+  },
   username: { header: 'USERNAME' },
   orgId: { header: 'ORG ID' },
   status: { header: 'SHAPE STATUS' },

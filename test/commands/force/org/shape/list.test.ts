@@ -97,14 +97,6 @@ describe('org:shape:list', () => {
     expect(uxTableStub.firstCall.args[0]).to.deep.equal(
       shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape))
     );
-    expect(uxTableStub.firstCall.args[1]).to.deep.equal({
-      alias: { header: 'ALIAS' },
-      username: { header: 'USERNAME' },
-      orgId: { header: 'ORG ID' },
-      status: { header: 'SHAPE STATUS' },
-      createdBy: { header: 'CREATED BY' },
-      createdDate: { header: 'CREATED DATE' },
-    });
   });
 
   it('no devhub org', async () => {

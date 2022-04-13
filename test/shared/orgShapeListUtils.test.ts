@@ -20,7 +20,7 @@ describe('shape list utils', () => {
 
   const joe = {
     username: 'joe@my.org',
-    alias: 'joe',
+    aliases: ['joe', 'j'],
     orgId: '00D000000000000004',
   } as unknown as OrgAuthorization;
 
@@ -55,7 +55,7 @@ describe('shape list utils', () => {
 
     const shapes = await getAllShapesFromOrg(joe);
     expect(shapes[0]).to.deep.equal({
-      alias: '',
+      alias: 'joe,j',
       createdBy: joe.username,
       createdDate: '2022-03-21T19:04:53.000+0000',
       orgId: joe.orgId,

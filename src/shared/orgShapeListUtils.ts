@@ -49,7 +49,7 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
         createdBy: shape.CreatedBy.Username,
         createdDate: shape.CreatedDate,
       },
-      ...(orgAuth.aliases ? { alias: orgAuth.aliases.join(',') } : {}),
+      ...(orgAuth.aliases.length > 0 ? { alias: orgAuth.aliases.join(',') } : {}),
     }));
   } catch (err) {
     const JsForceErr = err as JsForceError;
