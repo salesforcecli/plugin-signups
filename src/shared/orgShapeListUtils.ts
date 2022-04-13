@@ -41,13 +41,15 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
       "SELECT Id, Status, CreatedBy.Username, CreatedDate FROM ShapeRepresentation WHERE Status IN ( 'Active', 'InProgress' )"
     );
     return shapesFound.records.map((shape) => ({
-      orgId: orgAuth.orgId,
-      username: orgAuth.username,
-      alias: orgAuth.aliases?.[0] || '',
-      shapeId: shape.Id,
-      status: shape.Status,
-      createdBy: shape.CreatedBy.Username,
-      createdDate: shape.CreatedDate,
+      ...{
+        orgId: orgAuth.orgId,
+        username: orgAuth.username,
+        shapeId: shape.Id,
+        status: shape.Status,
+        createdBy: shape.CreatedBy.Username,
+        createdDate: shape.CreatedDate,
+      },
+      ...(orgAuth.aliases ? { alias: orgAuth.aliases.join(',') } : {}),
     }));
   } catch (err) {
     const JsForceErr = err as JsForceError;
