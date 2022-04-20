@@ -55,6 +55,7 @@ workflows:
           sfdx_version: latest
           requires:
             - release-management/test-package
+          context: na40-auth-url
       - release-management/test-nut:
           name: nuts-on-windows
           node_version: lts
@@ -63,6 +64,7 @@ workflows:
           requires:
             - release-management/test-package
             - nuts-on-linux
+          context: na40-auth-url
       - release-management/release-package:
           sign: true
           github-release: true
@@ -74,6 +76,7 @@ workflows:
           context:
             - CLI_CTC
             - AWS
+            - release
   test-ts-update:
     when:
       equal: [test-ts-update, << pipeline.parameters.workflow >>]
@@ -94,6 +97,7 @@ workflows:
                 - linux
                 - windows
           npm_module_name: << pipeline.parameters.npm_module_name >>
+          context: na40-auth-url
   dependabot-automerge:
     when:
       equal: [dependabot-automerge, << pipeline.parameters.workflow >>]
