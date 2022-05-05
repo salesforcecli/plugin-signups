@@ -93,6 +93,19 @@ describe('snapshot commands', () => {
     expect(snapshots.find((s) => s.SnapshotName === `a_${orgIdKey}`)).to.have.property('Description', aliasDescription);
   });
 
+  it('stdout tables formatting for list', () => {
+    const table = execCmd('force:org:snapshot:list', {
+      ensureExitCode: 0,
+    }).shellOutput.stdout;
+    expect(table).to.include('Snapshot Name');
+    expect(table).to.include('Last Cloned Date');
+    expect(table).to.not.include('SnapshotName');
+    expect(table).to.not.include('LastClonedDate');
+
+    // time fixes
+    expect(table).not.to.include('.000+0000');
+  });
+
   it('can get a snapshot by id', () => {
     const snapshot = execCmd<OrgSnapshot>(`force:org:snapshot:get -s ${aliasSnapshot.Id} --json`, {
       ensureExitCode: 0,
@@ -107,6 +120,19 @@ describe('snapshot commands', () => {
     }).jsonOutput.result;
     expect(snapshot).to.have.all.keys(expectedFields);
     expect(snapshot.Description).to.equal(orgIdDescription);
+  });
+
+  it('stdout tables formatting for get', () => {
+    const table = execCmd(`force:org:snapshot:get -s ${usernameSnapshot.Id}`, {
+      ensureExitCode: 0,
+    }).shellOutput.stdout;
+    expect(table).to.include('Snapshot Name');
+    expect(table).to.include('Last Cloned Date');
+    expect(table).to.not.include('SnapshotName');
+    expect(table).to.not.include('LastClonedDate');
+
+    // time fixes
+    expect(table).not.to.include('.000+0000');
   });
 
   it('can delete a snapshot by id', () => {

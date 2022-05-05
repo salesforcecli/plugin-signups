@@ -40,15 +40,18 @@ export const ORG_SNAPSHOT_FIELDS = [
   'LastClonedById',
   'Error',
 ];
+const dateTimeFormatter = (dateString: string): string =>
+  dateString
+    ? new Date(dateString).toLocaleString(undefined, {
+        month: '2-digit',
+        year: 'numeric',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null;
 
-const rowDateTimeFormatter = (row: OrgSnapshot, field: string): string =>
-  new Date(row[field]).toLocaleString(undefined, {
-    month: '2-digit',
-    year: 'numeric',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
+const rowDateTimeFormatter = (row: OrgSnapshot, field: string): string => dateTimeFormatter(row[field]);
 
 const ORG_SNAPSHOT_COLUMNS = {
   Id: {},
@@ -90,7 +93,13 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
   CliUx.ux.table(
     Object.entries(snapshotRecord)
       .filter(([key]) => key !== 'attributes')
-      .map(([key, value]) => ({ Name: capitalCase(key), Value: value as string })),
+      .map(([key, value]) => ({
+        Name: capitalCase(key),
+        // format the datetime values
+        Value: ['LastModifiedDate', 'LastClonedDate', 'CreatedDate'].includes(key)
+          ? dateTimeFormatter(value)
+          : (value as string),
+      })),
     { Name: {}, Value: {} }
   );
 };
