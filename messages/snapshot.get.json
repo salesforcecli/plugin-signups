@@ -1,0 +1,15 @@
+{
+  "description": "get details about a scratch org snapshot",
+  "examples": [
+    "get a snapshot by ID",
+    "  sfdx force:org:snapshot:get --snapshot 0Oo...",
+    "get a snapshot by name",
+    "  sfdx force:org:snapshot:get -s Dependencies"
+  ],
+  "flags": {
+    "snapshot": "name or ID of snapshot to retrieve"
+  },
+  "flagsLong": {
+    "snapshot": "The name or ID (starts with 0Oo) of the snapshot to retrieve."
+  }
+}

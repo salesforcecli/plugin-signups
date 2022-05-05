@@ -1,0 +1,4 @@
+{
+  "description": "list scratch org snapshots",
+  "examples": ["sfdx force:org:snapshot:list", "sfdx force:org:snapshot:list -v OtherDevHub@example.com"]
+}
