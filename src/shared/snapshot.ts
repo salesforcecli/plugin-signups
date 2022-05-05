@@ -41,7 +41,7 @@ export const ORG_SNAPSHOT_FIELDS = [
   'Error',
 ];
 
-const rowDateTimeFormmater = (row: OrgSnapshot, field: string): string =>
+const rowDateTimeFormatter = (row: OrgSnapshot, field: string): string =>
   new Date(row[field]).toLocaleString(undefined, {
     month: '2-digit',
     year: 'numeric',
@@ -57,19 +57,19 @@ const ORG_SNAPSHOT_COLUMNS = {
   SourceOrg: { header: 'Source Org Id' },
   CreatedDate: {
     header: 'Created Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormmater(row, 'CreatedDate'),
+    get: (row): string => rowDateTimeFormatter(row, 'CreatedDate'),
   },
   LastModifiedDate: {
     header: 'Last Modified Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormmater(row, 'LastModifiedDate'),
+    get: (row): string => rowDateTimeFormatter(row, 'LastModifiedDate'),
   },
   ExpirationDate: {
     header: 'Expiration Date',
-    get: (row: OrgSnapshot): string => new Date(row.ExpirationDate).toLocaleDateString(),
+    get: (row: OrgSnapshot): string => (row.ExpirationDate ? new Date(row.ExpirationDate).toLocaleDateString() : null),
   },
   LastClonedDate: {
     header: 'Last Cloned Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormmater(row, 'LastClonedDate'),
+    get: (row): string => rowDateTimeFormatter(row, 'LastClonedDate'),
   },
   LastClonedById: { header: 'Last Cloned By Id' },
 };
@@ -96,8 +96,14 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
 };
 
 export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
+  if (snapshotRecords.length === 0) {
+    CliUx.ux.log('No snapshots found');
+    return;
+  }
+
   CliUx.ux.table(
     // snapshotRecords,
+    // without this, you encounter typing errors from CliUx.ux.table
     snapshotRecords.map((s) => ({ ...s })),
     ORG_SNAPSHOT_COLUMNS
   );

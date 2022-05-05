@@ -1,0 +1,17 @@
+{
+  "description": "snapshot a scratch org",
+  "examples": [
+    "sfdx force:org:snapshot:create --sourceorg 00Dxx0000000000 --snapshotname Dependencies --description 'Contains PackageA v1.1.0'",
+    "sfdx force:org:snapshot:create -o myuser@myorg -n NightlyBranch -d 'Contains PkgA v2.1.0 and PkgB 3.3.0'"
+  ],
+  "flags": {
+    "snapshotname": "unique name of snapshot",
+    "description": "description of snapshot",
+    "sourceorg": "ID or locally authenticated username or alias of scratch org to snapshot"
+  },
+  "flagsLong": {
+    "snapshotname": "The unique name of the snapshot. Use this name to create scratch orgs from the snapshot.",
+    "description": "A description of the snapshot. Use this description to document the contents of the snapshot.\nWe suggest that you include a reference point, such as a version control system tag or commit ID.'",
+    "sourceorg": "The org ID, or a locally authenticated username or alias, of the scratch org to snapshot."
+  }
+}

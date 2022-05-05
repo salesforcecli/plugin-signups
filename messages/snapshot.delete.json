@@ -1,0 +1,10 @@
+{
+  "description": "delete a scratch org snapshot",
+  "examples": ["sfdx force:org:snapshot:delete --snapshot 0Oo...", "sfdx force:org:snapshot:delete -s BaseSnapshot"],
+  "flags": {
+    "snapshot": "name or ID of snapshot to delete"
+  },
+  "flagsLong": {
+    "snapshot": "The name or ID (starts with 0Oo) of the snapshot to delete."
+  }
+}
