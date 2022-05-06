@@ -45,7 +45,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by username', () => {
     usernameSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${scratchUsername} -d '${usernameDescription}' -n un_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${scratchUsername} -d "${usernameDescription}" -n un_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
@@ -56,7 +56,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by orgId', () => {
     orgIdSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${orgId} -d '${orgIdDescription}' -n id_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${orgId} -d "${orgIdDescription}" -n id_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
@@ -67,7 +67,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by alias', () => {
     aliasSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${alias} -d '${aliasDescription}' -n a_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${alias} -d "${aliasDescription}" -n a_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
