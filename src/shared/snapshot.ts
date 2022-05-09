@@ -114,6 +114,7 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
     // snapshotRecords,
     // without this, you encounter typing errors from CliUx.ux.table
     snapshotRecords.map((s) => ({ ...s })),
-    ORG_SNAPSHOT_COLUMNS
+    ORG_SNAPSHOT_COLUMNS,
+    { title: `Org Snapshots [${snapshotRecords.length}]` }
   );
 };
