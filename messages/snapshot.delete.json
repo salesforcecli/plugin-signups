@@ -6,5 +6,6 @@
   },
   "flagsLong": {
     "snapshot": "The name or ID (starts with 0Oo) of the snapshot to delete."
-  }
+  },
+  "success": "Successfully deleted snapshot %s."
 }

@@ -11,7 +11,7 @@ import { SaveResult, SaveError } from 'jsforce';
 import { queryByNameOrId } from '../../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.get');
+const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.delete');
 
 // jsforce can return SaveError[] or never[]
 const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
@@ -35,7 +35,7 @@ export class SnapshotGet extends SfdxCommand {
     const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot);
     const deleteResult = await this.hubOrg.getConnection().sobject('OrgSnapshot').delete(result.Id);
     if (deleteResult.success) {
-      this.ux.log(`Successfully deleted snapshot ${this.flags.snapshot as string}.`);
+      this.ux.log(messages.getMessage('success', [this.flags.snapshot as string]));
       return deleteResult;
     } else if (deleteResult.errors) {
       throw new Error(
