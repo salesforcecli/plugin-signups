@@ -10,7 +10,7 @@ import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot');
+const messages = Messages.load('@salesforce/plugin-signups', 'snapshot', ['snapshotNotEnabled', 'noSnapshots']);
 
 export interface OrgSnapshotRequest {
   SourceOrg: string;
