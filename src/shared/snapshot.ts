@@ -6,8 +6,10 @@
  */
 
 import { CliUx } from '@oclif/core';
-import { Connection } from '@salesforce/core';
+import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
+
+const messages = Messages.load('@salesforce/plugin-signups', 'snapshot', ['noSnapshots', 'snapshotNotEnabled']);
 
 export interface OrgSnapshotRequest {
   SourceOrg: string;
@@ -77,16 +79,36 @@ const ORG_SNAPSHOT_COLUMNS = {
   LastClonedById: { header: 'Last Cloned By Id' },
 };
 
+const invalidTypeErrorHandler = (e: unknown): never => {
+  if (e instanceof Error && e.name === 'INVALID_TYPE') {
+    e.message = messages.getMessage('snapshotNotEnabled');
+  }
+  throw e;
+};
+
 export const queryAll = async (conn: Connection): Promise<OrgSnapshot[]> => {
   const query = `SELECT ${ORG_SNAPSHOT_FIELDS.join(',')} FROM OrgSnapshot Order by CreatedDate`;
-  return (await conn.query<OrgSnapshot>(query)).records;
+  try {
+    const result = (await conn.query<OrgSnapshot>(query)).records;
+    return result;
+  } catch (e) {
+    invalidTypeErrorHandler(e);
+  }
 };
 
 export const queryByNameOrId = async (conn: Connection, nameOrId: string): Promise<OrgSnapshot> => {
   const query = `SELECT ${ORG_SNAPSHOT_FIELDS.join(',')} FROM OrgSnapshot WHERE ${
     nameOrId.startsWith('0Oo') ? 'Id' : 'SnapshotName'
   } = '${nameOrId}'`;
-  return conn.singleRecordQuery<OrgSnapshot>(query);
+  try {
+    const result = await conn.singleRecordQuery<OrgSnapshot>(query);
+    return result;
+  } catch (e) {
+    if (e instanceof SfError && e.name === 'SingleRecordQuery_NoRecords') {
+      e.message = messages.getMessage('noSnapshots', [nameOrId]);
+    }
+    invalidTypeErrorHandler(e);
+  }
 };
 
 export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
