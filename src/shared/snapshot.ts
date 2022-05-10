@@ -9,7 +9,7 @@ import { CliUx } from '@oclif/core';
 import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
 
-const messages = Messages.load('@salesforce/plugin-signups', 'snapshot.shared', ['noSnapshots', 'snapshotNotEnabled']);
+const messages = Messages.load('@salesforce/plugin-signups', 'snapshot', ['noSnapshots', 'snapshotNotEnabled']);
 
 export interface OrgSnapshotRequest {
   SourceOrg: string;
@@ -76,7 +76,7 @@ const ORG_SNAPSHOT_COLUMNS = {
     header: 'Last Cloned Date',
     get: (row): string => rowDateTimeFormatter(row, 'LastClonedDate'),
   },
-  LastClonedById: { header: 'Last Cloned By Id' },
+  LastClonedById: { header: 'Last Cloned By Id', get: (row: OrgSnapshot): string => row.LastClonedById ?? '' },
 };
 
 const invalidTypeErrorHandler = (e: unknown): never => {
