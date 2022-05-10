@@ -9,7 +9,7 @@ import { CliUx } from '@oclif/core';
 import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
 
-const messages = Messages.load('@salesforce/plugin-signups', 'snapshot', ['noSnapshots', 'snapshotNotEnabled']);
+const messages = Messages.load('@salesforce/plugin-signups', 'snapshot.shared', ['noSnapshots', 'snapshotNotEnabled']);
 
 export interface OrgSnapshotRequest {
   SourceOrg: string;
