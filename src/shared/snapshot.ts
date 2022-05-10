@@ -51,7 +51,7 @@ const dateTimeFormatter = (dateString: string): string =>
         hour: '2-digit',
         minute: '2-digit',
       })
-    : null;
+    : '';
 
 const rowDateTimeFormatter = (row: OrgSnapshot, field: string): string => dateTimeFormatter(row[field]);
 
@@ -70,7 +70,7 @@ const ORG_SNAPSHOT_COLUMNS = {
   },
   ExpirationDate: {
     header: 'Expiration Date',
-    get: (row: OrgSnapshot): string => (row.ExpirationDate ? new Date(row.ExpirationDate).toLocaleDateString() : null),
+    get: (row: OrgSnapshot): string => (row.ExpirationDate ? new Date(row.ExpirationDate).toLocaleDateString() : ''),
   },
   LastClonedDate: {
     header: 'Last Cloned Date',
@@ -115,13 +115,17 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
   CliUx.ux.table(
     Object.entries(snapshotRecord)
       .filter(([key]) => key !== 'attributes')
+      // remove empty error field
+      .filter(([key, value]) => key !== 'Error' || value)
       .map(([key, value]) => ({
         Name: capitalCase(key),
         // format the datetime values
         Value: ['LastModifiedDate', 'LastClonedDate', 'CreatedDate'].includes(key)
           ? dateTimeFormatter(value)
           : (value as string),
-      })),
+      }))
+      // null/undefined becomes empty string
+      .map((row) => (row.Value ? row : { ...row, Value: '' })),
     { Name: {}, Value: {} }
   );
 };
@@ -137,6 +141,6 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
     // without this, you encounter typing errors from CliUx.ux.table
     snapshotRecords.map((s) => ({ ...s })),
     ORG_SNAPSHOT_COLUMNS,
-    { title: `Org Snapshots [${snapshotRecords.length}]` }
+    { title: `Org Snapshots [${snapshotRecords.length}]`, 'no-truncate': true }
   );
 };
