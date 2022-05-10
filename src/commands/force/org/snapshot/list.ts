@@ -10,7 +10,7 @@ import { Messages } from '@salesforce/core';
 import { OrgSnapshot, queryAll, printRecordTable } from '../../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.get');
+const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.list');
 
 export class SnapshotGet extends SfdxCommand {
   public static readonly description = messages.getMessage('description');
