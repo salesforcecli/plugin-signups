@@ -1,9 +1,9 @@
 {
-  "description": "get details about a scratch org snapshot",
+  "description": "get details about a scratch org snapshot\nSnapshot creation can take a while. Use this command with the snapshot name or ID to check its creation status. Once the status changes to Active, you can use the snapshot to create scratch orgs. \n\nTo create a snapshot, use the \"sfdx force:org:snapshot:create\" command. To retrieve a list of all snapshots, use \"sfdx force:org:snapshot:list\".",
   "examples": [
-    "get a snapshot by ID",
-    "  sfdx force:org:snapshot:get --snapshot 0Oo...",
-    "get a snapshot by name",
+    "Get snapshot details using its ID:\n",
+    "  sfdx force:org:snapshot:get --snapshot 0Oo...\n",
+    "Get snapshot details using its name:\n",
     "  sfdx force:org:snapshot:get -s Dependencies"
   ],
   "flags": {
