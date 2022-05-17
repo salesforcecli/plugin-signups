@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/salesforcecli/plugin-signups/compare/v1.1.0...v1.1.1) (2022-05-17)
+
+### Bug Fixes
+
+- remove "beta" state from Org Shape ([#35](https://github.com/salesforcecli/plugin-signups/issues/35)) ([ba96632](https://github.com/salesforcecli/plugin-signups/commit/ba966325e58d48aa3ccdfa9e2d3a7ead1a32e775))
+
 ## 1.1.0 (2022-05-11)
 
 ### Features
