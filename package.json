@@ -88,7 +88,6 @@
             "subtopics": {
               "shape": {
                 "description": "manage org shape",
-                "state": "beta",
                 "trailblazerCommunityLink": {
                   "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A0000009TPk",
                   "name": "Org Shape for Scratch Orgs"
