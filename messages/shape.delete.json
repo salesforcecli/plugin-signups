@@ -14,12 +14,12 @@
   "humanSuccess": "Successfully deleted org shape for %s.",
   "noShapesHumanSuccess": "Can't delete org shape. No org shape found for org %s.",
   "help": [
-    "sfdx force:org:shape:delete -u me@my.org",
+    "$ sfdx force:org:shape:delete -u me@my.org",
 
-    "sfdx force:org:shape:delete -u MyOrgAlias -p",
+    "$ sfdx force:org:shape:delete -u MyOrgAlias -p",
 
-    "sfdx force:org:shape:delete -u me@my.org --json",
+    "$ sfdx force:org:shape:delete -u me@my.org --json",
 
-    "sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json"
+    "$ sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json"
   ]
 }

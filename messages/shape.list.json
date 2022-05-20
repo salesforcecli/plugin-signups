@@ -6,8 +6,8 @@
   "noOrgShapes": "No org shapes found.",
   "noAuthFound": "No authenticated orgs found.",
   "help": [
-    "sfdx force:org:shape:list",
-    "sfdx force:org:shape:list --json",
-    "sfdx force:org:shape:list --json > tmp/MyOrgShapeList.json"
+    "$ sfdx force:org:shape:list",
+    "$ sfdx force:org:shape:list --json",
+    "$ sfdx force:org:shape:list --json > tmp/MyOrgShapeList.json"
   ]
 }
