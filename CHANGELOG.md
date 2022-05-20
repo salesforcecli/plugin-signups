@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/salesforcecli/plugin-signups/compare/v1.1.1...v1.1.2) (2022-05-20)
+
+### Bug Fixes
+
+- add prompt to examples ([dece28b](https://github.com/salesforcecli/plugin-signups/commit/dece28bd8db12ca48331df15b2b2b3e5e73905c3))
+- add prompt to examples ([475f621](https://github.com/salesforcecli/plugin-signups/commit/475f621f641e9947010ba1f9f355be4262f1e3fe))
+- add prompt to examples ([288e20a](https://github.com/salesforcecli/plugin-signups/commit/288e20a6247f1c1e6a0fd34e0b2ee2468c0198c9))
+
 ### [1.1.1](https://github.com/salesforcecli/plugin-signups/compare/v1.1.0...v1.1.1) (2022-05-17)
 
 ### Bug Fixes
