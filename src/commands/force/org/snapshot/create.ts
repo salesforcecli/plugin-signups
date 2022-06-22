@@ -6,7 +6,7 @@
  */
 import { EOL } from 'os';
 import { flags, SfdxCommand, FlagsConfig } from '@salesforce/command';
-import { GlobalInfo, Messages } from '@salesforce/core';
+import { StateAggregator, Messages } from '@salesforce/core';
 import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
@@ -42,9 +42,9 @@ export class SnapshotGet extends SfdxCommand {
     let sourceOrgId = this.flags.sourceorg as string;
 
     if (!sourceOrgId.startsWith('00D')) {
-      const globalInfo = await GlobalInfo.create();
-      const username = globalInfo.aliases.getValue(sourceOrgId) ?? sourceOrgId;
-      sourceOrgId = globalInfo.orgs.get(username)?.orgId;
+      const stateAggregator = await StateAggregator.create();
+      const username = stateAggregator.aliases.getValue(sourceOrgId) ?? sourceOrgId;
+      sourceOrgId = (await stateAggregator.orgs.read(username))?.orgId;
     }
 
     const createResponse = await this.hubOrg
