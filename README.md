@@ -113,7 +113,7 @@ EXAMPLES
   $ sfdx force:org:shape:create -u me@my.org --json --loglevel debug
 ```
 
-_See code: [src/commands/force/org/shape/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/shape/create.ts)_
+_See code: [src/commands/force/org/shape/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/shape/create.ts)_
 
 ## `sfdx force:org:shape:delete [-p] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -147,7 +147,7 @@ EXAMPLES
   $ sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json
 ```
 
-_See code: [src/commands/force/org/shape/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/shape/delete.ts)_
+_See code: [src/commands/force/org/shape/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/shape/delete.ts)_
 
 ## `sfdx force:org:shape:list [--verbose] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -176,7 +176,7 @@ EXAMPLES
   $ sfdx force:org:shape:list --json > tmp/MyOrgShapeList.json
 ```
 
-_See code: [src/commands/force/org/shape/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/shape/list.ts)_
+_See code: [src/commands/force/org/shape/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/shape/list.ts)_
 
 ## `sfdx force:org:snapshot:create -o <string> -n <string> [-d <string>] [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -222,7 +222,7 @@ EXAMPLES
   $ sfdx force:org:snapshot:create -o myuser@myorg -n NightlyBranch -d 'Contains PkgA v2.1.0 and PkgB 3.3.0'
 ```
 
-_See code: [src/commands/force/org/snapshot/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/snapshot/create.ts)_
+_See code: [src/commands/force/org/snapshot/create.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/snapshot/create.ts)_
 
 ## `sfdx force:org:snapshot:delete -s <string> [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -260,7 +260,7 @@ EXAMPLES
   $ sfdx force:org:snapshot:delete -s BaseSnapshot -v SnapshotDevHub
 ```
 
-_See code: [src/commands/force/org/snapshot/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/snapshot/delete.ts)_
+_See code: [src/commands/force/org/snapshot/delete.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/snapshot/delete.ts)_
 
 ## `sfdx force:org:snapshot:get -s <string> [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -301,7 +301,7 @@ EXAMPLES
   $ sfdx force:org:snapshot:get -s Dependencies
 ```
 
-_See code: [src/commands/force/org/snapshot/get.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/snapshot/get.ts)_
+_See code: [src/commands/force/org/snapshot/get.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/snapshot/get.ts)_
 
 ## `sfdx force:org:snapshot:list [-v <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -341,6 +341,6 @@ EXAMPLES
   $ sfdx force:org:snapshot:list -v OtherDevHub@example.com
 ```
 
-_See code: [src/commands/force/org/snapshot/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.1/src/commands/force/org/snapshot/list.ts)_
+_See code: [src/commands/force/org/snapshot/list.ts](https://github.com/salesforcecli/plugin-signups/blob/v1.1.2/src/commands/force/org/snapshot/list.ts)_
 
 <!-- commandsstop -->
