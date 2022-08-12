@@ -51,6 +51,8 @@ export class OrgShapeListCommand extends SfdxCommand {
     return shapes;
   }
 
+  // is public because tests mock it
+  // eslint-disable-next-line class-methods-use-this
   public async getAllOrgShapesFromAuthenticatedOrgs(): Promise<OrgShapeListResult[]> {
     const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
     if (orgs.length === 0) {

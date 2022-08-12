@@ -74,7 +74,7 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
     }
 
     if (deleteRes.failures.length > 0 && deleteRes.shapeIds.length > 0) {
-      this.setExitCode(68);
+      setExitCode(68);
 
       this.ux.styledHeader('Partial Success');
       this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
@@ -86,9 +86,9 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
       };
       this.ux.table(deleteRes.failures, columns);
     } else if (deleteRes.failures.length > 0) {
-      this.setExitCode(1);
+      setExitCode(1);
     } else if (deleteRes.shapeIds.length > 0) {
-      this.setExitCode(0);
+      setExitCode(0);
       this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
     }
 
@@ -97,10 +97,6 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
       shapeIds: deleteRes.shapeIds,
       failures: deleteRes.failures,
     };
-  }
-
-  protected setExitCode(code: number): void {
-    process.exitCode = code;
   }
 
   /**
@@ -155,3 +151,7 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
     return deleteAllResult;
   }
 }
+
+const setExitCode = (code: number): void => {
+  process.exitCode = code;
+};

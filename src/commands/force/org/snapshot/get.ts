@@ -27,7 +27,7 @@ export class SnapshotGet extends SfdxCommand {
   };
 
   public async run(): Promise<OrgSnapshot> {
-    const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot);
+    const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot as string);
     if (!this.flags.json) {
       printSingleRecordTable(result);
     }
