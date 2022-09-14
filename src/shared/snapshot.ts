@@ -54,7 +54,7 @@ const dateTimeFormatter = (dateString: string): string =>
       })
     : '';
 
-const rowDateTimeFormatter = (row: OrgSnapshot, field: string): string => dateTimeFormatter(row[field]);
+const rowDateTimeFormatter = (row: OrgSnapshot, field: keyof OrgSnapshot): string => dateTimeFormatter(row[field]);
 
 const ORG_SNAPSHOT_COLUMNS = {
   Id: {},
@@ -63,11 +63,11 @@ const ORG_SNAPSHOT_COLUMNS = {
   SourceOrg: { header: 'Source Org Id' },
   CreatedDate: {
     header: 'Created Date',
-    get: (row): string => rowDateTimeFormatter(row, 'CreatedDate'),
+    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'CreatedDate'),
   },
   LastModifiedDate: {
     header: 'Last Modified Date',
-    get: (row): string => rowDateTimeFormatter(row, 'LastModifiedDate'),
+    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'LastModifiedDate'),
   },
   ExpirationDate: {
     header: 'Expiration Date',
@@ -75,7 +75,7 @@ const ORG_SNAPSHOT_COLUMNS = {
   },
   LastClonedDate: {
     header: 'Last Cloned Date',
-    get: (row): string => rowDateTimeFormatter(row, 'LastClonedDate'),
+    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'LastClonedDate'),
   },
   LastClonedById: { header: 'Last Cloned By Id', get: (row: OrgSnapshot): string => row.LastClonedById ?? '' },
 };
@@ -118,12 +118,11 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
       .filter(([key]) => key !== 'attributes')
       // remove empty error field
       .filter(([key, value]) => key !== 'Error' || value)
-      .map(([key, value]) => ({
+      // every field on the type is a string
+      .map(([key, value]: [string, string]) => ({
         Name: capitalCase(key),
         // format the datetime values
-        Value: ['LastModifiedDate', 'LastClonedDate', 'CreatedDate'].includes(key)
-          ? dateTimeFormatter(value)
-          : (value as string),
+        Value: ['LastModifiedDate', 'LastClonedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value,
       }))
       // null/undefined becomes empty string
       .map((row) => (row.Value ? row : { ...row, Value: '' })),
@@ -141,7 +140,7 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
     // snapshotRecords,
     // without this, you encounter typing errors from CliUx.ux.table
     snapshotRecords.map((s) => ({ ...s })),
-    ORG_SNAPSHOT_COLUMNS,
+    ORG_SNAPSHOT_COLUMNS as Record<string, unknown>,
     { title: `Org Snapshots [${snapshotRecords.length}]`, 'no-truncate': true }
   );
 };

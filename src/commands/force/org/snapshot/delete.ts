@@ -32,7 +32,7 @@ export class SnapshotGet extends SfdxCommand {
 
   public async run(): Promise<SaveResult> {
     // resolve the query to an ID.  This also verifies the snapshot exists in the org
-    const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot);
+    const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot as string);
     const deleteResult = await this.hubOrg.getConnection().sobject('OrgSnapshot').delete(result.Id);
     if (deleteResult.success) {
       this.ux.log(messages.getMessage('success', [this.flags.snapshot as string]));
