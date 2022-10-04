@@ -33,14 +33,20 @@ describe('snapshot commands', () => {
       project: {
         name: 'snapshots',
       },
-      setupCommands: [
-        `sfdx force:org:create -d 1 -f ${path.join('config', 'project-scratch-def.json')} --json -a ${alias}`,
+      devhubAuthStrategy: 'AUTO',
+      scratchOrgs: [
+        {
+          executable: 'sfdx',
+          duration: 1,
+          alias,
+          config: path.join('config', 'project-scratch-def.json'),
+        }
       ],
     });
-    const org = (session.setup as [{ result: { orgId: string; username: string } }])[0];
-    orgId = org.result.orgId;
+    const org = session.orgs.get(alias);
+    orgId = org.orgId;
     orgIdKey = sfdc.trimTo15(orgId).replace('00D', '');
-    scratchUsername = org.result.username;
+    scratchUsername = org.username;
   });
 
   it('creates a new snapshot by username', () => {

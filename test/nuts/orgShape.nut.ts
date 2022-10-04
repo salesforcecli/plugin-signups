@@ -6,7 +6,6 @@
  */
 
 import { expect } from 'chai';
-import { isArray, AnyJson } from '@salesforce/ts-types';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { ShapeCreateResult } from '../../src/commands/force/org/shape/create';
 import { OrgShapeListResult } from '../../src/shared/orgShapeListUtils';
@@ -21,18 +20,8 @@ let newShapeId: string;
 
 describe('org:shape commands', () => {
   before(async () => {
-    session = await TestSession.create({
-      setupCommands: ['sfdx config:list --json'],
-    });
-  });
-
-  it('finds default devhub', () => {
-    if (isArray<AnyJson>(session.setup)) {
-      hubOrgUsername = (session.setup[0] as { result: [{ key: string; value: string }] }).result.find(
-        (config) => config.key === 'defaultdevhubusername'
-      ).value;
-    }
-    expect(hubOrgUsername).to.be.a('string');
+    session = await TestSession.create({ devhubAuthStrategy: 'AUTO' });
+    hubOrgUsername = session.hubOrg.username;
   });
 
   it('finds existing org shapes', () => {
