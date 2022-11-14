@@ -1,6 +1,6 @@
 # plugin-signups
 
-[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-signups.svg?label=@salesforce/plugin-signups)](https://www.npmjs.com/package/@salesforce/plugin-signups) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-signups/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-signups/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-signups.svg)](https://npmjs.org/package/@salesforce/plugin-signups) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-signups/main/LICENSE.txt)
+[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-signups.svg?label=@salesforce/plugin-signups)](https://www.npmjs.com/package/@salesforce/plugin-signups) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-signups.svg)](https://npmjs.org/package/@salesforce/plugin-signups) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-signups/main/LICENSE.txt)
 
 ## Learn about the plugin-signups
 
