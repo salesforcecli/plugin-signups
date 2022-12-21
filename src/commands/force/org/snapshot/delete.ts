@@ -5,7 +5,13 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { EOL } from 'os';
-import { flags, SfdxCommand, FlagsConfig } from '@salesforce/command';
+import {
+  Flags,
+  SfCommand,
+  loglevel,
+  orgApiVersionFlagWithDeprecations,
+  requiredHubFlagWithDeprecations,
+} from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 import { SaveResult, SaveError } from 'jsforce';
 import { queryByNameOrId } from '../../../../shared/snapshot';
@@ -16,26 +22,31 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.d
 // jsforce can return SaveError[] or never[]
 const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
 
-export class SnapshotGet extends SfdxCommand {
+export class SnapshotGet extends SfCommand<SaveResult> {
+  public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('examples').split(EOL);
-  public static readonly requiresDevhubUsername = true;
 
-  public static readonly flagsConfig: FlagsConfig = {
-    snapshot: flags.string({
+  public static readonly flags = {
+    'target-dev-hub': requiredHubFlagWithDeprecations,
+    'api-version': orgApiVersionFlagWithDeprecations,
+    loglevel,
+    snapshot: Flags.string({
       char: 's',
-      description: messages.getMessage('flags.snapshot'),
-      longDescription: messages.getMessage('flagsLong.snapshot'),
+      summary: messages.getMessage('flags.snapshot'),
+      description: messages.getMessage('flagsLong.snapshot'),
       required: true,
     }),
   };
 
   public async run(): Promise<SaveResult> {
     // resolve the query to an ID.  This also verifies the snapshot exists in the org
-    const result = await queryByNameOrId(this.hubOrg.getConnection(), this.flags.snapshot as string);
-    const deleteResult = await this.hubOrg.getConnection().sobject('OrgSnapshot').delete(result.Id);
+    const { flags } = await this.parse(SnapshotGet);
+    const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
+    const result = await queryByNameOrId(conn, flags.snapshot);
+    const deleteResult = await conn.sobject('OrgSnapshot').delete(result.Id);
     if (deleteResult.success) {
-      this.ux.log(messages.getMessage('success', [this.flags.snapshot as string]));
+      this.log(messages.getMessage('success', [flags.snapshot]));
       return deleteResult;
     } else if (deleteResult.errors) {
       throw new Error(

@@ -6,7 +6,13 @@
  */
 
 import { EOL } from 'os';
-import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
+import {
+  Flags,
+  SfCommand,
+  requiredOrgFlagWithDeprecations,
+  orgApiVersionFlagWithDeprecations,
+  loglevel,
+} from '@salesforce/sf-plugins-core';
 import { Messages, Connection } from '@salesforce/core';
 import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
 
@@ -23,77 +29,86 @@ interface ShapeRepresentation {
   Description: string;
 }
 
-interface FailureMsg {
+type FailureMsg = {
   shapeId: string;
   message: string;
-}
+};
 
-interface DeleteAllResult {
+type DeleteAllResult = {
   shapeIds: string[];
   failures: FailureMsg[];
-}
+};
 
 export interface OrgShapeDeleteResult extends DeleteAllResult {
   orgId: string;
 }
 
-export class OrgShapeDeleteCommand extends SfdxCommand {
+export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
+  public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('help').split(EOL);
-  public static readonly requiresUsername = true;
-  public static readonly flagsConfig: FlagsConfig = {
-    noprompt: flags.boolean({
+
+  public static readonly flags = {
+    'target-org': requiredOrgFlagWithDeprecations,
+    'api-version': orgApiVersionFlagWithDeprecations,
+    loglevel,
+    'no-prompt': Flags.boolean({
       char: 'p',
-      description: messages.getMessage('noPrompt'),
+      summary: messages.getMessage('noPrompt'),
+      aliases: ['noprompt'],
+      deprecateAliases: true,
     }),
   };
   private conn: Connection;
 
   public async run(): Promise<OrgShapeDeleteResult> {
-    if (!this.flags.noprompt) {
-      if (!(await this.ux.confirm(messages.getMessage('deleteCommandYesNo', [this.org.getUsername()])))) {
+    const { flags } = await this.parse(OrgShapeDeleteCommand);
+    const username = flags['target-org'].getUsername();
+    const orgId = flags['target-org'].getOrgId();
+    if (!flags.noprompt) {
+      if (!(await this.confirm(messages.getMessage('deleteCommandYesNo', [username])))) {
         return;
       }
     }
 
-    this.conn = this.org.getConnection();
+    this.conn = flags['target-org'].getConnection(flags['api-version']);
 
     if (!(await isShapeEnabled(this.conn))) {
-      const err = messages.createError('noAccess', [this.org.getUsername()]);
+      const err = messages.createError('noAccess', [username]);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore override readonly .name field
       err.name = 'noAccess';
       throw err;
     }
 
-    const deleteRes = await this.deleteAll();
+    const deleteRes = await this.deleteAll(username);
 
     if (deleteRes.shapeIds.length === 0) {
-      this.ux.log(messages.getMessage('noShapesHumanSuccess', [this.org.getOrgId()]));
+      this.log(messages.getMessage('noShapesHumanSuccess', [orgId]));
       return;
     }
 
     if (deleteRes.failures.length > 0 && deleteRes.shapeIds.length > 0) {
       setExitCode(68);
 
-      this.ux.styledHeader('Partial Success');
-      this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
-      this.ux.log('');
-      this.ux.styledHeader('Failures');
+      this.styledHeader('Partial Success');
+      this.log(messages.getMessage('humanSuccess', [orgId]));
+      this.log('');
+      this.styledHeader('Failures');
       const columns = {
         shapeId: { header: 'Shape ID' },
         message: { header: 'Error Message' },
       };
-      this.ux.table(deleteRes.failures, columns);
+      this.table(deleteRes.failures, columns);
     } else if (deleteRes.failures.length > 0) {
       setExitCode(1);
     } else if (deleteRes.shapeIds.length > 0) {
       setExitCode(0);
-      this.ux.log(messages.getMessage('humanSuccess', [this.org.getOrgId()]));
+      this.log(messages.getMessage('humanSuccess', [orgId]));
     }
 
     return {
-      orgId: this.org.getOrgId(),
+      orgId,
       shapeIds: deleteRes.shapeIds,
       failures: deleteRes.failures,
     };
@@ -104,7 +119,7 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
    *
    * @return List of SR IDs that were deleted
    */
-  private async deleteAll(): Promise<DeleteAllResult> {
+  private async deleteAll(username: string): Promise<DeleteAllResult> {
     const deleteAllResult = {
       shapeIds: [],
       failures: [],
@@ -122,7 +137,7 @@ export class OrgShapeDeleteCommand extends SfdxCommand {
       const JsForceErr = err as JsForceError;
       if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
         // ShapeExportPref is not enabled, or user does not have CRUD access
-        const e = messages.createError('noAccess', [this.org.getUsername()]);
+        const e = messages.createError('noAccess', [username]);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore override readonly .name field
         e.name = 'noAccess';

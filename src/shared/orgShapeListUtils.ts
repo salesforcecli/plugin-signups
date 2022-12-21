@@ -16,7 +16,7 @@ interface OrgShape {
   CreatedDate: string;
 }
 
-export interface OrgShapeListResult {
+export type OrgShapeListResult = {
   orgId: string;
   username: string;
   alias?: string;
@@ -24,7 +24,7 @@ export interface OrgShapeListResult {
   status: string;
   createdBy: string;
   createdDate: string;
-}
+};
 
 export interface JsForceError extends Error {
   errorCode: string;

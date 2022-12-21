@@ -6,7 +6,7 @@
  */
 
 import { EOL } from 'os';
-import { flags, FlagsConfig, SfdxCommand } from '@salesforce/command';
+import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
 import { Messages, AuthInfo } from '@salesforce/core';
 import * as chalk from 'chalk';
 import { getAllShapesFromOrg, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
@@ -27,24 +27,28 @@ const orgShapeColumns = {
   createdDate: { header: 'CREATED DATE' },
 };
 
-export class OrgShapeListCommand extends SfdxCommand {
+export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
+  public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('help').split(EOL);
-  public static readonly flagsConfig: FlagsConfig = {
-    verbose: flags.builtin({
-      description: messages.getMessage('verbose'),
+  public static readonly flags = {
+    verbose: Flags.boolean({
+      summary: messages.getMessage('verbose'),
     }),
+    loglevel,
   };
 
+  // there were no flags being used in the original!
+  // eslint-disable-next-line sf-plugin/should-parse-flags
   public async run(): Promise<OrgShapeListResult[]> {
     const shapes = await this.getAllOrgShapesFromAuthenticatedOrgs();
     if (shapes.length === 0) {
-      this.ux.log(messages.getMessage('noOrgShapes'));
+      this.log(messages.getMessage('noOrgShapes'));
       return shapes;
     }
 
-    this.ux.styledHeader('Org Shapes');
-    this.ux.table(
+    this.styledHeader('Org Shapes');
+    this.table(
       shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape)),
       orgShapeColumns
     );
