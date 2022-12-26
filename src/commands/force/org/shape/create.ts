@@ -29,6 +29,8 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
   public static readonly summary = messages.getMessage('create_shape_command_description');
   public static readonly description = messages.getMessage('create_shape_command_description');
   public static readonly examples = messages.getMessage('create_shape_command_help').split(EOL);
+  public static readonly aliases = ['force:org:shape:create', 'org:shape:create'];
+  public static readonly deprecateAliases = true;
 
   public static readonly flags = {
     'target-org': requiredOrgFlagWithDeprecations,

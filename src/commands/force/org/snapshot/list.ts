@@ -17,11 +17,12 @@ import { OrgSnapshot, queryAll, printRecordTable } from '../../../../shared/snap
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.list');
 
-export class SnapshotGet extends SfCommand<OrgSnapshot[]> {
+export class SnapshotList extends SfCommand<OrgSnapshot[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('examples').split(EOL);
-
+  public static readonly aliases = ['force:org:snapshot:list', 'org:snapshot:list'];
+  public static readonly deprecateAliases = true;
   public static readonly flags = {
     'target-dev-hub': requiredHubFlagWithDeprecations,
     'api-version': orgApiVersionFlagWithDeprecations,
@@ -29,7 +30,7 @@ export class SnapshotGet extends SfCommand<OrgSnapshot[]> {
   };
 
   public async run(): Promise<OrgSnapshot[]> {
-    const { flags } = await this.parse(SnapshotGet);
+    const { flags } = await this.parse(SnapshotList);
     const results = await queryAll(flags['target-dev-hub'].getConnection(flags['api-version']));
     if (!this.jsonEnabled()) {
       printRecordTable(results);

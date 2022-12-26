@@ -22,10 +22,12 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.d
 // jsforce can return SaveError[] or never[]
 const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
 
-export class SnapshotGet extends SfCommand<SaveResult> {
+export class SnapshotDelete extends SfCommand<SaveResult> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('examples').split(EOL);
+  public static readonly aliases = ['force:org:snapshot:delete', 'org:snapshot:delete'];
+  public static readonly deprecateAliases = true;
 
   public static readonly flags = {
     'target-dev-hub': requiredHubFlagWithDeprecations,
@@ -41,7 +43,7 @@ export class SnapshotGet extends SfCommand<SaveResult> {
 
   public async run(): Promise<SaveResult> {
     // resolve the query to an ID.  This also verifies the snapshot exists in the org
-    const { flags } = await this.parse(SnapshotGet);
+    const { flags } = await this.parse(SnapshotDelete);
     const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
     const result = await queryByNameOrId(conn, flags.snapshot);
     const deleteResult = await conn.sobject('OrgSnapshot').delete(result.Id);

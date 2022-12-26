@@ -31,6 +31,9 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('help').split(EOL);
+  public static readonly aliases = ['force:org:shape:list', 'org:shape:list'];
+  public static readonly deprecateAliases = true;
+
   public static readonly flags = {
     verbose: Flags.boolean({
       summary: messages.getMessage('verbose'),

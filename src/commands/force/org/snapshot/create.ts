@@ -18,11 +18,12 @@ import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../.
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.create');
 
-export class SnapshotGet extends SfCommand<OrgSnapshot> {
+export class SnapshotCreate extends SfCommand<OrgSnapshot> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessage('examples').split(EOL);
-
+  public static readonly aliases = ['force:org:snapshot:create', 'org:snapshot:create'];
+  public static readonly deprecateAliases = true;
   public static readonly flags = {
     'target-dev-hub': requiredHubFlagWithDeprecations,
     'api-version': orgApiVersionFlagWithDeprecations,
@@ -55,7 +56,7 @@ export class SnapshotGet extends SfCommand<OrgSnapshot> {
 
   public async run(): Promise<OrgSnapshot> {
     // sourceorg might be a username or alias, but we need an orgId
-    const { flags } = await this.parse(SnapshotGet);
+    const { flags } = await this.parse(SnapshotCreate);
 
     const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
     const createResponse = await conn.sobject('OrgSnapshot').create({
