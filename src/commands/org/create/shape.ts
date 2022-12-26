@@ -25,9 +25,9 @@ export interface ShapeCreateResult {
 }
 
 export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
-  public static readonly summary = messages.getMessage('create_shape_command_description');
-  public static readonly description = messages.getMessage('create_shape_command_description_long');
-  public static readonly examples = messages.getMessages('create_shape_command_help');
+  public static readonly summary = messages.getMessage('summary');
+  public static readonly description = messages.getMessage('description');
+  public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:shape:create', 'org:shape:create'];
   public static readonly deprecateAliases = true;
 
@@ -42,14 +42,14 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
     const conn = flags['target-org'].getConnection(flags['api-version']);
 
     if (!(await isShapeEnabled(conn))) {
-      throw messages.createError('noAccess', [flags['target-org'].getUsername()]);
+      throw messages.createError('ShapeRepresentationNoAccess', [flags['target-org'].getUsername()]);
     }
 
     const createShapeResponse = await createShapeOrg(conn);
 
     if (createShapeResponse.success !== true) {
       (await Logger.child('OrgShapeCreateCommand')).error('Shape create failed', createShapeResponse['errors']);
-      throw messages.createError('shape_create_failed_message');
+      throw messages.createError('shape_create_failed');
     }
     const output: ShapeCreateResult = {
       shapeId: createShapeResponse.id,
@@ -57,7 +57,7 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
       errors: [],
     };
 
-    this.log(messages.getMessage('create_shape_command_success_id', [output.shapeId]));
+    this.log(messages.getMessage('success', [output.shapeId]));
     return output;
   }
 }
@@ -70,7 +70,7 @@ const createShapeOrg = async (conn: Connection): Promise<SaveResult> => {
   } catch (err) {
     const JsForceErr = err as JsForceError;
     if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
-      throw messages.createError('create_shape_command_no_crud_access');
+      throw messages.createError('NoCrudAccessCreateShape');
     } else {
       throw JsForceErr;
     }
