@@ -4,7 +4,6 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { EOL } from 'os';
 import {
   loglevel,
   orgApiVersionFlagWithDeprecations,
@@ -20,7 +19,7 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.l
 export class SnapshotList extends SfCommand<OrgSnapshot[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
-  public static readonly examples = messages.getMessage('examples').split(EOL);
+  public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:snapshot:list', 'org:snapshot:list'];
   public static readonly deprecateAliases = true;
   public static readonly flags = {

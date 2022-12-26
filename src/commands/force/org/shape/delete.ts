@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { EOL } from 'os';
 import {
   Flags,
   SfCommand,
@@ -46,7 +45,7 @@ export interface OrgShapeDeleteResult extends DeleteAllResult {
 export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('longDescription');
-  public static readonly examples = messages.getMessage('help').split(EOL);
+  public static readonly examples = messages.getMessages('help');
   public static readonly aliases = ['force:org:shape:delete', 'org:shape:delete'];
   public static readonly deprecateAliases = true;
 

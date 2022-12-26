@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { EOL } from 'os';
 import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
 import { Messages, AuthInfo } from '@salesforce/core';
 import * as chalk from 'chalk';
@@ -30,7 +29,7 @@ const orgShapeColumns = {
 export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('longDescription');
-  public static readonly examples = messages.getMessage('help').split(EOL);
+  public static readonly examples = messages.getMessages('help');
   public static readonly aliases = ['force:org:shape:list', 'org:shape:list'];
   public static readonly deprecateAliases = true;
 

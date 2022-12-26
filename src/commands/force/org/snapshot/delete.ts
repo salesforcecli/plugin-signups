@@ -25,7 +25,7 @@ const isSaveError = (error: SaveError | unknown): error is SaveError => (error a
 export class SnapshotDelete extends SfCommand<SaveResult> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('description');
-  public static readonly examples = messages.getMessage('examples').split(EOL);
+  public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:snapshot:delete', 'org:snapshot:delete'];
   public static readonly deprecateAliases = true;
 

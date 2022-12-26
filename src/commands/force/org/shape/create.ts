@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { EOL } from 'os';
 import {
   SfCommand,
   requiredOrgFlagWithDeprecations,
@@ -28,7 +27,7 @@ export interface ShapeCreateResult {
 export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
   public static readonly summary = messages.getMessage('create_shape_command_description');
   public static readonly description = messages.getMessage('create_shape_command_description_long');
-  public static readonly examples = messages.getMessage('create_shape_command_help').split(EOL);
+  public static readonly examples = messages.getMessages('create_shape_command_help');
   public static readonly aliases = ['force:org:shape:create', 'org:shape:create'];
   public static readonly deprecateAliases = true;
 
