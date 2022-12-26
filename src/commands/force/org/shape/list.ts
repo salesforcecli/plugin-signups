@@ -41,7 +41,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   // there were no flags being used in the original!
   // eslint-disable-next-line sf-plugin/should-parse-flags
   public async run(): Promise<OrgShapeListResult[]> {
-    const shapes = await this.getAllOrgShapesFromAuthenticatedOrgs();
+    const shapes = await getAllOrgShapesFromAuthenticatedOrgs();
     if (shapes.length === 0) {
       this.log(messages.getMessage('noOrgShapes'));
       return shapes;
@@ -54,19 +54,17 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
     );
     return shapes;
   }
-
-  // is public because tests mock it
-  // eslint-disable-next-line class-methods-use-this
-  public async getAllOrgShapesFromAuthenticatedOrgs(): Promise<OrgShapeListResult[]> {
-    const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
-    if (orgs.length === 0) {
-      const e = messages.createError('noAuthFound');
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      e.name = 'noAuthFound';
-      throw e;
-    }
-    const shapes = await Promise.all(orgs.map((o) => getAllShapesFromOrg(o)));
-    return shapes.flat();
-  }
 }
+
+export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<OrgShapeListResult[]> => {
+  const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
+  if (orgs.length === 0) {
+    const e = messages.createError('noAuthFound');
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore override readonly .name field
+    e.name = 'noAuthFound';
+    throw e;
+  }
+  const shapes = await Promise.all(orgs.map((o) => getAllShapesFromOrg(o)));
+  return shapes.flat();
+};

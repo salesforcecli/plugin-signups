@@ -59,21 +59,20 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       deprecateAliases: true,
     }),
   };
-  private conn: Connection;
 
   public async run(): Promise<OrgShapeDeleteResult> {
     const { flags } = await this.parse(OrgShapeDeleteCommand);
     const username = flags['target-org'].getUsername();
     const orgId = flags['target-org'].getOrgId();
-    if (!flags.noprompt) {
+    if (!flags['no-prompt']) {
       if (!(await this.confirm(messages.getMessage('deleteCommandYesNo', [username])))) {
         return;
       }
     }
 
-    this.conn = flags['target-org'].getConnection(flags['api-version']);
+    const conn = flags['target-org'].getConnection(flags['api-version']);
 
-    if (!(await isShapeEnabled(this.conn))) {
+    if (!(await isShapeEnabled(conn))) {
       const err = messages.createError('noAccess', [username]);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore override readonly .name field
@@ -81,7 +80,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       throw err;
     }
 
-    const deleteRes = await this.deleteAll(username);
+    const deleteRes = await deleteAll(conn, username);
 
     if (deleteRes.shapeIds.length === 0) {
       this.log(messages.getMessage('noShapesHumanSuccess', [orgId]));
@@ -113,60 +112,59 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       failures: deleteRes.failures,
     };
   }
-
-  /**
-   * Delete all ShapeRepresentation records for the shapeOrg.
-   *
-   * @return List of SR IDs that were deleted
-   */
-  private async deleteAll(username: string): Promise<DeleteAllResult> {
-    const deleteAllResult = {
-      shapeIds: [],
-      failures: [],
-    };
-
-    let shapeIds: string[] = [];
-
-    try {
-      const result = await this.conn.query<ShapeRepresentation>('SELECT Id FROM ShapeRepresentation');
-      if (result.totalSize === 0) {
-        return deleteAllResult;
-      }
-      shapeIds = result.records.map((shape) => shape.Id);
-    } catch (err) {
-      const JsForceErr = err as JsForceError;
-      if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
-        // ShapeExportPref is not enabled, or user does not have CRUD access
-        const e = messages.createError('noAccess', [username]);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore override readonly .name field
-        e.name = 'noAccess';
-        throw e;
-      }
-      // non-access error
-      throw JsForceErr;
-    }
-
-    await Promise.allSettled(
-      shapeIds.map(async (id) => {
-        try {
-          const delResult = await this.conn.sobject('ShapeRepresentation').delete(id);
-          if (delResult.success) {
-            deleteAllResult.shapeIds.push(id);
-          }
-        } catch (err) {
-          deleteAllResult.failures.push({
-            shapeId: id,
-            message: err instanceof Error ? err.message : 'error contained no message',
-          });
-        }
-      })
-    );
-
-    return deleteAllResult;
-  }
 }
 
+/**
+ * Delete all ShapeRepresentation records for the shapeOrg.
+ *
+ * @return List of SR IDs that were deleted
+ */
+export const deleteAll = async (conn: Connection, username: string): Promise<DeleteAllResult> => {
+  const deleteAllResult = {
+    shapeIds: [],
+    failures: [],
+  };
+
+  let shapeIds: string[] = [];
+
+  try {
+    const result = await conn.query<ShapeRepresentation>('SELECT Id FROM ShapeRepresentation');
+    if (result.totalSize === 0) {
+      return deleteAllResult;
+    }
+    shapeIds = result.records.map((shape) => shape.Id);
+  } catch (err) {
+    const JsForceErr = err as JsForceError;
+    if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
+      // ShapeExportPref is not enabled, or user does not have CRUD access
+      const e = messages.createError('noAccess', [username]);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore override readonly .name field
+      e.name = 'noAccess';
+      throw e;
+    }
+    // non-access error
+    throw JsForceErr;
+  }
+
+  await Promise.allSettled(
+    shapeIds.map(async (id) => {
+      try {
+        const delResult = await conn.sobject('ShapeRepresentation').delete(id);
+        if (delResult.success) {
+          deleteAllResult.shapeIds.push(id);
+        }
+      } catch (err) {
+        deleteAllResult.failures.push({
+          shapeId: id,
+          message: err instanceof Error ? err.message : 'error contained no message',
+        });
+      }
+    })
+  );
+
+  return deleteAllResult;
+};
 const setExitCode = (code: number): void => {
   process.exitCode = code;
 };
