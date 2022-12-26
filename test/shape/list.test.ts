@@ -29,7 +29,7 @@ describe('org:shape:list', () => {
 
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
-  const config = new Config({ root: resolve(__dirname, '../../../package.json') });
+  const config = new Config({ root: resolve(__dirname, '../../package.json') });
 
   beforeEach(async () => {
     await config.load();
@@ -91,7 +91,7 @@ describe('org:shape:list', () => {
       const command = new OrgShapeListCommand([], config);
       await command.run();
     } catch (e) {
-      expect(e).to.have.property('name', 'noAuthFound');
+      expect(e).to.have.property('name', 'NoAuthFoundError');
     }
   });
 });

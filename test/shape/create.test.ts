@@ -23,7 +23,7 @@ chaiConfig.truncateThreshold = 0;
 describe('org:shape:create', () => {
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
-  const config = new Config({ root: resolve(__dirname, '../../../package.json') });
+  const config = new Config({ root: resolve(__dirname, '../../package.json') });
 
   const sandbox = sinon.createSandbox();
 
@@ -84,7 +84,7 @@ describe('org:shape:create', () => {
       const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
       await command.run();
     } catch (e) {
-      expect(e).to.have.property('name', 'noAccess');
+      expect(e).to.have.property('name', 'ShapeRepresentationNoAccessError');
     }
   });
 
@@ -107,7 +107,7 @@ describe('org:shape:create', () => {
       const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
       await command.run();
     } catch (e) {
-      expect(e).to.have.property('name', 'shape_create_failed_message');
+      expect(e).to.have.property('name', 'ShapeCreateFailedError');
     }
   });
 });

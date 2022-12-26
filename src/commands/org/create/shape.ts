@@ -49,7 +49,7 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
 
     if (createShapeResponse.success !== true) {
       (await Logger.child('OrgShapeCreateCommand')).error('Shape create failed', createShapeResponse['errors']);
-      throw messages.createError('shape_create_failed');
+      throw messages.createError('ShapeCreateFailed');
     }
     const output: ShapeCreateResult = {
       shapeId: createShapeResponse.id,

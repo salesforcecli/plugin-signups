@@ -1,15 +1,3 @@
-# NoCrudAccessCreateShape
-
-Can't create org shape. Contact the org admin to grant you access to the ShapeRepresentation object. Then try again.
-
-# success
-
-Successfully created org shape for %s.
-
-# shape_create_failed
-
-Error creating scratch definition file. Please contact Salesforce support.
-
 # summary
 
 Create a scratch org configuration (shape) based on the specified source org
@@ -27,3 +15,15 @@ Create a scratch org configuration (shape) based on the specified source org.
 # ShapeRepresentationNoAccess
 
 The org needs to be enabled for org shape before one can be created. %s
+
+# NoCrudAccessCreateShape
+
+Can't create org shape. Contact the org admin to grant you access to the ShapeRepresentation object. Then try again.
+
+# success
+
+Successfully created org shape for %s.
+
+# ShapeCreateFailed
+
+Error creating scratch definition file. Please contact Salesforce support.
