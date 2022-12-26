@@ -13,9 +13,9 @@ import * as chaiAsPromised from 'chai-as-promised';
 import * as sinon from 'sinon';
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
-import * as OrgShapeListCommandFunctions from '../../../../../src/commands/force/org/shape/list';
-import { OrgShapeListCommand } from '../../../../../src/commands/force/org/shape/list';
-import { OrgShapeListResult } from '../../../../../src/shared/orgShapeListUtils';
+import * as OrgShapeListCommandFunctions from '../../src/commands/org/list/shape';
+import { OrgShapeListCommand } from '../../src/commands/org/list/shape';
+import { OrgShapeListResult } from '../../src/shared/orgShapeListUtils';
 
 use(chaiAsPromised);
 

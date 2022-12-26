@@ -14,8 +14,8 @@ import { SfCommand } from '@salesforce/sf-plugins-core';
 import { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
 import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
-import { OrgShapeCreateCommand } from '../../../../../src/commands/force/org/shape/create';
-import { queryShapeEnabledResponse } from '../../../../shared/apiResponses';
+import { OrgShapeCreateCommand } from '../../src/commands/org/create/shape';
+import { queryShapeEnabledResponse } from '../shared/apiResponses';
 
 use(chaiAsPromised);
 chaiConfig.truncateThreshold = 0;

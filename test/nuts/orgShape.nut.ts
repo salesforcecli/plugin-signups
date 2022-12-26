@@ -7,9 +7,9 @@
 
 import { expect } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
-import { ShapeCreateResult } from '../../src/commands/force/org/shape/create';
+import { ShapeCreateResult } from '../../src/commands/org/create/shape';
 import { OrgShapeListResult } from '../../src/shared/orgShapeListUtils';
-import { OrgShapeDeleteResult } from '../../src/commands/force/org/shape/delete';
+import { OrgShapeDeleteResult } from '../../src/commands/org/delete/shape';
 
 let session: TestSession;
 let originalShapes: OrgShapeListResult[];

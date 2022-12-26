@@ -13,7 +13,7 @@ import {
   loglevel,
 } from '@salesforce/sf-plugins-core';
 import { Messages, Connection } from '@salesforce/core';
-import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
+import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
@@ -75,11 +75,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
     const conn = flags['target-org'].getConnection(flags['api-version']);
 
     if (!(await isShapeEnabled(conn))) {
-      const err = messages.createError('noAccess', [username]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      err.name = 'noAccess';
-      throw err;
+      throw messages.createError('noAccess', [username]);
     }
 
     const deleteRes = await deleteAll(conn, username);
@@ -139,11 +135,7 @@ export const deleteAll = async (conn: Connection, username: string): Promise<Del
     const JsForceErr = err as JsForceError;
     if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
       // ShapeExportPref is not enabled, or user does not have CRUD access
-      const e = messages.createError('noAccess', [username]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      e.name = 'noAccess';
-      throw e;
+      throw messages.createError('noAccess', [username]);
     }
     // non-access error
     throw JsForceErr;

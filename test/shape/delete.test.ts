@@ -15,9 +15,9 @@ import { SfCommand } from '@salesforce/sf-plugins-core';
 import { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
 import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
-import { OrgShapeDeleteCommand } from '../../../../../src/commands/force/org/shape/delete';
-import * as deleteFunctions from '../../../../../src/commands/force/org/shape/delete';
-import { queryShapeEnabledResponse } from '../../../../shared/apiResponses';
+import { OrgShapeDeleteCommand } from '../../src/commands/org/delete/shape';
+import * as deleteFunctions from '../../src/commands/org/delete/shape';
+import { queryShapeEnabledResponse } from '../shared/apiResponses';
 
 use(chaiAsPromised);
 chaiConfig.truncateThreshold = 0;

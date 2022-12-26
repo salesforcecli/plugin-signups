@@ -12,7 +12,7 @@ import {
   requiredHubFlagWithDeprecations,
 } from '@salesforce/sf-plugins-core';
 import { StateAggregator, Messages } from '@salesforce/core';
-import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../../shared/snapshot';
+import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.create');

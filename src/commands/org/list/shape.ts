@@ -8,7 +8,7 @@
 import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
 import { Messages, AuthInfo } from '@salesforce/core';
 import * as chalk from 'chalk';
-import { getAllShapesFromOrg, OrgShapeListResult } from '../../../../shared/orgShapeListUtils';
+import { getAllShapesFromOrg, OrgShapeListResult } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
@@ -62,11 +62,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
 export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<OrgShapeListResult[]> => {
   const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
   if (orgs.length === 0) {
-    const e = messages.createError('noAuthFound');
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore override readonly .name field
-    e.name = 'noAuthFound';
-    throw e;
+    throw messages.createError('noAuthFound');
   }
   const shapes = await Promise.all(orgs.map((o) => getAllShapesFromOrg(o)));
   return shapes.flat();

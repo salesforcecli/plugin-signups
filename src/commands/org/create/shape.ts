@@ -13,7 +13,7 @@ import {
 } from '@salesforce/sf-plugins-core';
 import { Messages, Connection, Logger } from '@salesforce/core';
 import { SaveResult } from 'jsforce';
-import { isShapeEnabled, JsForceError } from '../../../../shared/orgShapeListUtils';
+import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
@@ -42,22 +42,14 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
     const conn = flags['target-org'].getConnection(flags['api-version']);
 
     if (!(await isShapeEnabled(conn))) {
-      const err = messages.createError('noAccess', [flags['target-org'].getUsername()]);
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      err.name = 'noAccess';
-      throw err;
+      throw messages.createError('noAccess', [flags['target-org'].getUsername()]);
     }
 
     const createShapeResponse = await createShapeOrg(conn);
 
     if (createShapeResponse.success !== true) {
       (await Logger.child('OrgShapeCreateCommand')).error('Shape create failed', createShapeResponse['errors']);
-      const err = messages.createError('shape_create_failed_message');
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      err.name = 'shape_create_failed_message';
-      throw err;
+      throw messages.createError('shape_create_failed_message');
     }
     const output: ShapeCreateResult = {
       shapeId: createShapeResponse.id,
@@ -78,11 +70,7 @@ const createShapeOrg = async (conn: Connection): Promise<SaveResult> => {
   } catch (err) {
     const JsForceErr = err as JsForceError;
     if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
-      const e = messages.createError('create_shape_command_no_crud_access');
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore override readonly .name field
-      e.name = 'create_shape_command_no_crud_access';
-      throw e;
+      throw messages.createError('create_shape_command_no_crud_access');
     } else {
       throw JsForceErr;
     }

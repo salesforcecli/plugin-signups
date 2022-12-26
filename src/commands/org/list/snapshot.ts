@@ -11,7 +11,7 @@ import {
   SfCommand,
 } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import { OrgSnapshot, queryAll, printRecordTable } from '../../../../shared/snapshot';
+import { OrgSnapshot, queryAll, printRecordTable } from '../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.list');
