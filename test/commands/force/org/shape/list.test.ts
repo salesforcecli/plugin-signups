@@ -5,68 +5,56 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { resolve } from 'path';
 import { Config } from '@oclif/core';
 import * as chalk from 'chalk';
-import * as chai from 'chai';
+import { use, expect } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
-
-chai.use(chaiAsPromised);
-
-import { Org, AuthInfo } from '@salesforce/core';
-import { UX } from '@salesforce/command';
-import { fromStub, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import * as sinon from 'sinon';
+import { SfCommand } from '@salesforce/sf-plugins-core';
+import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
+import * as OrgShapeListCommandFunctions from '../../../../../src/commands/force/org/shape/list';
 import { OrgShapeListCommand } from '../../../../../src/commands/force/org/shape/list';
 import { OrgShapeListResult } from '../../../../../src/shared/orgShapeListUtils';
 
-const expect = chai.expect;
+use(chaiAsPromised);
 
 describe('org:shape:list', () => {
   const sandbox = sinon.createSandbox();
-  const oclifConfigStub = fromStub(stubInterface<Config>(sandbox));
 
   // stubs
   let uxLogStub: sinon.SinonStub;
   let uxTableStub: sinon.SinonStub;
   let uxStyledHeaderStub: sinon.SinonStub;
-  let cmd: TestCreate;
-  const hubOrgStub = sinon.createStubInstance(Org);
 
-  class TestCreate extends OrgShapeListCommand {
-    public async runIt() {
-      await this.init();
-      return this.run();
-    }
-    public setOrg(org: Org) {
-      this.org = org;
-    }
-  }
+  const $$ = new TestContext();
+  const testOrg = new MockTestOrgData();
+  const config = new Config({ root: resolve(__dirname, '../../../package.json') });
 
-  async function listShapeCommand(params: string[]) {
-    cmd = new TestCreate(params, oclifConfigStub);
-
-    uxLogStub = stubMethod(sandbox, UX.prototype, 'log');
-    uxTableStub = stubMethod(sandbox, UX.prototype, 'table');
-    uxStyledHeaderStub = stubMethod(sandbox, UX.prototype, 'styledHeader');
-    stubMethod(sandbox, cmd, 'assignOrg').callsFake(() => {
-      cmd.setOrg(hubOrgStub);
-    });
-    return cmd;
-  }
+  beforeEach(async () => {
+    await config.load();
+    uxLogStub = sandbox.stub(SfCommand.prototype, 'log');
+    uxStyledHeaderStub = sandbox.stub(SfCommand.prototype, 'styledHeader');
+    uxTableStub = sandbox.stub(SfCommand.prototype, 'table');
+  });
 
   afterEach(() => {
+    $$.restore();
     sandbox.restore();
   });
 
   it('no shapes', async () => {
-    stubMethod(sandbox, OrgShapeListCommand.prototype, 'getAllOrgShapesFromAuthenticatedOrgs').resolves([]);
-    const command = await listShapeCommand([]);
-    await command.runIt();
+    await $$.stubAuths(testOrg);
+    sandbox.stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs').resolves([]);
+
+    const command = new OrgShapeListCommand([], config);
+    await command.run();
     expect(uxLogStub.calledOnce).to.be.true;
     expect(uxLogStub.firstCall.args[0]).to.equal('No org shapes found.');
   });
 
   it('lists org shapes', async () => {
+    await $$.stubAuths(testOrg);
     const shapes = [
       {
         orgId: '00D000000000000004',
@@ -87,10 +75,9 @@ describe('org:shape:list', () => {
         createdDate: '2022-03-21T02:12:23.000+0000',
       },
     ];
-
-    stubMethod(sandbox, OrgShapeListCommand.prototype, 'getAllOrgShapesFromAuthenticatedOrgs').resolves(shapes);
-    const command = await listShapeCommand([]);
-    await command.runIt();
+    sandbox.stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs').resolves(shapes);
+    const command = new OrgShapeListCommand([], config);
+    await command.run();
     expect(uxLogStub.notCalled).to.be.true;
     expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Org Shapes');
     expect((uxTableStub.firstCall.args[0] as OrgShapeListResult[]).length).to.equal(2);
@@ -100,13 +87,11 @@ describe('org:shape:list', () => {
   });
 
   it('no devhub org', async () => {
-    const listAllAuthSpy = stubMethod(sandbox, AuthInfo, 'listAllAuthorizations').resolves([]);
     try {
-      const command = await listShapeCommand([]);
-      await command.runIt();
+      const command = new OrgShapeListCommand([], config);
+      await command.run();
     } catch (e) {
       expect(e).to.have.property('name', 'noAuthFound');
     }
-    expect(listAllAuthSpy.callCount).to.be.equal(1);
   });
 });

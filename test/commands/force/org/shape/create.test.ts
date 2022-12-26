@@ -4,127 +4,108 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-
+import { resolve } from 'path';
 import { Config } from '@oclif/core';
-import * as chai from 'chai';
+import { use, expect, config as chaiConfig } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
+import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
 
-chai.use(chaiAsPromised);
-
-import { Connection, Org } from '@salesforce/core';
-import { UX } from '@salesforce/command';
-import { fromStub, stubInterface, stubMethod } from '@salesforce/ts-sinon';
+import { SfCommand } from '@salesforce/sf-plugins-core';
 import { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
+import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
 import { OrgShapeCreateCommand } from '../../../../../src/commands/force/org/shape/create';
+import { queryShapeEnabledResponse } from '../../../../shared/apiResponses';
 
-const expect = chai.expect;
+use(chaiAsPromised);
+chaiConfig.truncateThreshold = 0;
 
 describe('org:shape:create', () => {
+  const $$ = new TestContext();
+  const testOrg = new MockTestOrgData();
+  const config = new Config({ root: resolve(__dirname, '../../../package.json') });
+
   const sandbox = sinon.createSandbox();
-  const oclifConfigStub = fromStub(stubInterface<Config>(sandbox));
 
   // stubs
   let uxLogStub: sinon.SinonStub;
-  let cmd: TestCreate;
-  const hubOrgStub = sinon.createStubInstance(Org);
 
-  class TestCreate extends OrgShapeCreateCommand {
-    public async runIt() {
-      await this.init();
-      return this.run();
-    }
-    public setOrg(org: Org) {
-      this.org = org;
-    }
-  }
-
-  async function createShapeCommand(params: string[]) {
-    cmd = new TestCreate(params, oclifConfigStub);
-
-    uxLogStub = stubMethod(sandbox, UX.prototype, 'log');
-    stubMethod(sandbox, cmd, 'assignOrg').callsFake(() => {
-      cmd.setOrg(hubOrgStub);
-    });
-    return cmd;
-  }
+  beforeEach(async () => {
+    await config.load();
+    uxLogStub = sandbox.stub(SfCommand.prototype, 'log');
+    await $$.stubAuths(testOrg);
+  });
 
   afterEach(() => {
-    queryShapeEnabled.resetHistory();
+    $$.restore();
     sandbox.restore();
   });
 
-  const queryShapeEnabled = sandbox
-    .stub()
-    .withArgs(`SELECT IsShapeExportPrefEnabled FROM ${'DevHubSettings'}`)
-    .onFirstCall()
-    .returns({
-      done: true,
-      totalSize: 1,
-      records: [{ IsShapeExportPrefEnabled: true }],
-    });
-
   it('creates a new shape org', async () => {
-    hubOrgStub.getConnection.returns({
-      tooling: {
-        query: queryShapeEnabled,
-      },
-      sobject: sinon
-        .stub()
-        .withArgs('ShapeDescription')
-        .returns({
-          create: sinon.stub().returns({
-            id: '3SR000000000123',
-            success: true,
-          } as SaveResult),
-        }),
-    } as unknown as Connection);
+    $$.fakeConnectionRequest = (request: AnyJson): Promise<SaveResult | AnyJson> => {
+      const requestWithUrl = ensureJsonMap(request);
+      if (request && ensureString(requestWithUrl.url).includes('tooling')) {
+        return Promise.resolve(queryShapeEnabledResponse);
+      }
+      if (request && ensureString(requestWithUrl.url).includes('ShapeRepresentation')) {
+        return Promise.resolve({
+          id: '3SR000000000123',
+          success: true,
+        } as SaveResult);
+      }
+      throw new Error('Unexpected request: ' + JSON.stringify(request));
+    };
 
-    const command = await createShapeCommand([]);
-    await command.runIt();
+    const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
+    await command.run();
     expect(uxLogStub.firstCall.args[0]).to.equal('Successfully created org shape for 3SR000000000123.');
   });
 
   it('shape feature is not enabled', async () => {
-    hubOrgStub.getConnection.returns({
-      tooling: {
-        query: sandbox
-          .stub()
-          .withArgs(`SELECT IsShapeExportPrefEnabled FROM ${'DevHubSettings'}`)
-          .returns({
-            done: true,
-            totalSize: 1,
-            records: [{ IsShapeExportPrefEnabled: false }],
-          }),
-      },
-    } as unknown as Connection);
+    $$.fakeConnectionRequest = (request: AnyJson): Promise<AnyJson | SaveResult> => {
+      const requestWithUrl = ensureJsonMap(request);
+      if (request && ensureString(requestWithUrl.url).includes('IsShapeExportPrefEnabled')) {
+        return Promise.resolve({
+          done: true,
+          totalSize: 1,
+          records: [{ IsShapeExportPrefEnabled: false }],
+        });
+      }
+      if (request && ensureString(requestWithUrl.url).includes('ShapeRepresentation')) {
+        return Promise.resolve({
+          id: '3SR000000000123',
+          success: true,
+        } as SaveResult);
+      }
+      throw new Error('Unexpected request: ' + JSON.stringify(request));
+    };
+
     try {
-      const command = await createShapeCommand([]);
-      await command.runIt();
+      const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
+      await command.run();
     } catch (e) {
       expect(e).to.have.property('name', 'noAccess');
     }
   });
 
   it('fails to create shape org', async () => {
-    hubOrgStub.getConnection.returns({
-      tooling: {
-        query: queryShapeEnabled,
-      },
-      sobject: sinon
-        .stub()
-        .withArgs('ShapeDescription')
-        .returns({
-          create: sinon.stub().returns({
-            success: false,
-            errors: [{ message: 'Failed to create shape org.' }],
-          } as SaveResult),
-        }),
-    } as unknown as Connection);
+    $$.fakeConnectionRequest = (request: AnyJson): Promise<AnyJson> => {
+      const requestWithUrl = ensureJsonMap(request);
+      if (request && ensureString(requestWithUrl.url).includes('IsShapeExportPrefEnabled')) {
+        return Promise.resolve(queryShapeEnabledResponse);
+      }
+      if (request && ensureString(requestWithUrl.url).includes('ShapeRepresentation')) {
+        return Promise.resolve({
+          success: false,
+          errors: [{ message: 'Failed to create shape org.' }],
+        } as SaveResult);
+      }
+      throw new Error('Unexpected request: ' + JSON.stringify(request));
+    };
 
     try {
-      const command = await createShapeCommand([]);
-      await command.runIt();
+      const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
+      await command.run();
     } catch (e) {
       expect(e).to.have.property('name', 'shape_create_failed_message');
     }
