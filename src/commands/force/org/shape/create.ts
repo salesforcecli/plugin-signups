@@ -27,7 +27,7 @@ export interface ShapeCreateResult {
 
 export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
   public static readonly summary = messages.getMessage('create_shape_command_description');
-  public static readonly description = messages.getMessage('create_shape_command_description');
+  public static readonly description = messages.getMessage('create_shape_command_description_long');
   public static readonly examples = messages.getMessage('create_shape_command_help').split(EOL);
   public static readonly aliases = ['force:org:shape:create', 'org:shape:create'];
   public static readonly deprecateAliases = true;
@@ -38,13 +38,11 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
     loglevel,
   };
 
-  private conn: Connection;
-
   public async run(): Promise<ShapeCreateResult> {
     const { flags } = await this.parse(OrgShapeCreateCommand);
-    this.conn = flags['target-org'].getConnection(flags['api-version']);
+    const conn = flags['target-org'].getConnection(flags['api-version']);
 
-    if (!(await isShapeEnabled(this.conn))) {
+    if (!(await isShapeEnabled(conn))) {
       const err = messages.createError('noAccess', [flags['target-org'].getUsername()]);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore override readonly .name field
@@ -52,11 +50,10 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
       throw err;
     }
 
-    const createShapeResponse = await this.createShapeOrg();
+    const createShapeResponse = await createShapeOrg(conn);
 
     if (createShapeResponse.success !== true) {
-      const logger = await Logger.child('OrgShapeCreateCommand');
-      logger.error('Shape create failed', createShapeResponse['errors']);
+      (await Logger.child('OrgShapeCreateCommand')).error('Shape create failed', createShapeResponse['errors']);
       const err = messages.createError('shape_create_failed_message');
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore override readonly .name field
@@ -72,23 +69,23 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
     this.log(messages.getMessage('create_shape_command_success_id', [output.shapeId]));
     return output;
   }
+}
 
-  private createShapeOrg(): Promise<SaveResult> {
-    try {
-      return this.conn.sobject('ShapeRepresentation').create({
-        Description: '',
-      });
-    } catch (err) {
-      const JsForceErr = err as JsForceError;
-      if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
-        const e = messages.createError('create_shape_command_no_crud_access');
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore override readonly .name field
-        e.name = 'create_shape_command_no_crud_access';
-        throw e;
-      } else {
-        throw JsForceErr;
-      }
+const createShapeOrg = async (conn: Connection): Promise<SaveResult> => {
+  try {
+    return await conn.sobject('ShapeRepresentation').create({
+      Description: '',
+    });
+  } catch (err) {
+    const JsForceErr = err as JsForceError;
+    if (JsForceErr.errorCode && JsForceErr.errorCode === 'NOT_FOUND' && JsForceErr['name'] === 'ACCESS_DENIED') {
+      const e = messages.createError('create_shape_command_no_crud_access');
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore override readonly .name field
+      e.name = 'create_shape_command_no_crud_access';
+      throw e;
+    } else {
+      throw JsForceErr;
     }
   }
-}
+};

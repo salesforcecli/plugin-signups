@@ -55,7 +55,6 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
   };
 
   public async run(): Promise<OrgSnapshot> {
-    // sourceorg might be a username or alias, but we need an orgId
     const { flags } = await this.parse(SnapshotCreate);
 
     const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
