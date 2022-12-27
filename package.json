@@ -77,27 +77,19 @@
       "@salesforce/plugin-command-reference"
     ],
     "topics": {
-      "force": {
-        "external": true,
+      "org": {
         "subtopics": {
-          "org": {
-            "subtopics": {
-              "shape": {
-                "description": "manage org shape",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A0000009TPk",
-                  "name": "Org Shape for Scratch Orgs"
-                }
-              },
-              "snapshot": {
-                "description": "manage org snapshots",
-                "state": "closedPilot",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W19 Pilot: Scratch Org Snapshots"
-                }
-              }
-            }
+          "create": {
+            "description": "create org shapes and snapshots"
+          },
+          "list": {
+            "description": "list org shapes and snapshots"
+          },
+          "delete": {
+            "description": " delete shapes and snapshots"
+          },
+          "get": {
+            "description": "get an org snapshot"
           }
         }
       }
