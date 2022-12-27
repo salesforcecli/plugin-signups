@@ -78,7 +78,7 @@
     ],
     "topics": {
       "org": {
-        "description": "create snapshots and org shapes",
+        "external": true,
         "subtopics": {
           "create": {
             "description": "create org shapes and snapshots"
