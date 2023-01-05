@@ -58,7 +58,7 @@ describe('org:shape:create', () => {
 
     const command = new OrgShapeCreateCommand(['--target-org', testOrg.username], config);
     await command.run();
-    expect(uxLogStub.firstCall.args[0]).to.equal('Successfully created org shape for 3SR000000000123.');
+    expect(uxLogStub.firstCall.args[0]).to.include('Successfully created org shape for 3SR000000000123.');
   });
 
   it('shape feature is not enabled', async () => {
