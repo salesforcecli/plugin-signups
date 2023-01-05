@@ -57,7 +57,7 @@ export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
       errors: [],
     };
 
-    this.log(messages.getMessage('success', [output.shapeId]));
+    this.logSuccess(messages.getMessage('success', [output.shapeId]));
     return output;
   }
 }

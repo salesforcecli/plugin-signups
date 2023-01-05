@@ -31,10 +31,7 @@ export interface JsForceError extends Error {
   fields: string[];
 }
 
-// it only really uses 3 properties from the Authorization type
-export async function getAllShapesFromOrg(
-  orgAuth: Pick<OrgAuthorization, 'orgId' | 'username'> & Partial<Pick<OrgAuthorization, 'aliases'>>
-): Promise<OrgShapeListResult[]> {
+export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<OrgShapeListResult[]> {
   const org = await Org.create({ aliasOrUsername: orgAuth.username });
   const conn = org.getConnection();
   const logger = await Logger.child(`getAllShapesFromOrg, ${orgAuth.username}`);

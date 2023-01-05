@@ -52,6 +52,9 @@ describe('shape list utils', () => {
       username: testOrg.username,
       orgId: testOrg.orgId,
       aliases: ['joe', 'j'],
+      isExpired: false,
+      oauthMethod: 'unknown',
+      configs: [],
     });
     expect(shapes[0]).to.deep.equal({
       alias: 'joe,j',
