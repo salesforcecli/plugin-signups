@@ -81,7 +81,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
     const deleteRes = await deleteAll(conn, username);
 
     if (deleteRes.shapeIds.length === 0) {
-      this.log(messages.getMessage('noShapesHumanSuccess', [orgId]));
+      this.info(messages.getMessage('noShapesHumanSuccess', [orgId]));
       return;
     }
 
@@ -89,7 +89,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       setExitCode(68);
 
       this.styledHeader('Partial Success');
-      this.log(messages.getMessage('humanSuccess', [orgId]));
+      this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
       this.log('');
       this.styledHeader('Failures');
       const columns = {
@@ -101,7 +101,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       setExitCode(1);
     } else if (deleteRes.shapeIds.length > 0) {
       setExitCode(0);
-      this.log(messages.getMessage('humanSuccess', [orgId]));
+      this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
     }
 
     return {

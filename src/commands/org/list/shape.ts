@@ -46,7 +46,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   public async run(): Promise<OrgShapeListResult[]> {
     const shapes = await getAllOrgShapesFromAuthenticatedOrgs();
     if (shapes.length === 0) {
-      this.log(messages.getMessage('noOrgShapes'));
+      this.info(messages.getMessage('noOrgShapes'));
       return shapes;
     }
 

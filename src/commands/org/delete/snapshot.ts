@@ -48,7 +48,7 @@ export class SnapshotDelete extends SfCommand<SaveResult> {
     const result = await queryByNameOrId(conn, flags.snapshot);
     const deleteResult = await conn.sobject('OrgSnapshot').delete(result.Id);
     if (deleteResult.success) {
-      this.log(messages.getMessage('success', [flags.snapshot]));
+      this.logSuccess(messages.getMessage('success', [flags.snapshot]));
       return deleteResult;
     } else if (deleteResult.errors) {
       throw new Error(
