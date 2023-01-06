@@ -85,7 +85,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
       return;
     }
 
-    if (deleteRes.failures.length > 0 && deleteRes.shapeIds.length > 0) {
+    if (deleteRes.failures.length > 0) {
       setExitCode(68);
 
       this.styledHeader('Partial Success');
@@ -97,9 +97,9 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
         message: { header: 'Error Message' },
       };
       this.table(deleteRes.failures, columns);
-    } else if (deleteRes.failures.length > 0) {
+    } else if (deleteRes.failures.length === deleteRes.shapeIds.length) {
       setExitCode(1);
-    } else if (deleteRes.shapeIds.length > 0) {
+    } else {
       setExitCode(0);
       this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
     }
@@ -118,13 +118,11 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
  * @return List of SR IDs that were deleted
  */
 export const deleteAll = async (conn: Connection, username: string): Promise<DeleteAllResult> => {
+  let shapeIds: string[] = [];
   const deleteAllResult = {
     shapeIds: [],
     failures: [],
   };
-
-  let shapeIds: string[] = [];
-
   try {
     const result = await conn.query<ShapeRepresentation>('SELECT Id FROM ShapeRepresentation');
     if (result.totalSize === 0) {
@@ -141,7 +139,7 @@ export const deleteAll = async (conn: Connection, username: string): Promise<Del
     throw JsForceErr;
   }
 
-  await Promise.allSettled(
+  await Promise.all(
     shapeIds.map(async (id) => {
       try {
         const delResult = await conn.sobject('ShapeRepresentation').delete(id);
