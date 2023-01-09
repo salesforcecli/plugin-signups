@@ -1,3 +1,9 @@
+## [1.2.17](https://github.com/salesforcecli/plugin-signups/compare/1.2.16...1.2.17) (2023-01-07)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/command from 5.2.33 to 5.2.38 ([6a1b2d1](https://github.com/salesforcecli/plugin-signups/commit/6a1b2d180b5a9e35b9d0f0205326e4abb89795f7))
+
 ## [1.2.16](https://github.com/salesforcecli/plugin-signups/compare/1.2.15...1.2.16) (2023-01-01)
 
 ### Bug Fixes
