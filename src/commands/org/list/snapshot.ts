@@ -20,7 +20,7 @@ export class SnapshotList extends SfCommand<OrgSnapshot[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
-  public static readonly aliases = ['force:org:snapshot:list', 'org:snapshot:list'];
+  public static readonly aliases = ['force:org:snapshot:list'];
   public static readonly deprecateAliases = true;
   public static readonly flags = {
     'target-dev-hub': requiredHubFlagWithDeprecations,

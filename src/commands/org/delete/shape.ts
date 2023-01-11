@@ -46,7 +46,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
   public static readonly summary = messages.getMessage('description');
   public static readonly description = messages.getMessage('longDescription');
   public static readonly examples = messages.getMessages('help');
-  public static readonly aliases = ['force:org:shape:delete', 'org:shape:delete'];
+  public static readonly aliases = ['force:org:shape:delete'];
   public static readonly deprecateAliases = true;
 
   public static readonly flags = {
