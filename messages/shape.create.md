@@ -1,16 +1,18 @@
 # summary
 
-Create a scratch org configuration (shape) based on the specified source org
+Create a scratch org configuration (shape) based on the specified source org.
 
 # description
 
-Create a scratch org configuration (shape) based on the specified source org.
+Scratch org shapes mimic the baseline setup (features, limits, edition, and Metadata API settings) of a source org without the extraneous data and metadata.
+
+After you create an org shape, you can create a scratch org based on this shape. First add the 'sourceOrg' property to your scratch org configruation file and set it to the org ID of the source org. Run "<%= config.bin %> org shape list" to view the available org shapes and their IDs. Then create the scratch org with the "<%= config.bin %> env create scratch" command.
 
 # examples
 
-- $ sfdx force:org:shape:create -u me@my.org
+- Create an org shape for the source org with alias SourceOrg:
 
-- $ sfdx force:org:shape:create -u me@my.org --json --loglevel debug
+  <%= config.bin %> <%= command.id %> --target-org SourceOrg
 
 # ShapeRepresentationNoAccess
 
