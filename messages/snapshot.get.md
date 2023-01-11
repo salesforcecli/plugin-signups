@@ -1,28 +1,27 @@
 # summary
 
-get details about a scratch org snapshot
+Get details about a scratch org snapshot.
 
 # description
 
-get details about a scratch org snapshot
 Snapshot creation can take a while. Use this command with the snapshot name or ID to check its creation status. Once the status changes to Active, you can use the snapshot to create scratch orgs.
 
-To create a snapshot, use the "sfdx force:org:snapshot:create" command. To retrieve a list of all snapshots, use "sfdx force:org:snapshot:list".
+To create a snapshot, use the "<%= config.bin %> org create snapshot" command. To retrieve a list of all snapshots, use "<%= config.bin %> org list snapshot".
 
 # examples
 
-- Get snapshot details using its ID:
+- Get snapshot details using its ID and the default Dev Hub org:
 
-- $ sfdx force:org:snapshot:get --snapshot 0Oo...
+  <%= config.bin %> <%= command.id %> --snapshot 0Oo...
 
-- Get snapshot details using its name:
+- Get snapshot details using its name from a Dev Hub org with alias SnapshotDevHub:
 
-- $ sfdx force:org:snapshot:get -s Dependencies
+  <%= config.bin %> <%= command.id %> --snapshot Dependencies --target-dev-hub SnapshotDevHub
 
-# flags.snapshot
+# flags.snapshot.summary
 
-name or ID of snapshot to retrieve
+Name or ID of snapshot to retrieve.
 
-# flagsLong.snapshot
+# flags.snapshot.description
 
-The name or ID (starts with 0Oo) of the snapshot to retrieve.
+The IDs of scratch org snapshots start with 0Oo.

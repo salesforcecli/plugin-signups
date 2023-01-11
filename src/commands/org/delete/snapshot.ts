@@ -23,7 +23,7 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.d
 const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
 
 export class SnapshotDelete extends SfCommand<SaveResult> {
-  public static readonly summary = messages.getMessage('description');
+  public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:snapshot:delete', 'org:snapshot:delete'];
@@ -35,8 +35,8 @@ export class SnapshotDelete extends SfCommand<SaveResult> {
     loglevel,
     snapshot: Flags.string({
       char: 's',
-      summary: messages.getMessage('flags.snapshot'),
-      description: messages.getMessage('flagsLong.snapshot'),
+      summary: messages.getMessage('flags.snapshot.summary'),
+      description: messages.getMessage('flags.snapshot.description'),
       required: true,
     }),
   };

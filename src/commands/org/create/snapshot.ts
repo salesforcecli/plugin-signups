@@ -31,8 +31,7 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
       // command doesn't use target-org, so dash-o is fine
       // eslint-disable-next-line sf-plugin/dash-o
       char: 'o',
-      summary: messages.getMessage('flags.sourceorg'),
-      description: messages.getMessage('flagsLong.sourceorg'),
+      summary: messages.getMessage('flags.source-org.summary'),
       required: true,
       aliases: ['sourceorg'],
       deprecateAliases: true,
@@ -40,16 +39,15 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
     }),
     name: Flags.string({
       char: 'n',
-      summary: messages.getMessage('flags.snapshotname'),
-      description: messages.getMessage('flagsLong.snapshotname'),
+      summary: messages.getMessage('flags.name.summary'),
       required: true,
       aliases: ['snapshotname'],
       deprecateAliases: true,
     }),
     description: Flags.string({
       char: 'd',
-      summary: messages.getMessage('flags.description'),
-      description: messages.getMessage('flagsLong.description'),
+      summary: messages.getMessage('flags.description.summary'),
+      description: messages.getMessage('flags.description.description'),
     }),
   };
 

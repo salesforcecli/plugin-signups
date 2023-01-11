@@ -1,25 +1,28 @@
+# summary
+
+Delete a scratch org snapshot.
+
 # description
 
-delete a scratch org snapshot
 Dev Hub admins can delete any snapshot, while users can delete only theirs unless a Dev Hub admin gives the user Modify All permissions.
 
 # examples
 
 - Delete a snapshot from the default Dev Hub using the snapshot ID:
 
-- $ sfdx force:org:snapshot:delete --snapshot 0Oo...
+  <%= config.bin %> <%= command.id %> --snapshot 0Oo...
 
 - Delete a snapshot from the specified Dev Hub using the snapshot name:
 
-- $ sfdx force:org:snapshot:delete -s BaseSnapshot -v SnapshotDevHub
+  <%= config.bin %> <%= command.id %> --snapshot BaseSnapshot --target-dev-hub SnapshotDevHub
 
-# flags.snapshot
+# flags.snapshot.summary
 
-name or ID of snapshot to delete
+Name or ID of snapshot to delete.
 
-# flagsLong.snapshot
+# flags.snapshot.description
 
-The name or ID (starts with 0Oo) of the snapshot to delete.
+The IDs of scratch org snapshots start with 0Oo.
 
 # success
 
