@@ -4,7 +4,7 @@ Delete all org shapes for a target org.
 
 # description
 
-A source org can have only one active org shape at a time. If you try to create an org shape for a source org that already has one, the previous shape is marked inactive and replaced by a new active shape. If you don’t want to create scratch orgs based on this shape, you can delete the org shape.
+A source org can have only one active org shape. If you try to create an org shape for a source org that already has one, the previous shape is marked inactive and replaced by a new active shape. If you don’t want to create scratch orgs based on this shape, you can delete the org shape.
 
 # examples
 

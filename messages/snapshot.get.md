@@ -4,7 +4,7 @@ Get details about a scratch org snapshot.
 
 # description
 
-Snapshot creation can take a while. Use this command with the snapshot name or ID to check its creation status. Once the status changes to Active, you can use the snapshot to create scratch orgs.
+Snapshot creation can take a while. Use this command with the snapshot name or ID to check its creation status. After the status changes to Active, you can use the snapshot to create scratch orgs.
 
 To create a snapshot, use the "<%= config.bin %> org create snapshot" command. To retrieve a list of all snapshots, use "<%= config.bin %> org list snapshot".
 

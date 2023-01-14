@@ -4,7 +4,7 @@ Delete a scratch org snapshot.
 
 # description
 
-Dev Hub admins can delete any snapshot, while users can delete only theirs unless a Dev Hub admin gives the user Modify All permissions.
+Dev Hub admins can delete any snapshot, while users can delete only their own unless a Dev Hub admin gives the user Modify All permissions.
 
 # examples
 
