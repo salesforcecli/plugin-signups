@@ -27,9 +27,9 @@ const orgShapeColumns = {
 };
 
 export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
-  public static readonly summary = messages.getMessage('description');
-  public static readonly description = messages.getMessage('longDescription');
-  public static readonly examples = messages.getMessages('help');
+  public static readonly summary = messages.getMessage('summary');
+  public static readonly description = messages.getMessage('description');
+  public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:shape:list'];
   public static readonly deprecateAliases = true;
 

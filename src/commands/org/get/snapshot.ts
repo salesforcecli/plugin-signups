@@ -30,8 +30,8 @@ export class SnapshotGet extends SfCommand<OrgSnapshot> {
     loglevel,
     snapshot: Flags.string({
       char: 's',
-      summary: messages.getMessage('flags.snapshot'),
-      description: messages.getMessage('flagsLong.snapshot'),
+      summary: messages.getMessage('flags.snapshot.summary'),
+      description: messages.getMessage('flags.snapshot.description'),
       required: true,
     }),
   };

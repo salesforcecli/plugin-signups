@@ -1,18 +1,24 @@
+# summary
+
+Delete all org shapes for a target org.
+
 # description
 
-Delete all org shapes for a target org
+A source org can have only one active org shape. If you try to create an org shape for a source org that already has one, the previous shape is marked inactive and replaced by a new active shape. If you don’t want to create scratch orgs based on this shape, you can delete the org shape.
 
-# longDescription
+# examples
 
-Deletes all org shapes that you’ve created for an org using the Salesforce CLI.
+- Delete all org shapes for the source org with alias SourceOrg:
 
-# noPrompt
+  <%= config.bin %> <%= command.id %> --target-org SourceOrg
 
-do not prompt for confirmation
+- Delete all org shapes without prompting:
 
-# noPromptLong
+  <%= config.bin %> <%= command.id %> --target-org SourceOrg --no-prompt
 
-Do not prompt for confirmation.
+# flags.no-prompt.summary
+
+Don't prompt for confirmation.
 
 # noAccess
 
@@ -29,13 +35,3 @@ Successfully deleted org shape for %s.
 # noShapesHumanSuccess
 
 Can't delete org shape. No org shape found for org %s.
-
-# help
-
-- $ sfdx force:org:shape:delete -u me@my.org
-
-- $ sfdx force:org:shape:delete -u MyOrgAlias -p
-
-- $ sfdx force:org:shape:delete -u me@my.org --json
-
-- $ sfdx force:org:shape:delete -u me@my.org -p --json > tmp/MyOrgShapeDelete.json

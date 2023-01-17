@@ -79,18 +79,19 @@
     "topics": {
       "org": {
         "external": true,
+        "description": "Commands to manage org shapes and snapshots.",
         "subtopics": {
           "create": {
-            "description": "create org shapes and snapshots"
+            "description": "Commands to create org shapes and snapshots."
           },
           "list": {
-            "description": "list org shapes and snapshots"
+            "description": "Commands to list org shapes and snapshots."
           },
           "delete": {
-            "description": " delete shapes and snapshots"
+            "description": " Commands to delete shapes and snapshots."
           },
           "get": {
-            "description": "get an org snapshot"
+            "description": "Commands to get an org snapshot."
           }
         }
       }
