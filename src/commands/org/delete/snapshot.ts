@@ -50,13 +50,12 @@ export class SnapshotDelete extends SfCommand<SaveResult> {
     if (deleteResult.success) {
       this.logSuccess(messages.getMessage('success', [flags.snapshot]));
       return deleteResult;
-    } else if (deleteResult.errors) {
-      throw new Error(
-        deleteResult.errors
-          .filter(isSaveError)
-          .map((error) => error.message)
-          .join(EOL)
-      );
     }
+    throw new Error(
+      deleteResult.errors
+        .filter(isSaveError)
+        .map((error) => error.message)
+        .join(EOL)
+    );
   }
 }

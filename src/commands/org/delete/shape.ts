@@ -12,7 +12,7 @@ import {
   orgApiVersionFlagWithDeprecations,
   loglevel,
 } from '@salesforce/sf-plugins-core';
-import { Messages, Connection } from '@salesforce/core';
+import { Messages, Connection, SfError } from '@salesforce/core';
 import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -42,7 +42,7 @@ export interface OrgShapeDeleteResult extends DeleteAllResult {
   orgId: string;
 }
 
-export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
+export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | undefined> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -61,9 +61,10 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
     }),
   };
 
-  public async run(): Promise<OrgShapeDeleteResult> {
+  public async run(): Promise<OrgShapeDeleteResult | undefined> {
     const { flags } = await this.parse(OrgShapeDeleteCommand);
     const username = flags['target-org'].getUsername();
+    if (!username) throw new SfError('No username found for target-org');
     const orgId = flags['target-org'].getOrgId();
     if (!flags['no-prompt']) {
       if (!(await this.confirm(messages.getMessage('deleteCommandYesNo', [username])))) {
@@ -118,7 +119,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
  */
 export const deleteAll = async (conn: Connection, username: string): Promise<DeleteAllResult> => {
   let shapeIds: string[] = [];
-  const deleteAllResult = {
+  const deleteAllResult: DeleteAllResult = {
     shapeIds: [],
     failures: [],
   };

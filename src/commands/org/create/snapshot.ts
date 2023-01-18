@@ -11,7 +11,7 @@ import {
   orgApiVersionFlagWithDeprecations,
   requiredHubFlagWithDeprecations,
 } from '@salesforce/sf-plugins-core';
-import { StateAggregator, Messages } from '@salesforce/core';
+import { StateAggregator, Messages, SfError } from '@salesforce/core';
 import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
@@ -61,6 +61,9 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
       SnapshotName: flags.name,
       Content: 'metadatadata',
     });
+    if (createResponse.success === false) {
+      throw new SfError('An error while created the org snapshot');
+    }
     const result = await queryByNameOrId(conn, createResponse.id);
     if (!flags.json) {
       printSingleRecordTable(result);
@@ -72,5 +75,9 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
 const resolveSourceOrgId = async (sourceOrgUsernameOrId: string): Promise<string> => {
   const stateAggregator = await StateAggregator.create();
   const username = stateAggregator.aliases.getValue(sourceOrgUsernameOrId) ?? sourceOrgUsernameOrId;
-  return (await stateAggregator.orgs.read(username))?.orgId;
+  const org = await stateAggregator.orgs.read(username);
+  if (!org?.orgId) {
+    throw new Error(`No org found for ${sourceOrgUsernameOrId}`);
+  }
+  return org.orgId;
 };
