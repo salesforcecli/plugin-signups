@@ -16,7 +16,7 @@ interface OrgShape {
   CreatedDate: string;
 }
 
-export interface OrgShapeListResult {
+export type OrgShapeListResult = {
   orgId: string;
   username: string;
   alias?: string;
@@ -24,7 +24,7 @@ export interface OrgShapeListResult {
   status: string;
   createdBy: string;
   createdDate: string;
-}
+};
 
 export interface JsForceError extends Error {
   errorCode: string;
@@ -49,7 +49,7 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
         createdBy: shape.CreatedBy.Username,
         createdDate: shape.CreatedDate,
       },
-      ...(orgAuth.aliases?.length > 0 ? { alias: orgAuth.aliases.join(',') } : {}),
+      ...(orgAuth.aliases?.length ? { alias: orgAuth.aliases.join(',') } : {}),
     }));
   } catch (err) {
     const JsForceErr = err as JsForceError;

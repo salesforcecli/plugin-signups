@@ -19,7 +19,7 @@ export interface OrgSnapshotRequest {
   Content?: string;
 }
 
-export interface OrgSnapshot extends OrgSnapshotRequest {
+export type OrgSnapshot = OrgSnapshotRequest & {
   Id: string;
   Status: string;
   LastClonedDate?: string;
@@ -28,7 +28,7 @@ export interface OrgSnapshot extends OrgSnapshotRequest {
   LastModifiedDate: string;
   ExpirationDate?: string;
   Error?: string;
-}
+};
 
 export const ORG_SNAPSHOT_FIELDS = [
   'Id',
@@ -43,7 +43,7 @@ export const ORG_SNAPSHOT_FIELDS = [
   'LastClonedById',
   'Error',
 ];
-const dateTimeFormatter = (dateString: string): string =>
+const dateTimeFormatter = (dateString?: string): string =>
   dateString
     ? new Date(dateString).toLocaleString(undefined, {
         month: '2-digit',
@@ -93,7 +93,7 @@ export const queryAll = async (conn: Connection): Promise<OrgSnapshot[]> => {
     const result = (await conn.query<OrgSnapshot>(query)).records;
     return result;
   } catch (e) {
-    invalidTypeErrorHandler(e);
+    return invalidTypeErrorHandler(e);
   }
 };
 
@@ -108,7 +108,7 @@ export const queryByNameOrId = async (conn: Connection, nameOrId: string): Promi
     if (e instanceof SfError && e.name === 'SingleRecordQuery_NoRecords') {
       e.message = messages.getMessage('noSnapshots', [nameOrId]);
     }
-    invalidTypeErrorHandler(e);
+    return invalidTypeErrorHandler(e);
   }
 };
 
@@ -137,10 +137,11 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
   }
 
   CliUx.ux.table(
-    // snapshotRecords,
-    // without this, you encounter typing errors from CliUx.ux.table
-    snapshotRecords.map((s) => ({ ...s })),
-    ORG_SNAPSHOT_COLUMNS as Record<string, unknown>,
+    // we know what columns we want, so filter out the other fields
+    snapshotRecords.map((s) =>
+      Object.fromEntries(Object.entries(s).filter(([key]) => Object.keys(ORG_SNAPSHOT_COLUMNS).includes(key)))
+    ),
+    ORG_SNAPSHOT_COLUMNS,
     { title: `Org Snapshots [${snapshotRecords.length}]`, 'no-truncate': true }
   );
 };
