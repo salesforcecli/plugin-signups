@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/salesforcecli/plugin-signups/compare/1.3.0...1.3.1) (2023-01-22)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/core from 3.32.12 to 3.33.0 ([a4f8b90](https://github.com/salesforcecli/plugin-signups/commit/a4f8b90b7e80cd43f00d65aec8bf507922bd54a1))
+
+
+
 # [1.3.0](https://github.com/salesforcecli/plugin-signups/compare/1.2.17...1.3.0) (2023-01-18)
 
 
