@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { CliUx } from '@oclif/core';
+import { ux } from '@oclif/core';
 import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
 
@@ -113,7 +113,7 @@ export const queryByNameOrId = async (conn: Connection, nameOrId: string): Promi
 };
 
 export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
-  CliUx.ux.table(
+  ux.table(
     Object.entries(snapshotRecord)
       .filter(([key]) => key !== 'attributes')
       // remove empty error field
@@ -132,11 +132,11 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
 
 export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
   if (snapshotRecords.length === 0) {
-    CliUx.ux.log('No snapshots found');
+    ux.log('No snapshots found');
     return;
   }
 
-  CliUx.ux.table(
+  ux.table(
     // we know what columns we want, so filter out the other fields
     snapshotRecords.map((s) =>
       Object.fromEntries(Object.entries(s).filter(([key]) => Object.keys(ORG_SNAPSHOT_COLUMNS).includes(key)))
