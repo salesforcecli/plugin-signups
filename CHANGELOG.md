@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/salesforcecli/plugin-signups/compare/1.3.2...1.4.0) (2023-01-31)
+
+
+### Features
+
+* use latest sf-plugins-core and oclif/core ([23aa9cf](https://github.com/salesforcecli/plugin-signups/commit/23aa9cf849f85e3cdf1c16d840629d8256eace70))
+
+
+
 ## [1.3.2](https://github.com/salesforcecli/plugin-signups/compare/1.3.1...1.3.2) (2023-01-29)
 
 
