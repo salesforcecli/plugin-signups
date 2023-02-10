@@ -8,7 +8,7 @@ import * as path from 'path';
 import * as chaiString from 'chai-string';
 import { expect, use } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
-import { sfdc } from '@salesforce/core';
+import { AuthFields, sfdc } from '@salesforce/core';
 import { OrgSnapshot, ORG_SNAPSHOT_FIELDS } from '../../src/shared/snapshot';
 
 use(chaiString);
@@ -40,13 +40,13 @@ describe('snapshot commands', () => {
           duration: 1,
           alias,
           config: path.join('config', 'project-scratch-def.json'),
-        }
+        },
       ],
     });
-    const org = session.orgs.get(alias);
-    orgId = org.orgId;
+    const org = session.orgs.get(alias) as AuthFields;
+    orgId = org.orgId as string;
     orgIdKey = sfdc.trimTo15(orgId).replace('00D', '');
-    scratchUsername = org.username;
+    scratchUsername = org.username as string;
   });
 
   it('creates a new snapshot by username', () => {
@@ -55,7 +55,7 @@ describe('snapshot commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput.result;
+    ).jsonOutput?.result as OrgSnapshot;
     expect(usernameSnapshot).to.have.all.keys(expectedFields);
     expect(usernameSnapshot.Id).startsWith('0Oo');
   });
@@ -66,7 +66,7 @@ describe('snapshot commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput.result;
+    ).jsonOutput?.result as OrgSnapshot;
     expect(orgIdSnapshot).to.have.all.keys(expectedFields);
     expect(orgIdSnapshot.Id).startsWith('0Oo');
   });
@@ -77,7 +77,7 @@ describe('snapshot commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput.result;
+    ).jsonOutput?.result as OrgSnapshot;
     expect(aliasSnapshot).to.have.all.keys(expectedFields);
     expect(aliasSnapshot.Id).startsWith('0Oo');
   });
@@ -85,7 +85,7 @@ describe('snapshot commands', () => {
   it('finds new snapshots in the list', () => {
     const snapshots = execCmd<OrgSnapshot[]>('force:org:snapshot:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgSnapshot[];
     // there could be others leftover or from other tests.  That's ok.
     expect(snapshots).to.have.length.greaterThanOrEqual(3);
     expect(snapshots.find((s) => s.SnapshotName === `un_${orgIdKey}`)).to.have.property(
@@ -115,7 +115,7 @@ describe('snapshot commands', () => {
   it('can get a snapshot by id', () => {
     const snapshot = execCmd<OrgSnapshot>(`force:org:snapshot:get -s ${aliasSnapshot.Id} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgSnapshot;
     expect(snapshot).to.have.all.keys(expectedFields);
     expect(snapshot.Description).to.equal(aliasDescription);
   });
@@ -123,7 +123,7 @@ describe('snapshot commands', () => {
   it('can get a snapshot by name', () => {
     const snapshot = execCmd<OrgSnapshot>(`force:org:snapshot:get -s ${orgIdSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgSnapshot;
     expect(snapshot).to.have.all.keys(expectedFields);
     expect(snapshot.Description).to.equal(orgIdDescription);
   });
@@ -144,19 +144,19 @@ describe('snapshot commands', () => {
   it('can delete a snapshot by id', () => {
     execCmd(`force:org:snapshot:delete -s ${aliasSnapshot.Id} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    });
   });
 
   it('can delete a snapshot by name', () => {
     execCmd(`force:org:snapshot:delete -s ${orgIdSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    });
   });
 
   it('can delete the last snapshot by name', () => {
     execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    });
   });
 
   it('fails at deleting the same snapshot twice', () => {
@@ -168,7 +168,7 @@ describe('snapshot commands', () => {
   it('list shows all snapshots deleted', () => {
     const snapshots = execCmd<OrgSnapshot[]>('force:org:snapshot:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgSnapshot[];
 
     expect(snapshots.find((s) => s.SnapshotName === `un_${orgIdKey}`)).to.be.undefined;
     expect(snapshots.find((s) => s.SnapshotName === `id_${orgIdKey}`)).to.be.undefined;

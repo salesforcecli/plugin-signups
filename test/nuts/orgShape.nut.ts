@@ -21,13 +21,13 @@ let newShapeId: string;
 describe('org:shape commands', () => {
   before(async () => {
     session = await TestSession.create({ devhubAuthStrategy: 'AUTO' });
-    hubOrgUsername = session.hubOrg.username;
+    hubOrgUsername = session.hubOrg.username as string;
   });
 
   it('finds existing org shapes', () => {
     originalShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgShapeListResult[];
     expect(originalShapes).to.be.an('array');
     // verify the result structure
     originalShapes.forEach((shape) => {
@@ -42,7 +42,7 @@ describe('org:shape commands', () => {
   it('creates a new shape', () => {
     newShapeId = execCmd<ShapeCreateResult>(`force:org:shape:create --json -u ${hubOrgUsername}`, {
       ensureExitCode: 0,
-    }).jsonOutput.result.shapeId;
+    }).jsonOutput?.result.shapeId as string;
     expect(newShapeId).to.be.a('string').with.length(18);
     expect(newShapeId.startsWith('3SR')).to.be.true;
   });
@@ -50,7 +50,7 @@ describe('org:shape commands', () => {
   it('finds new shape in the list', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgShapeListResult[];
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length : originalShapes.length + 1);
     expect(modifiedShapes.some((shape) => shape.shapeId === newShapeId)).to.be.true;
   });
@@ -61,7 +61,7 @@ describe('org:shape commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput.result;
+    ).jsonOutput?.result as OrgShapeDeleteResult;
     expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds', 'failures']);
     expect(deleteResult.shapeIds).to.include(newShapeId);
   });
@@ -69,7 +69,7 @@ describe('org:shape commands', () => {
   it('finds the shapes as it was before create', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput.result;
+    }).jsonOutput?.result as OrgShapeListResult[];
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length - 1 : originalShapes.length);
     expect(
       modifiedShapes.some((shape) => {

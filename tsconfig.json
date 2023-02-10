@@ -2,6 +2,7 @@
   "extends": "@salesforce/dev-config/tsconfig-strict",
   "compilerOptions": {
     "outDir": "lib",
+    "strictNullChecks": true,
     "rootDir": "src",
     "lib": ["es2020"]
   },
