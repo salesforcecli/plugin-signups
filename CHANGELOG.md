@@ -1,3 +1,12 @@
+## [1.4.1](https://github.com/salesforcecli/plugin-signups/compare/1.4.0...1.4.1) (2023-02-11)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/sf-plugins-core from 2.0.1 to 2.1.1 ([981e745](https://github.com/salesforcecli/plugin-signups/commit/981e7458365a8a86e7996e298b0a34e74909389e))
+
+
+
 # [1.4.0](https://github.com/salesforcecli/plugin-signups/compare/1.3.2...1.4.0) (2023-01-31)
 
 
