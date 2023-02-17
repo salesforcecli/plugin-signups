@@ -5,7 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { OrgAuthorization, Org, Logger, Connection } from '@salesforce/core';
+import { Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
 
 interface OrgShape {
   Id: string;
@@ -57,7 +59,9 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
       return [];
     } else {
       logger.error(false, 'Error finding org shapes', JsForceErr);
-      throw JsForceErr;
+      const error = SfError.wrap(JsForceErr);
+      error.message = messages.getMessage('errorWithOrg', [orgAuth.username, JsForceErr.message]);
+      return Promise.reject(error);
     }
   }
 }

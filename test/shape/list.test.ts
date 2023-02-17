@@ -45,12 +45,14 @@ describe('org:shape:list', () => {
 
   it('no shapes', async () => {
     await $$.stubAuths(testOrg);
-    sandbox.stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs').resolves([]);
+    sandbox
+      .stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs')
+      .resolves({ orgShapes: [], errors: [] });
 
     const command = new OrgShapeListCommand([], config);
     await command.run();
-    expect(uxLogStub.calledOnce).to.be.true;
-    expect(uxLogStub.firstCall.args[0]).to.include('No org shapes found.');
+    expect(uxLogStub.calledTwice).to.be.true;
+    expect(uxLogStub.secondCall.args[0]).to.include('No org shapes found.');
   });
 
   it('lists org shapes', async () => {
@@ -75,7 +77,9 @@ describe('org:shape:list', () => {
         createdDate: '2022-03-21T02:12:23.000+0000',
       },
     ];
-    sandbox.stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs').resolves(shapes);
+    sandbox
+      .stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs')
+      .resolves({ orgShapes: shapes, errors: [] });
     const command = new OrgShapeListCommand([], config);
     await command.run();
     expect(uxLogStub.notCalled).to.be.true;
