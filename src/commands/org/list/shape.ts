@@ -8,6 +8,7 @@
 import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
 import { AuthInfo, Messages } from '@salesforce/core';
 import * as chalk from 'chalk';
+import { settleAll } from '@salesforce/kit';
 import { getAllShapesFromOrg, OrgShapeListResult } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -69,26 +70,7 @@ export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
   if (orgs.length === 0) {
     throw messages.createError('noAuthFound');
   }
-  const shapes = await Promise.allSettled(orgs.map((o) => getAllShapesFromOrg(o)));
-  // get all fulfilled promises values from settled promises
-  const orgShapes = shapes
-    .filter((s) => s.status === 'fulfilled')
-    .map((s) => {
-      if (s.status === 'fulfilled') {
-        return s.value;
-      } else {
-        return [];
-      }
-    })
-    .flat();
-  const errors = shapes
-    .filter((s) => s.status === 'rejected')
-    .map((s) => {
-      if (s.status === 'rejected') {
-        return s.reason as Error;
-      }
-    })
-    .filter((e) => e !== undefined) as Error[];
+  const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
 
-  return { orgShapes, errors };
+  return { orgShapes: shapes.fulfilled.flat(), errors: shapes.rejected };
 };
