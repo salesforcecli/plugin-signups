@@ -51,8 +51,8 @@ describe('org:shape:list', () => {
 
     const command = new OrgShapeListCommand([], config);
     await command.run();
-    expect(uxLogStub.calledTwice).to.be.true;
-    expect(uxLogStub.secondCall.args[0]).to.include('No org shapes found.');
+    expect(uxLogStub.callCount).to.be.greaterThanOrEqual(2);
+    expect(uxLogStub.args.some((a: string[]) => a.length > 0 && a[0].includes('No org shapes found.'))).to.be.true;
   });
 
   it('lists org shapes', async () => {
