@@ -6,8 +6,9 @@
  */
 
 import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
-import { Messages, AuthInfo } from '@salesforce/core';
+import { AuthInfo, Messages } from '@salesforce/core';
 import * as chalk from 'chalk';
+import { settleAll } from '@salesforce/kit';
 import { getAllShapesFromOrg, OrgShapeListResult } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);
@@ -44,26 +45,32 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   // there were no flags being used in the original!
   // eslint-disable-next-line sf-plugin/should-parse-flags
   public async run(): Promise<OrgShapeListResult[]> {
-    const shapes = await getAllOrgShapesFromAuthenticatedOrgs();
-    if (shapes.length === 0) {
+    const { orgShapes, errors } = await getAllOrgShapesFromAuthenticatedOrgs();
+    errors.forEach((e) => this.warn(e));
+    if (orgShapes.length === 0) {
+      this.log();
       this.info(messages.getMessage('noOrgShapes'));
-      return shapes;
+      return orgShapes;
     }
 
     this.styledHeader('Org Shapes');
     this.table(
-      shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape)),
+      orgShapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape)),
       orgShapeColumns
     );
-    return shapes;
+    return orgShapes;
   }
 }
 
-export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<OrgShapeListResult[]> => {
+export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
+  orgShapes: OrgShapeListResult[];
+  errors: Error[];
+}> => {
   const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
   if (orgs.length === 0) {
     throw messages.createError('noAuthFound');
   }
-  const shapes = await Promise.all(orgs.map((o) => getAllShapesFromOrg(o)));
-  return shapes.flat();
+  const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
+
+  return { orgShapes: shapes.fulfilled.flat(), errors: shapes.rejected };
 };
