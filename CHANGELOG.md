@@ -1,3 +1,12 @@
+## [1.4.6](https://github.com/salesforcecli/plugin-signups/compare/1.4.5...1.4.6) (2023-03-02)
+
+
+### Bug Fixes
+
+* bump core libraries ([948925c](https://github.com/salesforcecli/plugin-signups/commit/948925c3c4767b19fcd8487dc0bf3fcc92a39dcb))
+
+
+
 ## [1.4.5](https://github.com/salesforcecli/plugin-signups/compare/1.4.4...1.4.5) (2023-02-28)
 
 
