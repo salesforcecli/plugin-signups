@@ -1,3 +1,12 @@
+## [1.4.7](https://github.com/salesforcecli/plugin-signups/compare/1.4.6...1.4.7) (2023-03-12)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/kit from 1.9.0 to 1.9.2 ([2e0d342](https://github.com/salesforcecli/plugin-signups/commit/2e0d342d62a774effc8edd7d5e83df20dca6b86c))
+
+
+
 ## [1.4.6](https://github.com/salesforcecli/plugin-signups/compare/1.4.5...1.4.6) (2023-03-02)
 
 

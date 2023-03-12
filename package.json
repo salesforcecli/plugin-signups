@@ -1,7 +1,7 @@
 {
   "name": "@salesforce/plugin-signups",
   "description": "Commands to interact with org shapes",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "author": "Salesforce",
   "main": "lib/index.js",
   "bugs": "https://github.com/forcedotcom/cli/issues",
