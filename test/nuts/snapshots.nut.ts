@@ -4,6 +4,8 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+/* eslint-disable sf-plugin/no-execcmd-double-quotes */
+
 import * as path from 'path';
 import * as chaiString from 'chai-string';
 import { expect, use } from 'chai';
@@ -51,7 +53,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by username', () => {
     usernameSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${scratchUsername} -d '${usernameDescription}' -n un_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${scratchUsername} -d "${usernameDescription}" -n un_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
@@ -62,7 +64,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by orgId', () => {
     orgIdSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${orgId} -d '${orgIdDescription}' -n id_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${orgId} -d "${orgIdDescription}" -n id_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
@@ -73,7 +75,7 @@ describe('snapshot commands', () => {
 
   it('creates a new snapshot by alias', () => {
     aliasSnapshot = execCmd<OrgSnapshot>(
-      `force:org:snapshot:create --json -o ${alias} -d '${aliasDescription}' -n a_${orgIdKey}`,
+      `force:org:snapshot:create --json -o ${alias} -d "${aliasDescription}" -n a_${orgIdKey}`,
       {
         ensureExitCode: 0,
       }
