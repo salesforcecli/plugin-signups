@@ -5,30 +5,31 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { ShapeCreateResult } from '../../src/commands/org/create/shape';
 import { OrgShapeListResult } from '../../src/shared/orgShapeListUtils';
 import { OrgShapeDeleteResult } from '../../src/commands/org/delete/shape';
 
 let session: TestSession;
-let originalShapes: OrgShapeListResult[];
+let originalShapes: OrgShapeListResult[] | undefined;
 let hubOrgUsername: string;
 // there could be a shape for this org already.  That's ok.
 let shapeAlreadyExists = false;
-let newShapeId: string;
+let newShapeId: string | undefined;
 
 describe('org:shape commands', () => {
   before(async () => {
     session = await TestSession.create({ devhubAuthStrategy: 'AUTO' });
-    hubOrgUsername = session.hubOrg.username as string;
+    assert(session.hubOrg.username, 'hubOrgUsername should be a string');
+    hubOrgUsername = session.hubOrg.username;
   });
 
   it('finds existing org shapes', () => {
     originalShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput?.result as OrgShapeListResult[];
-    expect(originalShapes).to.be.an('array');
+    }).jsonOutput?.result;
+    assert(Array.isArray(originalShapes), 'originalShapes should be an array');
     // verify the result structure
     originalShapes.forEach((shape) => {
       // they may or may not have an alias key
@@ -42,15 +43,18 @@ describe('org:shape commands', () => {
   it('creates a new shape', () => {
     newShapeId = execCmd<ShapeCreateResult>(`force:org:shape:create --json -u ${hubOrgUsername}`, {
       ensureExitCode: 0,
-    }).jsonOutput?.result.shapeId as string;
-    expect(newShapeId).to.be.a('string').with.length(18);
+    }).jsonOutput?.result.shapeId;
+    assert(newShapeId, 'newShapeId should be a string');
+    expect(newShapeId).to.have.length(18);
     expect(newShapeId.startsWith('3SR')).to.be.true;
   });
 
   it('finds new shape in the list', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput?.result as OrgShapeListResult[];
+    }).jsonOutput?.result;
+    assert(Array.isArray(modifiedShapes), 'modifiedShapes should be an array');
+    assert(Array.isArray(originalShapes), 'originalShapes should be an array');
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length : originalShapes.length + 1);
     expect(modifiedShapes.some((shape) => shape.shapeId === newShapeId)).to.be.true;
   });
@@ -61,15 +65,17 @@ describe('org:shape commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput?.result as OrgShapeDeleteResult;
+    ).jsonOutput?.result;
     expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds', 'failures']);
-    expect(deleteResult.shapeIds).to.include(newShapeId);
+    expect(deleteResult?.shapeIds).to.include(newShapeId);
   });
 
   it('finds the shapes as it was before create', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
-    }).jsonOutput?.result as OrgShapeListResult[];
+    }).jsonOutput?.result;
+    assert(Array.isArray(modifiedShapes), 'modifiedShapes should be an array');
+    assert(Array.isArray(originalShapes), 'originalShapes should be an array');
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length - 1 : originalShapes.length);
     expect(
       modifiedShapes.some((shape) => {

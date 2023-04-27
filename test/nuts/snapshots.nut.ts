@@ -8,7 +8,7 @@
 
 import * as path from 'path';
 import * as chaiString from 'chai-string';
-import { expect, use } from 'chai';
+import { assert, expect, use } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { AuthFields, sfdc } from '@salesforce/core';
 import { OrgSnapshot, ORG_SNAPSHOT_FIELDS } from '../../src/shared/snapshot';
@@ -21,7 +21,7 @@ const alias = 'snapNutAlias';
 let orgId: string;
 let orgIdKey: string;
 let orgIdSnapshot: OrgSnapshot;
-let usernameSnapshot: OrgSnapshot;
+let usernameSnapshot: OrgSnapshot | undefined;
 let aliasSnapshot: OrgSnapshot;
 const expectedFields = [...ORG_SNAPSHOT_FIELDS, 'attributes'];
 
@@ -38,8 +38,6 @@ describe('snapshot commands', () => {
       devhubAuthStrategy: 'AUTO',
       scratchOrgs: [
         {
-          executable: 'sfdx',
-          duration: 1,
           alias,
           config: path.join('config', 'project-scratch-def.json'),
         },
@@ -57,7 +55,8 @@ describe('snapshot commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput?.result as OrgSnapshot;
+    ).jsonOutput?.result;
+    assert(usernameSnapshot, 'username snapshot should be defined');
     expect(usernameSnapshot).to.have.all.keys(expectedFields);
     expect(usernameSnapshot.Id).startsWith('0Oo');
   });
@@ -117,20 +116,21 @@ describe('snapshot commands', () => {
   it('can get a snapshot by id', () => {
     const snapshot = execCmd<OrgSnapshot>(`force:org:snapshot:get -s ${aliasSnapshot.Id} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput?.result as OrgSnapshot;
+    }).jsonOutput?.result;
     expect(snapshot).to.have.all.keys(expectedFields);
-    expect(snapshot.Description).to.equal(aliasDescription);
+    expect(snapshot?.Description).to.equal(aliasDescription);
   });
 
   it('can get a snapshot by name', () => {
     const snapshot = execCmd<OrgSnapshot>(`force:org:snapshot:get -s ${orgIdSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
-    }).jsonOutput?.result as OrgSnapshot;
+    }).jsonOutput?.result;
     expect(snapshot).to.have.all.keys(expectedFields);
-    expect(snapshot.Description).to.equal(orgIdDescription);
+    expect(snapshot?.Description).to.equal(orgIdDescription);
   });
 
   it('stdout tables formatting for get', () => {
+    assert(usernameSnapshot, 'username snapshot should be defined');
     const table = execCmd(`force:org:snapshot:get -s ${usernameSnapshot.Id}`, {
       ensureExitCode: 0,
     }).shellOutput.stdout;
@@ -156,12 +156,14 @@ describe('snapshot commands', () => {
   });
 
   it('can delete the last snapshot by name', () => {
+    assert(usernameSnapshot, 'username snapshot should be defined');
     execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
     });
   });
 
   it('fails at deleting the same snapshot twice', () => {
+    assert(usernameSnapshot, 'username snapshot should be defined');
     execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json`, {
       ensureExitCode: 1,
     });
