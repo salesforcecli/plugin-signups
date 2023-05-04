@@ -10,7 +10,7 @@ import * as path from 'path';
 import * as chaiString from 'chai-string';
 import { expect, use } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
-import { AuthFields, sfdc } from '@salesforce/core';
+import { AuthFields, trimTo15 } from '@salesforce/core';
 import { OrgSnapshot, ORG_SNAPSHOT_FIELDS } from '../../src/shared/snapshot';
 
 use(chaiString);
@@ -38,8 +38,6 @@ describe('snapshot commands', () => {
       devhubAuthStrategy: 'AUTO',
       scratchOrgs: [
         {
-          executable: 'sfdx',
-          duration: 1,
           alias,
           config: path.join('config', 'project-scratch-def.json'),
         },
@@ -47,7 +45,7 @@ describe('snapshot commands', () => {
     });
     const org = session.orgs.get(alias) as AuthFields;
     orgId = org.orgId as string;
-    orgIdKey = sfdc.trimTo15(orgId).replace('00D', '');
+    orgIdKey = trimTo15(orgId).replace('00D', '');
     scratchUsername = org.username as string;
   });
 
