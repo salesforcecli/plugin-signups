@@ -1,3 +1,12 @@
+## [1.4.16](https://github.com/salesforcecli/plugin-signups/compare/1.4.15...1.4.16) (2023-05-11)
+
+
+### Bug Fixes
+
+* **deps:** dep bumps for new configs ([37f6105](https://github.com/salesforcecli/plugin-signups/commit/37f61058bc1f0caaa304a613852d419fede7034b))
+
+
+
 ## [1.4.15](https://github.com/salesforcecli/plugin-signups/compare/1.4.14...1.4.15) (2023-05-07)
 
 
