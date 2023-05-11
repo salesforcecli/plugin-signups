@@ -1,3 +1,16 @@
+## [1.4.18](https://github.com/salesforcecli/plugin-signups/compare/1.4.17...1.4.18) (2023-05-11)
+
+
+### Bug Fixes
+
+* bump core, dedup ([1c0e90e](https://github.com/salesforcecli/plugin-signups/commit/1c0e90e472b6fd124b20c193ef4a4f21f8e744e5))
+
+
+
+## [1.4.17](https://github.com/salesforcecli/plugin-signups/compare/1.4.16...1.4.17) (2023-05-11)
+
+
+
 ## [1.4.16](https://github.com/salesforcecli/plugin-signups/compare/1.4.15...1.4.16) (2023-05-11)
 
 
