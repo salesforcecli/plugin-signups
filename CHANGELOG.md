@@ -1,3 +1,12 @@
+## [1.4.21](https://github.com/salesforcecli/plugin-signups/compare/1.4.20...1.4.21) (2023-06-04)
+
+
+### Bug Fixes
+
+* **deps:** bump @salesforce/core from 4.0.1 to 4.1.0 ([a9394cf](https://github.com/salesforcecli/plugin-signups/commit/a9394cfd48c7b66e75c5fa3542bc1892038bf44b))
+
+
+
 ## [1.4.20](https://github.com/salesforcecli/plugin-signups/compare/1.4.19...1.4.20) (2023-05-27)
 
 
