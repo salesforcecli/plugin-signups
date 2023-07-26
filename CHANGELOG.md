@@ -1,3 +1,12 @@
+## [1.4.30](https://github.com/salesforcecli/plugin-signups/compare/1.4.29...1.4.30) (2023-07-26)
+
+
+### Bug Fixes
+
+* update snapshot command state ([#297](https://github.com/salesforcecli/plugin-signups/issues/297)) ([eaea472](https://github.com/salesforcecli/plugin-signups/commit/eaea472f08c6e8610a6f0fbec025481bff9ca7ea))
+
+
+
 ## [1.4.29](https://github.com/salesforcecli/plugin-signups/compare/1.4.28...1.4.29) (2023-07-22)
 
 
