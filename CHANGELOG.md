@@ -1,3 +1,12 @@
+## [1.4.31](https://github.com/salesforcecli/plugin-signups/compare/1.4.30...1.4.31) (2023-07-29)
+
+
+### Bug Fixes
+
+* **deps:** bump tslib from 2.6.0 to 2.6.1 ([b7964f5](https://github.com/salesforcecli/plugin-signups/commit/b7964f5812609a966331e98635a3bb2a55f75fa1))
+
+
+
 ## [1.4.30](https://github.com/salesforcecli/plugin-signups/compare/1.4.29...1.4.30) (2023-07-26)
 
 
