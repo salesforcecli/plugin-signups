@@ -1,3 +1,12 @@
+## [1.4.32](https://github.com/salesforcecli/plugin-signups/compare/1.4.31...1.4.32) (2023-08-09)
+
+
+### Bug Fixes
+
+* **deps:** core 5 ([50812b7](https://github.com/salesforcecli/plugin-signups/commit/50812b76fb1d93b08bc8562136e6bb4ffe91ec8e))
+
+
+
 ## [1.4.31](https://github.com/salesforcecli/plugin-signups/compare/1.4.30...1.4.31) (2023-07-29)
 
 
