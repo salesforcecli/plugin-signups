@@ -52,7 +52,7 @@
     "sinon": "^11.1.1",
     "ts-node": "^10.2.1",
     "typescript": "^4.9.5",
-    "wireit": "^0.10.0"
+    "wireit": "^0.13.0"
   },
   "config": {},
   "engines": {
