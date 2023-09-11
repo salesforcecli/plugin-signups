@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/salesforcecli/plugin-signups/compare/1.4.34...1.5.0) (2023-09-11)
+
+
+### Features
+
+* use oclif.lock ([070d5d9](https://github.com/salesforcecli/plugin-signups/commit/070d5d9ab838fac968edfab2681cd1715be5c89b))
+
+
+
 ## [1.4.34](https://github.com/salesforcecli/plugin-signups/compare/1.4.33...1.4.34) (2023-08-20)
 
 
