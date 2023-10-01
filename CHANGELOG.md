@@ -1,3 +1,9 @@
+## [1.5.3](https://github.com/salesforcecli/plugin-signups/compare/1.5.2...1.5.3) (2023-10-01)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 3.1.23 to 3.1.26 ([94ff117](https://github.com/salesforcecli/plugin-signups/commit/94ff117a945e29ee612d11ad41964a47bb8afb8e))
+
 ## [1.5.2](https://github.com/salesforcecli/plugin-signups/compare/1.5.1...1.5.2) (2023-10-01)
 
 ### Bug Fixes
