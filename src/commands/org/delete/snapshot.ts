@@ -13,7 +13,7 @@ import {
   requiredHubFlagWithDeprecations,
 } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import { SaveResult, SaveError } from 'jsforce';
+import type { SaveResult, SaveError } from 'jsforce';
 import { queryByNameOrId } from '../../../shared/snapshot';
 
 Messages.importMessagesDirectory(__dirname);
