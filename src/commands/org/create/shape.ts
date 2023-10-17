@@ -12,7 +12,7 @@ import {
   loglevel,
 } from '@salesforce/sf-plugins-core';
 import { Messages, Connection, Logger } from '@salesforce/core';
-import { SaveResult } from 'jsforce';
+import type { SaveResult } from 'jsforce';
 import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils';
 
 Messages.importMessagesDirectory(__dirname);

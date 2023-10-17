@@ -11,7 +11,7 @@ import * as chaiAsPromised from 'chai-as-promised';
 import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
 
 import { SfCommand } from '@salesforce/sf-plugins-core';
-import { SaveResult } from 'jsforce';
+import type { SaveResult } from 'jsforce';
 import * as sinon from 'sinon';
 import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
 import { OrgShapeCreateCommand } from '../../src/commands/org/create/shape';
