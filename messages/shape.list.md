@@ -16,7 +16,7 @@ The output includes the alias, username, and ID of the source org, the status of
 
   <%= config.bin %> <%= command.id %> --json > tmp/MyOrgShapeList.json
 
-# verbose
+# flags.verbose.summary
 
 List more information about each org shape.
 
