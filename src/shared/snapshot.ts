@@ -117,7 +117,7 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
     Object.entries(snapshotRecord)
       .filter(([key]) => key !== 'attributes')
       // remove empty error field
-      .filter(([key, value]) => key !== 'Error' || value)
+      .filter(([key, value]) => key !== 'Error' || typeof value === 'string')
       // every field on the type is a string
       .map(([key, value]: [string, string]) => ({
         Name: capitalCase(key),
