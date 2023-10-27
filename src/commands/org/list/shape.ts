@@ -36,7 +36,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
 
   public static readonly flags = {
     verbose: Flags.boolean({
-      summary: messages.getMessage('verbose'),
+      summary: messages.getMessage('flags.verbose.summary'),
       hidden: true,
     }),
     loglevel,

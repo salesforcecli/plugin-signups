@@ -6,7 +6,7 @@
  */
 /* eslint-disable sf-plugin/no-execcmd-double-quotes */
 
-import * as path from 'path';
+import * as path from 'node:path';
 import * as chaiString from 'chai-string';
 import { expect, use } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';

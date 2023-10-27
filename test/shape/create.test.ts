@@ -4,7 +4,7 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { Config } from '@oclif/core';
 import { use, expect, config as chaiConfig } from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
