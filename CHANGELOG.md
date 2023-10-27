@@ -1,3 +1,9 @@
+## [1.5.6](https://github.com/salesforcecli/plugin-signups/compare/1.5.5...1.5.6) (2023-10-27)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 5.3.9 to 5.3.14 ([bb3bf68](https://github.com/salesforcecli/plugin-signups/commit/bb3bf684a34b7d555f0030ea86e2cbafd43a7f08))
+
 ## [1.5.5](https://github.com/salesforcecli/plugin-signups/compare/1.5.4...1.5.5) (2023-10-08)
 
 ### Bug Fixes
