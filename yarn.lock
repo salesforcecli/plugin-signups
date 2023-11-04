@@ -1036,12 +1036,12 @@
     chalk "^4"
     inquirer "^8.2.5"
 
-"@salesforce/ts-sinon@^1.4.16":
-  version "1.4.16"
-  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.16.tgz#44ca058279d4009d7cc5d2de04d0ff764897f7c2"
-  integrity sha512-nl/zQ0z+W3C5VUgOh5i7N9ZgI7cEboDGBfPk7JXIz1R3U8yjSr3IIrJgmB3XSHFRNOQ/BjxdO8XSeuOehlaX3g==
+"@salesforce/ts-sinon@^1.4.19":
+  version "1.4.19"
+  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.19.tgz#64157b6c8cf4a3c637867e2ddd90c2d058c334f7"
+  integrity sha512-vopxKrI6QD0OCtPlge1eGGHFWLkoDee7KaB/dpGeRwioeNfCVJ8ikELN0hv0zq9Ys6gUYWYcdpxzTP1upslCJA==
   dependencies:
-    "@salesforce/ts-types" "^2.0.7"
+    "@salesforce/ts-types" "^2.0.9"
     sinon "^5.1.1"
     tslib "^2.6.1"
 
