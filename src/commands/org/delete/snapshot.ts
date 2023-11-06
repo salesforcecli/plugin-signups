@@ -20,6 +20,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.delete');
 
 // jsforce can return SaveError[] or never[]
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
 
 export class SnapshotDelete extends SfCommand<SaveResult> {
