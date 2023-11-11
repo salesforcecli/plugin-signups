@@ -22,8 +22,6 @@ export interface OrgSnapshotRequest {
 export type OrgSnapshot = OrgSnapshotRequest & {
   Id: string;
   Status: string;
-  LastClonedDate?: string;
-  LastClonedById?: string;
   CreatedDate: string;
   LastModifiedDate: string;
   ExpirationDate?: string;
@@ -39,8 +37,6 @@ export const ORG_SNAPSHOT_FIELDS = [
   'CreatedDate',
   'LastModifiedDate',
   'ExpirationDate',
-  'LastClonedDate',
-  'LastClonedById',
   'Error',
 ];
 const dateTimeFormatter = (dateString?: string): string =>
@@ -73,11 +69,6 @@ const ORG_SNAPSHOT_COLUMNS = {
     header: 'Expiration Date',
     get: (row: OrgSnapshot): string => (row.ExpirationDate ? new Date(row.ExpirationDate).toLocaleDateString() : ''),
   },
-  LastClonedDate: {
-    header: 'Last Cloned Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'LastClonedDate'),
-  },
-  LastClonedById: { header: 'Last Cloned By Id', get: (row: OrgSnapshot): string => row.LastClonedById ?? '' },
 };
 
 const invalidTypeErrorHandler = (e: unknown): never => {
@@ -122,7 +113,7 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
       .map(([key, value]: [string, string]) => ({
         Name: capitalCase(key),
         // format the datetime values
-        Value: ['LastModifiedDate', 'LastClonedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value,
+        Value: ['LastModifiedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value,
       }))
       // null/undefined becomes empty string
       .map((row) => (row.Value ? row : { ...row, Value: '' })),
