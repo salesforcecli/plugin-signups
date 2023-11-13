@@ -6,12 +6,12 @@
  */
 /* eslint-disable sf-plugin/no-execcmd-double-quotes */
 
-import * as path from 'node:path';
-import * as chaiString from 'chai-string';
+import path from 'node:path';
+import chaiString from 'chai-string';
 import { expect, use } from 'chai';
 import { TestSession, execCmd } from '@salesforce/cli-plugins-testkit';
 import { AuthFields, trimTo15 } from '@salesforce/core';
-import { OrgSnapshot, ORG_SNAPSHOT_FIELDS } from '../../src/shared/snapshot';
+import { OrgSnapshot, ORG_SNAPSHOT_FIELDS } from '../../src/shared/snapshot.js';
 
 use(chaiString);
 let session: TestSession;

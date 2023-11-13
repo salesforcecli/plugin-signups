@@ -5,8 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
-Messages.importMessagesDirectory(__dirname);
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { AuthInfo, Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
+import { settleAll } from '@salesforce/kit';
+
+Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
 
 interface OrgShape {
@@ -76,3 +80,22 @@ export async function isShapeEnabled(conn: Connection): Promise<boolean> {
   // no records are returned if ShapeExportPilot perm is disabled
   return prefValue.totalSize > 0 && prefValue.records?.[0]?.IsShapeExportPrefEnabled;
 }
+
+export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
+  orgShapes: OrgShapeListResult[];
+  errors: Error[];
+}> => {
+  const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
+  if (orgs.length === 0) {
+    throw messages.createError('noAuthFound');
+  }
+  const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
+
+  return { orgShapes: shapes.fulfilled.flat(), errors: shapes.rejected };
+};
+
+export default {
+  getAllOrgShapesFromAuthenticatedOrgs,
+  isShapeEnabled,
+  getAllShapesFromOrg,
+};
