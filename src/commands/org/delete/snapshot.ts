@@ -22,7 +22,7 @@ Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.delete');
 
 // jsforce can return SaveError[] or never[]
-const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
+const isSaveError = (error: SaveError): error is SaveError => error.message !== undefined;
 
 export class SnapshotDelete extends SfCommand<SaveResult> {
   public static readonly summary = messages.getMessage('summary');
