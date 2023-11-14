@@ -9,9 +9,6 @@ import { fileURLToPath } from 'node:url';
 import { Messages, Connection } from '@salesforce/core';
 import { JsForceError } from './orgShapeListUtils.js';
 
-Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
-
 type ShapeRepresentation = {
   Id: string;
   Status: string;
@@ -52,6 +49,9 @@ export const deleteAll = async (conn: Connection, username: string): Promise<Del
   } catch (err) {
     const JsForceErr = err as JsForceError;
     if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
+      Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
+      const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
+
       // ShapeExportPref is not enabled, or user does not have CRUD access
       throw messages.createError('noAccess', [username]);
     }

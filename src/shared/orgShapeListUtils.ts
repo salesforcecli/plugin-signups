@@ -10,9 +10,6 @@ import { fileURLToPath } from 'node:url';
 import { AuthInfo, Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
 import { settleAll } from '@salesforce/kit';
 
-Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
-
 interface OrgShape {
   Id: string;
   CreatedBy: {
@@ -64,6 +61,8 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
     } else {
       logger.error(false, 'Error finding org shapes', JsForceErr);
       const error = SfError.wrap(JsForceErr);
+      Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
+      const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
       error.message = messages.getMessage('errorWithOrg', [orgAuth.username, JsForceErr.message]);
       return Promise.reject(error);
     }
@@ -87,6 +86,8 @@ export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
 }> => {
   const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
   if (orgs.length === 0) {
+    Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
+    const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
     throw messages.createError('noAuthFound');
   }
   const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
