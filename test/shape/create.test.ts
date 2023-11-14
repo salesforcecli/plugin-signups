@@ -4,18 +4,19 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config } from '@oclif/core';
 import { use, expect, config as chaiConfig } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
+import chaiAsPromised from 'chai-as-promised';
+import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
 
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import type { SaveResult } from 'jsforce';
-import * as sinon from 'sinon';
+import sinon from 'sinon';
 import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
-import { OrgShapeCreateCommand } from '../../src/commands/org/create/shape';
-import { queryShapeEnabledResponse } from '../shared/apiResponses';
+import { OrgShapeCreateCommand } from '../../src/commands/org/create/shape.js';
+import { queryShapeEnabledResponse } from '../shared/apiResponses.js';
 
 use(chaiAsPromised);
 chaiConfig.truncateThreshold = 0;
@@ -23,7 +24,7 @@ chaiConfig.truncateThreshold = 0;
 describe('org:shape:create', () => {
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
-  const config = new Config({ root: resolve(__dirname, '../../package.json') });
+  const config = new Config({ root: resolve(dirname(fileURLToPath(import.meta.url)), '../../package.json') });
 
   const sandbox = sinon.createSandbox();
 

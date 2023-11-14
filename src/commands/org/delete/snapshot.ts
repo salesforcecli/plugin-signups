@@ -5,6 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import { EOL } from 'node:os';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   Flags,
   SfCommand,
@@ -14,13 +16,13 @@ import {
 } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
 import type { SaveResult, SaveError } from 'jsforce';
-import { queryByNameOrId } from '../../../shared/snapshot';
+import { queryByNameOrId } from '../../../shared/snapshot.js';
 
-Messages.importMessagesDirectory(__dirname);
+Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.delete');
 
 // jsforce can return SaveError[] or never[]
-const isSaveError = (error: SaveError | unknown): error is SaveError => (error as SaveError).message !== undefined;
+const isSaveError = (error: SaveError): error is SaveError => error.message !== undefined;
 
 export class SnapshotDelete extends SfCommand<SaveResult> {
   public static readonly summary = messages.getMessage('summary');

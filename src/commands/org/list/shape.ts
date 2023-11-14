@@ -5,13 +5,14 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
-import { AuthInfo, Messages } from '@salesforce/core';
-import * as chalk from 'chalk';
-import { settleAll } from '@salesforce/kit';
-import { getAllShapesFromOrg, OrgShapeListResult } from '../../../shared/orgShapeListUtils';
+import { Messages } from '@salesforce/core';
+import chalk from 'chalk';
+import utils, { OrgShapeListResult } from '../../../shared/orgShapeListUtils.js';
 
-Messages.importMessagesDirectory(__dirname);
+Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
 
 // default columns for the shape list
@@ -45,7 +46,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   // there were no flags being used in the original!
   // eslint-disable-next-line sf-plugin/should-parse-flags
   public async run(): Promise<OrgShapeListResult[]> {
-    const { orgShapes, errors } = await getAllOrgShapesFromAuthenticatedOrgs();
+    const { orgShapes, errors } = await utils.getAllOrgShapesFromAuthenticatedOrgs();
     errors.forEach((e) => this.warn(e));
     if (orgShapes.length === 0) {
       this.log();
@@ -61,16 +62,3 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
     return orgShapes;
   }
 }
-
-export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
-  orgShapes: OrgShapeListResult[];
-  errors: Error[];
-}> => {
-  const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
-  if (orgs.length === 0) {
-    throw messages.createError('noAuthFound');
-  }
-  const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
-
-  return { orgShapes: shapes.fulfilled.flat(), errors: shapes.rejected };
-};

@@ -5,9 +5,10 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
-Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { AuthInfo, Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
+import { settleAll } from '@salesforce/kit';
 
 interface OrgShape {
   Id: string;
@@ -60,6 +61,8 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
     } else {
       logger.error(false, 'Error finding org shapes', JsForceErr);
       const error = SfError.wrap(JsForceErr);
+      Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
+      const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
       error.message = messages.getMessage('errorWithOrg', [orgAuth.username, JsForceErr.message]);
       return Promise.reject(error);
     }
@@ -76,3 +79,24 @@ export async function isShapeEnabled(conn: Connection): Promise<boolean> {
   // no records are returned if ShapeExportPilot perm is disabled
   return prefValue.totalSize > 0 && prefValue.records?.[0]?.IsShapeExportPrefEnabled;
 }
+
+export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
+  orgShapes: OrgShapeListResult[];
+  errors: Error[];
+}> => {
+  const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
+  if (orgs.length === 0) {
+    Messages.importMessagesDirectory(dirname(fileURLToPath(import.meta.url)));
+    const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
+    throw messages.createError('noAuthFound');
+  }
+  const shapes = await settleAll<OrgShapeListResult[]>(orgs.map((o) => getAllShapesFromOrg(o)));
+
+  return { orgShapes: shapes.fulfilled.flat(), errors: shapes.rejected };
+};
+
+export default {
+  getAllOrgShapesFromAuthenticatedOrgs,
+  isShapeEnabled,
+  getAllShapesFromOrg,
+};

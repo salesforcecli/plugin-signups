@@ -5,17 +5,17 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { resolve } from 'node:path';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config } from '@oclif/core';
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import { use, expect } from 'chai';
-import * as chaiAsPromised from 'chai-as-promised';
-import * as sinon from 'sinon';
+import chaiAsPromised from 'chai-as-promised';
+import sinon from 'sinon';
 import { SfCommand } from '@salesforce/sf-plugins-core';
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup';
-import * as OrgShapeListCommandFunctions from '../../src/commands/org/list/shape';
-import { OrgShapeListCommand } from '../../src/commands/org/list/shape';
-import { OrgShapeListResult } from '../../src/shared/orgShapeListUtils';
+import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
+import { OrgShapeListCommand } from '../../src/commands/org/list/shape.js';
+import utils, { OrgShapeListResult } from '../../src/shared/orgShapeListUtils.js';
 
 use(chaiAsPromised);
 
@@ -29,7 +29,7 @@ describe('org:shape:list', () => {
 
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
-  const config = new Config({ root: resolve(__dirname, '../../package.json') });
+  const config = new Config({ root: resolve(dirname(fileURLToPath(import.meta.url)), '../../package.json') });
 
   beforeEach(async () => {
     await config.load();
@@ -45,9 +45,7 @@ describe('org:shape:list', () => {
 
   it('no shapes', async () => {
     await $$.stubAuths(testOrg);
-    sandbox
-      .stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs')
-      .resolves({ orgShapes: [], errors: [] });
+    sandbox.stub(utils, 'getAllOrgShapesFromAuthenticatedOrgs').resolves({ orgShapes: [], errors: [] });
 
     const command = new OrgShapeListCommand([], config);
     await command.run();
@@ -77,9 +75,7 @@ describe('org:shape:list', () => {
         createdDate: '2022-03-21T02:12:23.000+0000',
       },
     ];
-    sandbox
-      .stub(OrgShapeListCommandFunctions, 'getAllOrgShapesFromAuthenticatedOrgs')
-      .resolves({ orgShapes: shapes, errors: [] });
+    sandbox.stub(utils, 'getAllOrgShapesFromAuthenticatedOrgs').resolves({ orgShapes: shapes, errors: [] });
     const command = new OrgShapeListCommand([], config);
     await command.run();
     expect(uxLogStub.notCalled).to.be.true;
