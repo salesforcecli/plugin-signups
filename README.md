@@ -78,25 +78,25 @@ sfdx plugins
 
 <!-- commands -->
 
-- [`sfdx org:create:shape`](#sfdx-orgcreateshape)
-- [`sfdx org:create:snapshot`](#sfdx-orgcreatesnapshot)
-- [`sfdx org:delete:shape`](#sfdx-orgdeleteshape)
-- [`sfdx org:delete:snapshot`](#sfdx-orgdeletesnapshot)
-- [`sfdx org:get:snapshot`](#sfdx-orggetsnapshot)
-- [`sfdx org:list:shape`](#sfdx-orglistshape)
-- [`sfdx org:list:snapshot`](#sfdx-orglistsnapshot)
+- [`sf org create shape`](#sf-org-create-shape)
+- [`sf org create snapshot`](#sf-org-create-snapshot)
+- [`sf org delete shape`](#sf-org-delete-shape)
+- [`sf org delete snapshot`](#sf-org-delete-snapshot)
+- [`sf org get snapshot`](#sf-org-get-snapshot)
+- [`sf org list shape`](#sf-org-list-shape)
+- [`sf org list snapshot`](#sf-org-list-snapshot)
 
-## `sfdx org:create:shape`
+## `sf org create shape`
 
 Create a scratch org configuration (shape) based on the specified source org.
 
 ```
 USAGE
-  $ sfdx org:create:shape -o <value> [--json] [--api-version <value>]
+  $ sf org create shape -o <value> [--json] [--api-version <value>]
 
 FLAGS
-  -o, --target-org=<value>  (required) Username or alias of the target org.
-  --api-version=<value>     Override the api version used for api requests made by this command
+  -o, --target-org=<value>   (required) Username or alias of the target org.
+      --api-version=<value>  Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -107,36 +107,36 @@ DESCRIPTION
   Scratch org shapes mimic the baseline setup (features, limits, edition, and Metadata API settings) of a source org
   without the extraneous data and metadata.
 
-  Run "sfdx org list shape" to view the available org shapes and their IDs.
+  Run "sf org list shape" to view the available org shapes and their IDs.
 
   To create a scratch org from an org shape, include the "sourceOrg" property in the scratch org definition file and set
-  it to the org ID of the source org. Then create a scratch org with the "sfdx force:org:create" command.
+  it to the org ID of the source org. Then create a scratch org with the "sf force:org:create" command.
 
 ALIASES
-  $ sfdx force:org:shape:create
+  $ sf force org shape create
 
 EXAMPLES
   Create an org shape for the source org with alias SourceOrg:
 
-    $ sfdx org:create:shape --target-org SourceOrg
+    $ sf org create shape --target-org SourceOrg
 ```
 
-_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/create/shape.ts)_
+_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/create/shape.ts)_
 
-## `sfdx org:create:snapshot`
+## `sf org create snapshot`
 
 Create a snapshot of a scratch org.
 
 ```
 USAGE
-  $ sfdx org:create:snapshot -v <value> -o <value> -n <value> [--json] [--api-version <value>] [-d <value>]
+  $ sf org create snapshot -v <value> -o <value> -n <value> [--json] [--api-version <value>] [-d <value>]
 
 FLAGS
   -d, --description=<value>     Description of snapshot.
   -n, --name=<value>            (required) Unique name of snapshot.
   -o, --source-org=<value>      (required) ID or locally authenticated username or alias of scratch org to snapshot.
   -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org.
-  --api-version=<value>         Override the api version used for api requests made by this command
+      --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -147,25 +147,25 @@ DESCRIPTION
   A snapshot is a point-in-time copy of a scratch org. The copy is referenced by its unique name in a scratch org
   definition file.
 
-  Use "sfdx org get snapshot" to get details, including status, about a snapshot creation request.
+  Use "sf org get snapshot" to get details, including status, about a snapshot creation request.
 
   To create a scratch org from a snapshot, include the "snapshot" option (instead of "edition") in the scratch org
-  definition file and set it to the name of the snapshot. Then use "sfdx force:org:create" to create the scratch org.
+  definition file and set it to the name of the snapshot. Then use "sf force:org:create" to create the scratch org.
 
 ALIASES
-  $ sfdx force:org:snapshot:create
+  $ sf force org snapshot create
 
 EXAMPLES
   Create a snapshot called "Dependencies" using the source scratch org ID and your default Dev Hub org:
 
-    $ sfdx org:create:snapshot --source-org 00Dxx0000000000 --name Dependencies --description 'Contains PackageA \
+    $ sf org create snapshot --source-org 00Dxx0000000000 --name Dependencies --description 'Contains PackageA \
       v1.1.0'
 
   Create a snapshot called "NightlyBranch" using the source scratch org username and a Dev Hub org with alias
   NightlyDevHub:
 
-    $ sfdx org:create:snapshot --source-org myuser@myorg --name NightlyBranch --description 'Contains PkgA v2.1.0 \
-      and PkgB 3.3.0' --target-dev-hub NightlyDevHub
+    $ sf org create snapshot --source-org myuser@myorg --name NightlyBranch --description 'Contains PkgA v2.1.0 and \
+      PkgB 3.3.0' --target-dev-hub NightlyDevHub
 
 FLAG DESCRIPTIONS
   -d, --description=<value>  Description of snapshot.
@@ -174,20 +174,20 @@ FLAG DESCRIPTIONS
     as a version control system tag or commit ID.
 ```
 
-_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/create/snapshot.ts)_
+_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/create/snapshot.ts)_
 
-## `sfdx org:delete:shape`
+## `sf org delete shape`
 
 Delete all org shapes for a target org.
 
 ```
 USAGE
-  $ sfdx org:delete:shape -o <value> [--json] [--api-version <value>] [-p]
+  $ sf org delete shape -o <value> [--json] [--api-version <value>] [-p]
 
 FLAGS
-  -o, --target-org=<value>  (required) Username or alias of the target org.
-  -p, --no-prompt           Don't prompt for confirmation.
-  --api-version=<value>     Override the api version used for api requests made by this command
+  -o, --target-org=<value>   (required) Username or alias of the target org.
+  -p, --no-prompt            Don't prompt for confirmation.
+      --api-version=<value>  Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -200,32 +200,32 @@ DESCRIPTION
   orgs based on this shape, you can delete the org shape.
 
 ALIASES
-  $ sfdx force:org:shape:delete
+  $ sf force org shape delete
 
 EXAMPLES
   Delete all org shapes for the source org with alias SourceOrg:
 
-    $ sfdx org:delete:shape --target-org SourceOrg
+    $ sf org delete shape --target-org SourceOrg
 
   Delete all org shapes without prompting:
 
-    $ sfdx org:delete:shape --target-org SourceOrg --no-prompt
+    $ sf org delete shape --target-org SourceOrg --no-prompt
 ```
 
-_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/delete/shape.ts)_
+_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/delete/shape.ts)_
 
-## `sfdx org:delete:snapshot`
+## `sf org delete snapshot`
 
 Delete a scratch org snapshot.
 
 ```
 USAGE
-  $ sfdx org:delete:snapshot -v <value> -s <value> [--json] [--api-version <value>]
+  $ sf org delete snapshot -v <value> -s <value> [--json] [--api-version <value>]
 
 FLAGS
   -s, --snapshot=<value>        (required) Name or ID of snapshot to delete.
   -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org.
-  --api-version=<value>         Override the api version used for api requests made by this command
+      --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -237,16 +237,16 @@ DESCRIPTION
   Modify All permissions.
 
 ALIASES
-  $ sfdx force:org:snapshot:delete
+  $ sf force org snapshot delete
 
 EXAMPLES
   Delete a snapshot from the default Dev Hub using the snapshot ID:
 
-    $ sfdx org:delete:snapshot --snapshot 0Oo...
+    $ sf org delete snapshot --snapshot 0Oo...
 
   Delete a snapshot from the specified Dev Hub using the snapshot name:
 
-    $ sfdx org:delete:snapshot --snapshot BaseSnapshot --target-dev-hub SnapshotDevHub
+    $ sf org delete snapshot --snapshot BaseSnapshot --target-dev-hub SnapshotDevHub
 
 FLAG DESCRIPTIONS
   -s, --snapshot=<value>  Name or ID of snapshot to delete.
@@ -254,20 +254,20 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/delete/snapshot.ts)_
+_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/delete/snapshot.ts)_
 
-## `sfdx org:get:snapshot`
+## `sf org get snapshot`
 
 Get details about a scratch org snapshot.
 
 ```
 USAGE
-  $ sfdx org:get:snapshot -v <value> -s <value> [--json] [--api-version <value>]
+  $ sf org get snapshot -v <value> -s <value> [--json] [--api-version <value>]
 
 FLAGS
   -s, --snapshot=<value>        (required) Name or ID of snapshot to retrieve.
   -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org.
-  --api-version=<value>         Override the api version used for api requests made by this command
+      --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -278,20 +278,20 @@ DESCRIPTION
   Snapshot creation can take a while. Use this command with the snapshot name or ID to check its creation status. After
   the status changes to Active, you can use the snapshot to create scratch orgs.
 
-  To create a snapshot, use the "sfdx org create snapshot" command. To retrieve a list of all snapshots, use "sfdx org
-  list snapshot".
+  To create a snapshot, use the "sf org create snapshot" command. To retrieve a list of all snapshots, use "sf org list
+  snapshot".
 
 ALIASES
-  $ sfdx force:org:snapshot:get
+  $ sf force org snapshot get
 
 EXAMPLES
   Get snapshot details using its ID and the default Dev Hub org:
 
-    $ sfdx org:get:snapshot --snapshot 0Oo...
+    $ sf org get snapshot --snapshot 0Oo...
 
   Get snapshot details using its name from a Dev Hub org with alias SnapshotDevHub:
 
-    $ sfdx org:get:snapshot --snapshot Dependencies --target-dev-hub SnapshotDevHub
+    $ sf org get snapshot --snapshot Dependencies --target-dev-hub SnapshotDevHub
 
 FLAG DESCRIPTIONS
   -s, --snapshot=<value>  Name or ID of snapshot to retrieve.
@@ -299,15 +299,15 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/get/snapshot.ts)_
+_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/get/snapshot.ts)_
 
-## `sfdx org:list:shape`
+## `sf org list shape`
 
 List all org shapes you’ve created.
 
 ```
 USAGE
-  $ sfdx org:list:shape [--json]
+  $ sf org list shape [--json]
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -319,31 +319,31 @@ DESCRIPTION
   the org ID to update your scratch org configuration file so you can create a scratch org based on this org shape.
 
 ALIASES
-  $ sfdx force:org:shape:list
+  $ sf force org shape list
 
 EXAMPLES
   List all org shapes you've created:
 
-    $ sfdx org:list:shape
+    $ sf org list shape
 
   List all org shapes in JSON format and write the output to a file:
 
-    $ sfdx org:list:shape --json > tmp/MyOrgShapeList.json
+    $ sf org list shape --json > tmp/MyOrgShapeList.json
 ```
 
-_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/list/shape.ts)_
+_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/list/shape.ts)_
 
-## `sfdx org:list:snapshot`
+## `sf org list snapshot`
 
 List scratch org snapshots.
 
 ```
 USAGE
-  $ sfdx org:list:snapshot -v <value> [--json] [--api-version <value>]
+  $ sf org list snapshot -v <value> [--json] [--api-version <value>]
 
 FLAGS
   -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org.
-  --api-version=<value>         Override the api version used for api requests made by this command
+      --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
   --json  Format output as json.
@@ -355,22 +355,22 @@ DESCRIPTION
   associated with the Dev Hub org. If you’re a user, you can see only your snapshots unless a Dev Hub admin gives you
   View All permissions.
 
-  To create a snapshot, use the "sfdx org create snapshot" command. To get details about a snapshot request, use "sfdx
-  org get snapshot".
+  To create a snapshot, use the "sf org create snapshot" command. To get details about a snapshot request, use "sf org
+  get snapshot".
 
 ALIASES
-  $ sfdx force:org:snapshot:list
+  $ sf force org snapshot list
 
 EXAMPLES
   List snapshots in the default Dev Hub:
 
-    $ sfdx org:list:snapshot
+    $ sf org list snapshot
 
   List snapshots in the Dev Hub with alias SnapshotDevHub:
 
-    $ sfdx org:list:snapshot --target-dev-hub SnapshotDevHub
+    $ sf org list snapshot --target-dev-hub SnapshotDevHub
 ```
 
-_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.6/src/commands/org/list/snapshot.ts)_
+_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/1.5.7/src/commands/org/list/snapshot.ts)_
 
 <!-- commandsstop -->

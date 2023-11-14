@@ -1,3 +1,5 @@
+## [2.0.1](https://github.com/salesforcecli/plugin-signups/compare/1.5.6...2.0.1) (2023-11-14)
+
 ## [1.5.6](https://github.com/salesforcecli/plugin-signups/compare/1.5.5...1.5.6) (2023-10-27)
 
 ### Bug Fixes
