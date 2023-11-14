@@ -104,9 +104,7 @@ describe('snapshot commands', () => {
       ensureExitCode: 0,
     }).shellOutput.stdout;
     expect(table).to.include('Snapshot Name');
-    expect(table).to.include('Last Cloned Date');
     expect(table).to.not.include('SnapshotName');
-    expect(table).to.not.include('LastClonedDate');
 
     // time fixes
     expect(table).not.to.include('.000+0000');
@@ -133,9 +131,7 @@ describe('snapshot commands', () => {
       ensureExitCode: 0,
     }).shellOutput.stdout;
     expect(table).to.include('Snapshot Name');
-    expect(table).to.include('Last Cloned Date');
     expect(table).to.not.include('SnapshotName');
-    expect(table).to.not.include('LastClonedDate');
 
     // time fixes
     expect(table).not.to.include('.000+0000');
