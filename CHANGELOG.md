@@ -1,3 +1,9 @@
+## [2.0.2](https://github.com/salesforcecli/plugin-signups/compare/2.0.1...2.0.2) (2023-11-14)
+
+### Bug Fixes
+
+- Remove LastClonedBy and LastClonedDate fields from Snapshot ([#427](https://github.com/salesforcecli/plugin-signups/issues/427)) ([2e77b43](https://github.com/salesforcecli/plugin-signups/commit/2e77b43729f36a37963f37197cef452e63e3b125))
+
 ## [2.0.1](https://github.com/salesforcecli/plugin-signups/compare/1.5.6...2.0.1) (2023-11-14)
 
 ## [1.5.6](https://github.com/salesforcecli/plugin-signups/compare/1.5.5...1.5.6) (2023-10-27)
