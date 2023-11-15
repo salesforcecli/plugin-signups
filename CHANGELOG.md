@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/salesforcecli/plugin-signups/compare/2.0.2...2.0.3) (2023-11-15)
+
+### Bug Fixes
+
+- updates from devScripts ([#436](https://github.com/salesforcecli/plugin-signups/issues/436)) and core v6 ([9f3cc61](https://github.com/salesforcecli/plugin-signups/commit/9f3cc6106d234a4ba4e3abbd0e4718d9d4505170))
+
 ## [2.0.2](https://github.com/salesforcecli/plugin-signups/compare/2.0.1...2.0.2) (2023-11-14)
 
 ### Bug Fixes
