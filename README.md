@@ -121,7 +121,7 @@ EXAMPLES
     $ sf org create shape --target-org SourceOrg
 ```
 
-_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/create/shape.ts)_
+_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/create/shape.ts)_
 
 ## `sf org create snapshot`
 
@@ -174,7 +174,7 @@ FLAG DESCRIPTIONS
     as a version control system tag or commit ID.
 ```
 
-_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/create/snapshot.ts)_
+_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/create/snapshot.ts)_
 
 ## `sf org delete shape`
 
@@ -212,7 +212,7 @@ EXAMPLES
     $ sf org delete shape --target-org SourceOrg --no-prompt
 ```
 
-_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/delete/shape.ts)_
+_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/delete/shape.ts)_
 
 ## `sf org delete snapshot`
 
@@ -254,7 +254,7 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/delete/snapshot.ts)_
+_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/delete/snapshot.ts)_
 
 ## `sf org get snapshot`
 
@@ -299,7 +299,7 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/get/snapshot.ts)_
+_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/get/snapshot.ts)_
 
 ## `sf org list shape`
 
@@ -331,7 +331,7 @@ EXAMPLES
     $ sf org list shape --json > tmp/MyOrgShapeList.json
 ```
 
-_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/list/shape.ts)_
+_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/list/shape.ts)_
 
 ## `sf org list snapshot`
 
@@ -371,6 +371,6 @@ EXAMPLES
     $ sf org list snapshot --target-dev-hub SnapshotDevHub
 ```
 
-_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.3/src/commands/org/list/snapshot.ts)_
+_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.4/src/commands/org/list/snapshot.ts)_
 
 <!-- commandsstop -->
