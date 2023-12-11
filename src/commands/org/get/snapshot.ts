@@ -25,7 +25,7 @@ export class SnapshotGet extends SfCommand<OrgSnapshot> {
   public static readonly examples = messages.getMessages('examples');
   public static readonly aliases = ['force:org:snapshot:get'];
   public static readonly deprecateAliases = true;
-  public static readonly state = 'closedPilot';
+  public static readonly state = 'beta';
 
   public static readonly flags = {
     'target-dev-hub': requiredHubFlagWithDeprecations,
