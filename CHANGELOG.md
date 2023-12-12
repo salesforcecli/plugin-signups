@@ -1,3 +1,9 @@
+## [2.0.9](https://github.com/salesforcecli/plugin-signups/compare/2.0.8...2.0.9) (2023-12-12)
+
+### Bug Fixes
+
+- change snapshot command status to beta from pilot ([e14e03c](https://github.com/salesforcecli/plugin-signups/commit/e14e03c76c35d30e77353b5ae83ebf41748b5a4c))
+
 ## [2.0.8](https://github.com/salesforcecli/plugin-signups/compare/2.0.7...2.0.8) (2023-12-10)
 
 ### Bug Fixes
