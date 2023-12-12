@@ -66,10 +66,10 @@
             "description": "Commands to create org shapes and snapshots.",
             "subtopics": {
               "snapshot": {
-                "state": "closedPilot",
+                "state": "beta",
                 "trailblazerCommunityLink": {
                   "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W19 Pilot: Scratch Org Snapshots"
+                  "name": "W24 Beta: Scratch Org Snapshots"
                 }
               }
             }
@@ -78,10 +78,10 @@
             "description": "Commands to list org shapes and snapshots.",
             "subtopics": {
               "snapshot": {
-                "state": "closedPilot",
+                "state": "beta",
                 "trailblazerCommunityLink": {
                   "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W19 Pilot: Scratch Org Snapshots"
+                  "name": "W24 Beta: Scratch Org Snapshots"
                 }
               }
             }
@@ -90,10 +90,10 @@
             "description": " Commands to delete shapes and snapshots.",
             "subtopics": {
               "snapshot": {
-                "state": "closedPilot",
+                "state": "beta",
                 "trailblazerCommunityLink": {
                   "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W19 Pilot: Scratch Org Snapshots"
+                  "name": "W24 Beta: Scratch Org Snapshots"
                 }
               }
             }
@@ -102,10 +102,10 @@
             "description": "Commands to get an org snapshot.",
             "subtopics": {
               "snapshot": {
-                "state": "closedPilot",
+                "state": "beta",
                 "trailblazerCommunityLink": {
                   "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W19 Pilot: Scratch Org Snapshots"
+                  "name": "W24 Beta: Scratch Org Snapshots"
                 }
               }
             }
