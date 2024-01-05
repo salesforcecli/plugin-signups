@@ -5,8 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
-
 import {
   Flags,
   SfCommand,
@@ -18,7 +16,7 @@ import { Messages, SfError } from '@salesforce/core';
 import { isShapeEnabled } from '../../../shared/orgShapeListUtils.js';
 import utils, { DeleteAllResult } from '../../../shared/deleteUtils.js';
 
-Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
 
 export interface OrgShapeDeleteResult extends DeleteAllResult {
@@ -50,7 +48,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | unde
     if (!username) throw new SfError('No username found for target-org');
     const orgId = flags['target-org'].getOrgId();
     if (!flags['no-prompt']) {
-      if (!(await this.confirm(messages.getMessage('deleteCommandYesNo', [username])))) {
+      if (!(await this.confirm({ message: messages.getMessage('deleteCommandYesNo', [username]) }))) {
         return;
       }
     }
