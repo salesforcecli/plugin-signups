@@ -1,3 +1,9 @@
+## [2.0.14](https://github.com/salesforcecli/plugin-signups/compare/2.0.13...2.0.14) (2024-01-05)
+
+### Bug Fixes
+
+- use new inquirer via sf-plugins-core ([#473](https://github.com/salesforcecli/plugin-signups/issues/473)) ([3eea54f](https://github.com/salesforcecli/plugin-signups/commit/3eea54f5a1c7f6aa5ec5a5bfdb54c382b1998b6f))
+
 ## [2.0.13](https://github.com/salesforcecli/plugin-signups/compare/2.0.12...2.0.13) (2023-12-30)
 
 ### Bug Fixes
