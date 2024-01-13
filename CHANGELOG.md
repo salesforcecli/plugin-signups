@@ -1,3 +1,9 @@
+## [2.0.16](https://github.com/salesforcecli/plugin-signups/compare/2.0.15...2.0.16) (2024-01-13)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 6.4.4 to 6.4.7 ([7b0a295](https://github.com/salesforcecli/plugin-signups/commit/7b0a2957d9cd4d28113b21c81f850c3cdad05b1f))
+
 ## [2.0.15](https://github.com/salesforcecli/plugin-signups/compare/2.0.14...2.0.15) (2024-01-06)
 
 ### Bug Fixes
