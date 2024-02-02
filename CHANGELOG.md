@@ -1,3 +1,9 @@
+## [2.0.19](https://github.com/salesforcecli/plugin-signups/compare/2.0.18...2.0.19) (2024-02-02)
+
+### Bug Fixes
+
+- **deps:** bump change-case from 5.3.0 to 5.4.2 ([c019f36](https://github.com/salesforcecli/plugin-signups/commit/c019f364b3cc7f6128e526b5d7fbbfc7105e8d3f))
+
 ## [2.0.18](https://github.com/salesforcecli/plugin-signups/compare/2.0.17...2.0.18) (2024-01-27)
 
 ### Bug Fixes
