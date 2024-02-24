@@ -1712,10 +1712,10 @@
     node-gyp "^8.2.0"
     read-package-json-fast "^2.0.1"
 
-"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.18.1", "@oclif/core@^3.18.2", "@oclif/core@^3.19.1":
-  version "3.19.2"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.19.2.tgz#1672061e7309f0048f9f9991607b303a9e5082fc"
-  integrity sha512-/kUZZQZO92esToSTn+fnfMQdAj8uDJ/lsMNXBRBCiLQpwnIskHXy8JzYpynxxkzY2wbGREBceQhxCyDV0XpY4g==
+"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.18.1", "@oclif/core@^3.19.1", "@oclif/core@^3.19.2":
+  version "3.19.6"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.19.6.tgz#12e5cb073016d8c32c469d2fec0cd585ac5c1c09"
+  integrity sha512-1ryQWAx7VOf+Wq6pv00uilOo56DrG0drr42crmCQ3eYrPPz252EmNCoFkoOBk7McN6x0f4ega83c0yNNCXmiXw==
   dependencies:
     "@types/cli-progress" "^3.11.5"
     ansi-escapes "^4.3.2"
@@ -1745,12 +1745,12 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-command-snapshot@^5.0.8":
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.0.8.tgz#8ddaa56099ca6ba3414cdfbc023384066e150fec"
-  integrity sha512-tVjT1USqjPpoVswK/rvk8k6NDEdrDxPJPyVZ7Dj+b68pCxUcQw7DTorp+YjYWSwMABY9e7k4bO3Xtk78m/q5tA==
+"@oclif/plugin-command-snapshot@^5.0.9":
+  version "5.0.9"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.0.9.tgz#d6d8e565602aab8581ee6d8f203a41d93f0679ea"
+  integrity sha512-lzvdYzGSW2/XGcH+RWyI+EfYcqDQ9Il7/EudTTKsODdhiry6B7IQoRxzs0soRB2myZTZrP+j2HcfG0XWrfXa4Q==
   dependencies:
-    "@oclif/core" "^3.18.2"
+    "@oclif/core" "^3.19.2"
     "@types/lodash.difference" "^4.5.9"
     chalk "^5.3.0"
     just-diff "^5.2.0"
@@ -1908,7 +1908,7 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.0"
 
-"@salesforce/core@^6.4.1", "@salesforce/core@^6.4.7", "@salesforce/core@^6.5.1", "@salesforce/core@^6.5.2", "@salesforce/core@^6.5.3":
+"@salesforce/core@^6.4.1", "@salesforce/core@^6.5.1", "@salesforce/core@^6.5.2", "@salesforce/core@^6.5.3":
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-6.5.3.tgz#b1ceef7947b9046ab23e78e73851115fec86f4f9"
   integrity sha512-L4I2LrGyuXbNDCkoQdrMQ2sR/nhNIgRMLgpYNpOARZFIWKUsnjgBLVpUui+knCzjrQsOMoSwev+W0vp17iT76w==
