@@ -1,3 +1,9 @@
+## [2.0.28](https://github.com/salesforcecli/plugin-signups/compare/2.0.27...2.0.28) (2024-03-03)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 7.1.9 to 7.1.14 ([aeb4732](https://github.com/salesforcecli/plugin-signups/commit/aeb4732aa2a8ebabd17993a0fef3223c804c998d))
+
 ## [2.0.27](https://github.com/salesforcecli/plugin-signups/compare/2.0.26...2.0.27) (2024-03-02)
 
 ### Bug Fixes
