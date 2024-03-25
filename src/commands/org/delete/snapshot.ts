@@ -6,7 +6,6 @@
  */
 import { EOL } from 'node:os';
 
-
 import {
   Flags,
   SfCommand,
@@ -18,7 +17,7 @@ import { Messages } from '@salesforce/core';
 import type { SaveResult, SaveError } from 'jsforce';
 import { queryByNameOrId } from '../../../shared/snapshot.js';
 
-Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.delete');
 
 // jsforce can return SaveError[] or never[]

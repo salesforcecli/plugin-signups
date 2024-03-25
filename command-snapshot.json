@@ -1,58 +1,58 @@
 [
   {
-    "command": "org:create:shape",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "json", "loglevel", "target-org"],
     "alias": ["force:org:shape:create"],
+    "command": "org:create:shape",
+    "flagAliases": ["apiversion", "targetusername", "u"],
     "flagChars": ["o"],
-    "flagAliases": ["apiversion", "targetusername", "u"]
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "target-org"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:create:snapshot",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "description", "json", "loglevel", "name", "source-org", "target-dev-hub"],
     "alias": ["force:org:snapshot:create"],
+    "command": "org:create:snapshot",
+    "flagAliases": ["apiversion", "snapshotname", "sourceorg", "targetdevhubusername"],
     "flagChars": ["d", "n", "o", "v"],
-    "flagAliases": ["apiversion", "snapshotname", "sourceorg", "targetdevhubusername"]
+    "flags": ["api-version", "description", "flags-dir", "json", "loglevel", "name", "source-org", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:delete:shape",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "json", "loglevel", "no-prompt", "target-org"],
     "alias": ["force:org:shape:delete"],
+    "command": "org:delete:shape",
+    "flagAliases": ["apiversion", "noprompt", "targetusername", "u"],
     "flagChars": ["o", "p"],
-    "flagAliases": ["apiversion", "noprompt", "targetusername", "u"]
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "no-prompt", "target-org"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:delete:snapshot",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "json", "loglevel", "snapshot", "target-dev-hub"],
     "alias": ["force:org:snapshot:delete"],
+    "command": "org:delete:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
     "flagChars": ["s", "v"],
-    "flagAliases": ["apiversion", "targetdevhubusername"]
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "snapshot", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:get:snapshot",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "json", "loglevel", "snapshot", "target-dev-hub"],
     "alias": ["force:org:snapshot:get"],
+    "command": "org:get:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
     "flagChars": ["s", "v"],
-    "flagAliases": ["apiversion", "targetdevhubusername"]
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "snapshot", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:list:shape",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["json", "loglevel", "verbose"],
     "alias": ["force:org:shape:list"],
+    "command": "org:list:shape",
+    "flagAliases": [],
     "flagChars": [],
-    "flagAliases": []
+    "flags": ["flags-dir", "json", "loglevel", "verbose"],
+    "plugin": "@salesforce/plugin-signups"
   },
   {
-    "command": "org:list:snapshot",
-    "plugin": "@salesforce/plugin-signups",
-    "flags": ["api-version", "json", "loglevel", "target-dev-hub"],
     "alias": ["force:org:snapshot:list"],
+    "command": "org:list:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
     "flagChars": ["v"],
-    "flagAliases": ["apiversion", "targetdevhubusername"]
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
   }
 ]
