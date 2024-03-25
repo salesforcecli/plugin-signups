@@ -1,10 +1,58 @@
 [
   {
+    "alias": ["force:org:shape:create"],
+    "command": "org:create:shape",
+    "flagAliases": ["apiversion", "targetusername", "u"],
+    "flagChars": ["o"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "target-org"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
+    "alias": ["force:org:snapshot:create"],
+    "command": "org:create:snapshot",
+    "flagAliases": ["apiversion", "snapshotname", "sourceorg", "targetdevhubusername"],
+    "flagChars": ["d", "n", "o", "v"],
+    "flags": ["api-version", "description", "flags-dir", "json", "loglevel", "name", "source-org", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
+    "alias": ["force:org:shape:delete"],
+    "command": "org:delete:shape",
+    "flagAliases": ["apiversion", "noprompt", "targetusername", "u"],
+    "flagChars": ["o", "p"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "no-prompt", "target-org"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
+    "alias": ["force:org:snapshot:delete"],
+    "command": "org:delete:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
+    "flagChars": ["s", "v"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "snapshot", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
+    "alias": ["force:org:snapshot:get"],
+    "command": "org:get:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
+    "flagChars": ["s", "v"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "snapshot", "target-dev-hub"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
     "alias": ["force:org:shape:list"],
     "command": "org:list:shape",
     "flagAliases": [],
     "flagChars": [],
     "flags": ["flags-dir", "json", "loglevel", "verbose"],
+    "plugin": "@salesforce/plugin-signups"
+  },
+  {
+    "alias": ["force:org:snapshot:list"],
+    "command": "org:list:snapshot",
+    "flagAliases": ["apiversion", "targetdevhubusername"],
+    "flagChars": ["v"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "target-dev-hub"],
     "plugin": "@salesforce/plugin-signups"
   }
 ]
