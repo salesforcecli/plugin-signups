@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/salesforcecli/plugin-signups/compare/2.0.30...2.1.0) (2024-03-25)
+
+### Features
+
+- bump sf-plugins-core ([c8068d3](https://github.com/salesforcecli/plugin-signups/commit/c8068d335b97268c6bacd7166b26ca8811fa2c21))
+- bump sf-plugins-core ([c8821b1](https://github.com/salesforcecli/plugin-signups/commit/c8821b1bc6a517cd3dfa7a684319f2bf30412396))
+
 ## [2.0.30](https://github.com/salesforcecli/plugin-signups/compare/2.0.29...2.0.30) (2024-03-24)
 
 ### Bug Fixes

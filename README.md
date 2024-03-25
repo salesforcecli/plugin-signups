@@ -123,7 +123,7 @@ EXAMPLES
     $ sf org create shape --target-org SourceOrg
 ```
 
-_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/create/shape.ts)_
+_See code: [src/commands/org/create/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/create/shape.ts)_
 
 ## `sf org create snapshot`
 
@@ -138,8 +138,8 @@ FLAGS
   -d, --description=<value>     Description of snapshot.
   -n, --name=<value>            (required) Unique name of snapshot.
   -o, --source-org=<value>      (required) ID or locally authenticated username or alias of scratch org to snapshot.
-  -v, --target-dev-hub=<value>  (required) [default: admin@integrationtesthubna40.org] Username or alias of the Dev Hub
-                                org. Not required if the `target-dev-hub` configuration variable is already set.
+  -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org. Not required if the `target-dev-hub`
+                                configuration variable is already set.
       --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
@@ -179,7 +179,7 @@ FLAG DESCRIPTIONS
     as a version control system tag or commit ID.
 ```
 
-_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/create/snapshot.ts)_
+_See code: [src/commands/org/create/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/create/snapshot.ts)_
 
 ## `sf org delete shape`
 
@@ -219,7 +219,7 @@ EXAMPLES
     $ sf org delete shape --target-org SourceOrg --no-prompt
 ```
 
-_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/delete/shape.ts)_
+_See code: [src/commands/org/delete/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/delete/shape.ts)_
 
 ## `sf org delete snapshot`
 
@@ -231,8 +231,8 @@ USAGE
 
 FLAGS
   -s, --snapshot=<value>        (required) Name or ID of snapshot to delete.
-  -v, --target-dev-hub=<value>  (required) [default: admin@integrationtesthubna40.org] Username or alias of the Dev Hub
-                                org. Not required if the `target-dev-hub` configuration variable is already set.
+  -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org. Not required if the `target-dev-hub`
+                                configuration variable is already set.
       --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
@@ -263,7 +263,7 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/delete/snapshot.ts)_
+_See code: [src/commands/org/delete/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/delete/snapshot.ts)_
 
 ## `sf org get snapshot`
 
@@ -275,8 +275,8 @@ USAGE
 
 FLAGS
   -s, --snapshot=<value>        (required) Name or ID of snapshot to retrieve.
-  -v, --target-dev-hub=<value>  (required) [default: admin@integrationtesthubna40.org] Username or alias of the Dev Hub
-                                org. Not required if the `target-dev-hub` configuration variable is already set.
+  -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org. Not required if the `target-dev-hub`
+                                configuration variable is already set.
       --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
@@ -310,7 +310,7 @@ FLAG DESCRIPTIONS
     The IDs of scratch org snapshots start with 0Oo.
 ```
 
-_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/get/snapshot.ts)_
+_See code: [src/commands/org/get/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/get/snapshot.ts)_
 
 ## `sf org list shape`
 
@@ -343,7 +343,7 @@ EXAMPLES
     $ sf org list shape --json > tmp/MyOrgShapeList.json
 ```
 
-_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/list/shape.ts)_
+_See code: [src/commands/org/list/shape.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/list/shape.ts)_
 
 ## `sf org list snapshot`
 
@@ -354,8 +354,8 @@ USAGE
   $ sf org list snapshot -v <value> [--json] [--flags-dir <value>] [--api-version <value>]
 
 FLAGS
-  -v, --target-dev-hub=<value>  (required) [default: admin@integrationtesthubna40.org] Username or alias of the Dev Hub
-                                org. Not required if the `target-dev-hub` configuration variable is already set.
+  -v, --target-dev-hub=<value>  (required) Username or alias of the Dev Hub org. Not required if the `target-dev-hub`
+                                configuration variable is already set.
       --api-version=<value>     Override the api version used for api requests made by this command
 
 GLOBAL FLAGS
@@ -385,6 +385,6 @@ EXAMPLES
     $ sf org list snapshot --target-dev-hub SnapshotDevHub
 ```
 
-_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.0.30/src/commands/org/list/snapshot.ts)_
+_See code: [src/commands/org/list/snapshot.ts](https://github.com/salesforcecli/plugin-signups/blob/2.1.0/src/commands/org/list/snapshot.ts)_
 
 <!-- commandsstop -->
