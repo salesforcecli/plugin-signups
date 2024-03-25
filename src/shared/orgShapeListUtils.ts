@@ -5,8 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
-
 import { AuthInfo, Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
 import { settleAll } from '@salesforce/kit';
 
@@ -61,7 +59,7 @@ export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<Or
     } else {
       logger.error(false, 'Error finding org shapes', JsForceErr);
       const error = SfError.wrap(JsForceErr);
-      Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+      Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
       const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
       error.message = messages.getMessage('errorWithOrg', [orgAuth.username, JsForceErr.message]);
       return Promise.reject(error);
@@ -86,7 +84,7 @@ export const getAllOrgShapesFromAuthenticatedOrgs = async (): Promise<{
 }> => {
   const orgs = await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && !orgAuth.isScratchOrg);
   if (orgs.length === 0) {
-    Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+    Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
     const messages = Messages.loadMessages('@salesforce/plugin-signups', 'messages');
     throw messages.createError('noAuthFound');
   }

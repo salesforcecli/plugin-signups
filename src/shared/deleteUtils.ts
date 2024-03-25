@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
 import { Messages, Connection } from '@salesforce/core';
 import { JsForceError } from './orgShapeListUtils.js';
 
@@ -49,7 +48,7 @@ export const deleteAll = async (conn: Connection, username: string): Promise<Del
   } catch (err) {
     const JsForceErr = err as JsForceError;
     if (JsForceErr.errorCode && JsForceErr.errorCode === 'INVALID_TYPE') {
-      Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+      Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
       const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
 
       // ShapeExportPref is not enabled, or user does not have CRUD access

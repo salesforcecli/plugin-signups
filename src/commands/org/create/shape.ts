@@ -5,8 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-
-
 import {
   SfCommand,
   requiredOrgFlagWithDeprecations,
@@ -17,7 +15,7 @@ import { Messages, Connection, Logger } from '@salesforce/core';
 import type { SaveResult } from 'jsforce';
 import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils.js';
 
-Messages.importMessagesDirectoryFromMetaUrl(import.meta.url)
+Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
 
 export interface ShapeCreateResult {
