@@ -13,10 +13,16 @@ import {
   requiredHubFlagWithDeprecations,
 } from '@salesforce/sf-plugins-core';
 import { StateAggregator, Messages, SfError } from '@salesforce/core';
-import { OrgSnapshot, queryByNameOrId, printSingleRecordTable } from '../../../shared/snapshot.js';
+import {
+  OrgSnapshot,
+  queryByNameOrId,
+  printSingleRecordTable,
+  invalidTypeErrorHandler,
+} from '../../../shared/snapshot.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.create');
+const snapshotMessages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot');
 
 export class SnapshotCreate extends SfCommand<OrgSnapshot> {
   public static readonly summary = messages.getMessage('summary');
@@ -57,12 +63,24 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
     const { flags } = await this.parse(SnapshotCreate);
 
     const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
-    const createResponse = await conn.sobject('OrgSnapshot').create({
-      SourceOrg: flags['source-org'],
-      Description: flags.description,
-      SnapshotName: flags.name,
-      Content: 'metadatadata',
-    });
+    const createResponse = await conn
+      .sobject('OrgSnapshot')
+      .create({
+        SourceOrg: flags['source-org'],
+        Description: flags.description,
+        SnapshotName: flags.name,
+        Content: 'metadatadata',
+      })
+      .catch((error: Error) => {
+        // dev hub does not have snapshot pref enabled
+        if (error.name === 'NOT_FOUND') {
+          error.message = snapshotMessages.getMessage('snapshotNotEnabled');
+          return invalidTypeErrorHandler(error);
+        } else {
+          throw error;
+        }
+      });
+
     if (createResponse.success === false) {
       throw new SfError('An error while created the org snapshot');
     }

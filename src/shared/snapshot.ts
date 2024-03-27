@@ -10,7 +10,7 @@ import { Connection, SfError, Messages } from '@salesforce/core';
 import { capitalCase } from 'change-case';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
-const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot');
+export const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot');
 
 export interface OrgSnapshotRequest {
   SourceOrg: string;
@@ -71,7 +71,7 @@ const ORG_SNAPSHOT_COLUMNS = {
   },
 };
 
-const invalidTypeErrorHandler = (e: unknown): never => {
+export const invalidTypeErrorHandler = (e: unknown): never => {
   if (e instanceof Error && e.name === 'INVALID_TYPE') {
     e.message = messages.getMessage('snapshotNotEnabled');
   }
