@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/salesforcecli/plugin-signups/compare/2.1.0...2.1.1) (2024-03-29)
+
+### Bug Fixes
+
+- error message for snapshot create ([#532](https://github.com/salesforcecli/plugin-signups/issues/532)) ([33d2c83](https://github.com/salesforcecli/plugin-signups/commit/33d2c8369a5008f7a88e30152abc71c7b7b53db0))
+
 # [2.1.0](https://github.com/salesforcecli/plugin-signups/compare/2.0.30...2.1.0) (2024-03-25)
 
 ### Features
