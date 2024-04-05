@@ -18,7 +18,7 @@ import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils.
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.create');
 
-export interface ShapeCreateResult {
+export type ShapeCreateResult = {
   shapeId: string;
   success: boolean;
   errors: [];
