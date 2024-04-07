@@ -8,7 +8,7 @@
 import { AuthInfo, Connection, Logger, Messages, Org, OrgAuthorization, SfError } from '@salesforce/core';
 import { settleAll } from '@salesforce/kit';
 
-interface OrgShape {
+type OrgShape = {
   Id: string;
   CreatedBy: {
     Username: string;
@@ -27,10 +27,10 @@ export type OrgShapeListResult = {
   createdDate: string;
 };
 
-export interface JsForceError extends Error {
+export type JsForceError = {
   errorCode: string;
   fields: string[];
-}
+} & Error
 
 export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<OrgShapeListResult[]> {
   const org = await Org.create({ aliasOrUsername: orgAuth.username });

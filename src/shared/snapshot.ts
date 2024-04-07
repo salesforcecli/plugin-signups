@@ -12,7 +12,7 @@ import { capitalCase } from 'change-case';
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 export const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot');
 
-export interface OrgSnapshotRequest {
+export type OrgSnapshotRequest = {
   SourceOrg: string;
   SnapshotName: string;
   Description: string;

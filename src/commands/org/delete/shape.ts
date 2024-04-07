@@ -19,9 +19,9 @@ import utils, { DeleteAllResult } from '../../../shared/deleteUtils.js';
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
 
-export interface OrgShapeDeleteResult extends DeleteAllResult {
+export type OrgShapeDeleteResult = {
   orgId: string;
-}
+} & DeleteAllResult
 
 export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | undefined> {
   public static readonly summary = messages.getMessage('summary');
