@@ -12,7 +12,7 @@ import {
   loglevel,
 } from '@salesforce/sf-plugins-core';
 import { Messages, Connection, Logger } from '@salesforce/core';
-import type { SaveResult } from 'jsforce';
+import type { SaveResult } from '@jsforce/jsforce-node';
 import { isShapeEnabled, JsForceError } from '../../../shared/orgShapeListUtils.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
@@ -22,7 +22,7 @@ export type ShapeCreateResult = {
   shapeId: string;
   success: boolean;
   errors: [];
-}
+};
 
 export class OrgShapeCreateCommand extends SfCommand<ShapeCreateResult> {
   public static readonly summary = messages.getMessage('summary');

@@ -14,7 +14,7 @@ import {
   requiredHubFlagWithDeprecations,
 } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import type { SaveResult, SaveError } from 'jsforce';
+import type { SaveResult, SaveError } from '@jsforce/jsforce-node';
 import { queryByNameOrId } from '../../../shared/snapshot.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
