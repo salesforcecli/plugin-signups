@@ -4,15 +4,12 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
-import { expect } from 'chai';
-import chai from 'chai';
+import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-
-chai.use(chaiAsPromised);
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
+import { TestContext, MockTestOrgData } from '@salesforce/core/testSetup';
 import { AnyJson, ensureJsonMap, ensureString } from '@salesforce/ts-types';
-
 import { getAllShapesFromOrg } from '../../src/shared/orgShapeListUtils.js';
+chai.use(chaiAsPromised);
 
 describe('shape list utils', () => {
   const $$ = new TestContext();

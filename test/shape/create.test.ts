@@ -9,10 +9,10 @@ import { fileURLToPath } from 'node:url';
 import { Config } from '@oclif/core';
 import { use, expect, config as chaiConfig } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
+import { TestContext, MockTestOrgData } from '@salesforce/core/testSetup';
 
 import { SfCommand } from '@salesforce/sf-plugins-core';
-import type { SaveResult } from 'jsforce';
+import type { SaveResult } from '@jsforce/jsforce-node';
 import sinon from 'sinon';
 import { ensureJsonMap, ensureString, AnyJson } from '@salesforce/ts-types';
 import { OrgShapeCreateCommand } from '../../src/commands/org/create/shape.js';
