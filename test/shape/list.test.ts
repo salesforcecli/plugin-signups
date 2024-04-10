@@ -13,7 +13,7 @@ import { use, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import { SfCommand } from '@salesforce/sf-plugins-core';
-import { TestContext, MockTestOrgData } from '@salesforce/core/lib/testSetup.js';
+import { TestContext, MockTestOrgData } from '@salesforce/core/testSetup';
 import { OrgShapeListCommand } from '../../src/commands/org/list/shape.js';
 import utils, { OrgShapeListResult } from '../../src/shared/orgShapeListUtils.js';
 
