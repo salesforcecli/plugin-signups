@@ -1,3 +1,9 @@
+# [2.2.0](https://github.com/salesforcecli/plugin-signups/compare/2.1.3...2.2.0) (2024-04-10)
+
+### Features
+
+- core7, jsforce-node ([3b8dff8](https://github.com/salesforcecli/plugin-signups/commit/3b8dff83497b24d3392bee3351609e32bc57ec21))
+
 ## [2.1.3](https://github.com/salesforcecli/plugin-signups/compare/2.1.2...2.1.3) (2024-04-06)
 
 ### Bug Fixes
