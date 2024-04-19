@@ -1,3 +1,9 @@
+## [2.2.2](https://github.com/salesforcecli/plugin-signups/compare/2.2.1...2.2.2) (2024-04-19)
+
+### Bug Fixes
+
+- **docs:** update snapshot delete description help description ([#553](https://github.com/salesforcecli/plugin-signups/issues/553)) ([56a3537](https://github.com/salesforcecli/plugin-signups/commit/56a3537554fa9376fe3d7d5c8241691e47eccd8f))
+
 ## [2.2.1](https://github.com/salesforcecli/plugin-signups/compare/2.2.0...2.2.1) (2024-04-13)
 
 ### Bug Fixes
