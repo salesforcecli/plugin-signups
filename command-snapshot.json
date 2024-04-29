@@ -27,8 +27,8 @@
     "alias": ["force:org:snapshot:delete"],
     "command": "org:delete:snapshot",
     "flagAliases": ["apiversion", "targetdevhubusername"],
-    "flagChars": ["s", "v"],
-    "flags": ["api-version", "flags-dir", "json", "loglevel", "snapshot", "target-dev-hub"],
+    "flagChars": ["p", "s", "v"],
+    "flags": ["api-version", "flags-dir", "json", "loglevel", "no-prompt", "snapshot", "target-dev-hub"],
     "plugin": "@salesforce/plugin-signups"
   },
   {
