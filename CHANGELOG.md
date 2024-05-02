@@ -1,3 +1,27 @@
+## [2.2.5](https://github.com/salesforcecli/plugin-signups/compare/2.2.4...2.2.5) (2024-04-27)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 7.3.0 to 7.3.1 ([9e11c67](https://github.com/salesforcecli/plugin-signups/commit/9e11c67c0259302be00e021e90d5838892b23cc9))
+
+## [2.2.4](https://github.com/salesforcecli/plugin-signups/compare/2.2.3...2.2.4) (2024-04-21)
+
+### Bug Fixes
+
+- **deps:** bump change-case from 5.4.3 to 5.4.4 ([8542fb1](https://github.com/salesforcecli/plugin-signups/commit/8542fb150190db681c8526054849db08fc2f43d5))
+
+## [2.2.3](https://github.com/salesforcecli/plugin-signups/compare/2.2.2...2.2.3) (2024-04-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 7.2.0 to 7.3.0 ([15b1b50](https://github.com/salesforcecli/plugin-signups/commit/15b1b50ba8133845a3b0edb445453e951f9562a6))
+
+## [2.2.2](https://github.com/salesforcecli/plugin-signups/compare/2.2.1...2.2.2) (2024-04-19)
+
+### Bug Fixes
+
+- **docs:** update snapshot delete description help description ([#553](https://github.com/salesforcecli/plugin-signups/issues/553)) ([56a3537](https://github.com/salesforcecli/plugin-signups/commit/56a3537554fa9376fe3d7d5c8241691e47eccd8f))
+
 ## [2.2.1](https://github.com/salesforcecli/plugin-signups/compare/2.2.0...2.2.1) (2024-04-13)
 
 ### Bug Fixes
