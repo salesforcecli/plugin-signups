@@ -138,25 +138,25 @@ describe('snapshot commands', () => {
   });
 
   it('can delete a snapshot by id (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${aliasSnapshot.Id} --json --noprompt`, {
+    execCmd(`force:org:snapshot:delete -s ${aliasSnapshot.Id} --json --no-prompt`, {
       ensureExitCode: 0,
     });
   });
 
   it('can delete a snapshot by name (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${orgIdSnapshot.SnapshotName} --json --noprompt`, {
+    execCmd(`force:org:snapshot:delete -s ${orgIdSnapshot.SnapshotName} --json --no-prompt`, {
       ensureExitCode: 0,
     });
   });
 
   it('can delete the last snapshot by name (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --noprompt`, {
+    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --no-prompt`, {
       ensureExitCode: 0,
     });
   });
 
   it('fails at deleting the same snapshot twice (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --noprompt`, {
+    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --no-prompt`, {
       ensureExitCode: 1,
     });
   });
