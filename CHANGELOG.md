@@ -1,3 +1,9 @@
+# [2.3.0](https://github.com/salesforcecli/plugin-signups/compare/2.2.6...2.3.0) (2024-05-06)
+
+### Features
+
+- add a prompt for snapshot deletion ([#567](https://github.com/salesforcecli/plugin-signups/issues/567)) ([3ad43fb](https://github.com/salesforcecli/plugin-signups/commit/3ad43fb6adf1bb481162421d64f3772551394771))
+
 ## [2.2.6](https://github.com/salesforcecli/plugin-signups/compare/2.2.5...2.2.6) (2024-05-04)
 
 ### Bug Fixes
