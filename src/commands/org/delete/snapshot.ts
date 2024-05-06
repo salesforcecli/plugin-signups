@@ -23,7 +23,7 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.d
 // jsforce can return SaveError[] or never[]
 const isSaveError = (error: SaveError): error is SaveError => error.message !== undefined;
 
-export class SnapshotDelete extends SfCommand<SaveResult> {
+export class SnapshotDelete extends SfCommand<SaveResult | undefined> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -41,11 +41,20 @@ export class SnapshotDelete extends SfCommand<SaveResult> {
       description: messages.getMessage('flags.snapshot.description'),
       required: true,
     }),
+    'no-prompt': Flags.boolean({
+      char: 'p',
+      summary: messages.getMessage('flags.no-prompt.summary'),
+    }),
   };
 
-  public async run(): Promise<SaveResult> {
-    // resolve the query to an ID.  This also verifies the snapshot exists in the org
+  public async run(): Promise<SaveResult | undefined> {
     const { flags } = await this.parse(SnapshotDelete);
+    const snapshot = flags['snapshot'];
+    if (!flags['no-prompt'] && !(await this.confirm({ message: messages.getMessage('prompt.confirm', [snapshot]) }))) {
+      return;
+    }
+
+    // resolve the query to an ID.  This also verifies the snapshot exists in the org
     const conn = flags['target-dev-hub'].getConnection(flags['api-version']);
     const result = await queryByNameOrId(conn, flags.snapshot);
     const deleteResult = await conn.sobject('OrgSnapshot').delete(result.Id);
