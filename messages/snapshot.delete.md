@@ -24,14 +24,6 @@ Name or ID of snapshot to delete.
 
 The IDs of scratch org snapshots start with 0Oo.
 
-# flags.no-prompt.summary
-
-Don't prompt the user to confirm the deletion.
-
-# prompt.confirm
-
-Are you sure you want to delete the snapshot with name: %s?
-
 # success
 
 Successfully deleted snapshot %s.

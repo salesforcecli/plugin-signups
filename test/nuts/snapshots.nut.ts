@@ -137,26 +137,26 @@ describe('snapshot commands', () => {
     expect(table).not.to.include('.000+0000');
   });
 
-  it('can delete a snapshot by id (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${aliasSnapshot.Id} --json --no-prompt`, {
+  it('can delete a snapshot by id', () => {
+    execCmd(`force:org:snapshot:delete -s ${aliasSnapshot.Id} --json`, {
       ensureExitCode: 0,
     });
   });
 
-  it('can delete a snapshot by name (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${orgIdSnapshot.SnapshotName} --json --no-prompt`, {
+  it('can delete a snapshot by name', () => {
+    execCmd(`force:org:snapshot:delete -s ${orgIdSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
     });
   });
 
-  it('can delete the last snapshot by name (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --no-prompt`, {
+  it('can delete the last snapshot by name', () => {
+    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json`, {
       ensureExitCode: 0,
     });
   });
 
-  it('fails at deleting the same snapshot twice (no prompt)', () => {
-    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json --no-prompt`, {
+  it('fails at deleting the same snapshot twice', () => {
+    execCmd(`force:org:snapshot:delete -s ${usernameSnapshot.SnapshotName} --json`, {
       ensureExitCode: 1,
     });
   });
