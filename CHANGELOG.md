@@ -1,3 +1,9 @@
+## [2.3.1](https://github.com/salesforcecli/plugin-signups/compare/2.3.0...2.3.1) (2024-05-08)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 9.0.5 to 9.0.7 ([1d06e15](https://github.com/salesforcecli/plugin-signups/commit/1d06e154e59ffe61b328aa32c04e396e28baaddc))
+
 # [2.3.0](https://github.com/salesforcecli/plugin-signups/compare/2.2.6...2.3.0) (2024-05-06)
 
 ### Features
