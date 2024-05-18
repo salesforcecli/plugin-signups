@@ -20,7 +20,7 @@
     "@salesforce/ts-types": "^2.0.9",
     "@types/chai-as-promised": "^7.1.8",
     "@types/chai-string": "^1.4.5",
-    "chai-as-promised": "7.1.1",
+    "chai-as-promised": "7.1.2",
     "chai-string": "^1.5.0",
     "eslint-plugin-sf-plugin": "^1.18.3",
     "jsforce": "^2.0.0-beta.28",
