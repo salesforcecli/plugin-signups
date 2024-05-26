@@ -16,7 +16,7 @@
     "@oclif/plugin-command-snapshot": "^5.1.9",
     "@salesforce/cli-plugins-testkit": "^5.3.4",
     "@salesforce/dev-scripts": "^9.1.2",
-    "@salesforce/plugin-command-reference": "^3.0.85",
+    "@salesforce/plugin-command-reference": "^3.0.86",
     "@salesforce/ts-types": "^2.0.9",
     "@types/chai-as-promised": "^7.1.8",
     "@types/chai-string": "^1.4.5",
