@@ -8,7 +8,7 @@ A snapshot is a point-in-time copy of a scratch org. The copy is referenced by i
 
 Use "<%= config.bin %> org get snapshot" to get details, including status, about a snapshot creation request.
 
-To create a scratch org from a snapshot, include the "snapshot" option (instead of "edition") in the scratch org definition file and set it to the name of the snapshot. Then use "<%= config.bin %> force:org:create" to create the scratch org.
+To create a scratch org from a snapshot, include the "snapshot" option (instead of "edition") in the scratch org definition file and set it to the name of the snapshot. Then use "<%= config.bin %> org create scratch" to create the scratch org.
 
 # examples
 
