@@ -1,3 +1,9 @@
+## [2.3.6](https://github.com/salesforcecli/plugin-signups/compare/2.3.5...2.3.6) (2024-05-29)
+
+### Bug Fixes
+
+- update messages to doc "org create scratch" ([9b98f37](https://github.com/salesforcecli/plugin-signups/commit/9b98f37cdb0e30c7886c4ff57b87284f6a459c96))
+
 ## [2.3.5](https://github.com/salesforcecli/plugin-signups/compare/2.3.4...2.3.5) (2024-05-25)
 
 ### Bug Fixes
