@@ -1,3 +1,9 @@
+## [2.3.7](https://github.com/salesforcecli/plugin-signups/compare/2.3.6...2.3.7) (2024-06-06)
+
+### Bug Fixes
+
+- **deps:** devScripts update for oclif/core-4 ([#603](https://github.com/salesforcecli/plugin-signups/issues/603)) ([1ade07b](https://github.com/salesforcecli/plugin-signups/commit/1ade07bf8923f086fdbe2f913a2b9bc143fd28e2))
+
 ## [2.3.6](https://github.com/salesforcecli/plugin-signups/compare/2.3.5...2.3.6) (2024-05-29)
 
 ### Bug Fixes
