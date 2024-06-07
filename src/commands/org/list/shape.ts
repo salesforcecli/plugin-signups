@@ -5,9 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Flags, loglevel, SfCommand } from '@salesforce/sf-plugins-core';
+import { Flags, loglevel, SfCommand, StandardColors } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import chalk from 'chalk';
 import utils, { OrgShapeListResult } from '../../../shared/orgShapeListUtils.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
@@ -54,7 +53,9 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
 
     this.styledHeader('Org Shapes');
     this.table(
-      orgShapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape)),
+      orgShapes.map((shape) =>
+        shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape
+      ),
       orgShapeColumns
     );
     return orgShapes;

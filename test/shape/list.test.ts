@@ -8,11 +8,10 @@
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Config } from '@oclif/core';
-import chalk from 'chalk';
 import { use, expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
-import { SfCommand } from '@salesforce/sf-plugins-core';
+import { SfCommand, StandardColors } from '@salesforce/sf-plugins-core';
 import { TestContext, MockTestOrgData } from '@salesforce/core/testSetup';
 import { OrgShapeListCommand } from '../../src/commands/org/list/shape.js';
 import utils, { OrgShapeListResult } from '../../src/shared/orgShapeListUtils.js';
@@ -82,7 +81,9 @@ describe('org:shape:list', () => {
     expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Org Shapes');
     expect((uxTableStub.firstCall.args[0] as OrgShapeListResult[]).length).to.equal(2);
     expect(uxTableStub.firstCall.args[0]).to.deep.equal(
-      shapes.map((shape) => (shape.status === 'Active' ? { ...shape, status: chalk.green(shape.status) } : shape))
+      shapes.map((shape) =>
+        shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape
+      )
     );
   });
 
