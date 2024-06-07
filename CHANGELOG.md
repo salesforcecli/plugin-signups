@@ -1,3 +1,9 @@
+## [2.3.8](https://github.com/salesforcecli/plugin-signups/compare/2.3.7...2.3.8) (2024-06-07)
+
+### Bug Fixes
+
+- **deps:** chalk => standardColors ([#604](https://github.com/salesforcecli/plugin-signups/issues/604)) ([959db72](https://github.com/salesforcecli/plugin-signups/commit/959db7268f34352254584256dbe5a2f6b9b7ba3c))
+
 ## [2.3.7](https://github.com/salesforcecli/plugin-signups/compare/2.3.6...2.3.7) (2024-06-06)
 
 ### Bug Fixes
