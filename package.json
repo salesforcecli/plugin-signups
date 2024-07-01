@@ -9,7 +9,8 @@
     "@salesforce/core": "^8.0.1",
     "@salesforce/kit": "^3.1.6",
     "@salesforce/sf-plugins-core": "^11.1.2",
-    "change-case": "^5.4.4"
+    "change-case": "^5.4.4",
+    "gulp": "^5.0.0"
   },
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^5.2.3",
@@ -62,52 +63,16 @@
         "description": "Commands to manage org shapes and snapshots.",
         "subtopics": {
           "create": {
-            "description": "Commands to create org shapes and snapshots.",
-            "subtopics": {
-              "snapshot": {
-                "state": "beta",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W24 Beta: Scratch Org Snapshots"
-                }
-              }
-            }
+            "description": "Commands to create org shapes and snapshots."
           },
           "list": {
-            "description": "Commands to list org shapes and snapshots.",
-            "subtopics": {
-              "snapshot": {
-                "state": "beta",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W24 Beta: Scratch Org Snapshots"
-                }
-              }
-            }
+            "description": "Commands to list org shapes and snapshots."
           },
           "delete": {
-            "description": " Commands to delete shapes and snapshots.",
-            "subtopics": {
-              "snapshot": {
-                "state": "beta",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W24 Beta: Scratch Org Snapshots"
-                }
-              }
-            }
+            "description": "Commands to delete shapes and snapshots."
           },
           "get": {
-            "description": "Commands to get an org snapshot.",
-            "subtopics": {
-              "snapshot": {
-                "state": "beta",
-                "trailblazerCommunityLink": {
-                  "url": "https://success.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F93A00000020d5",
-                  "name": "W24 Beta: Scratch Org Snapshots"
-                }
-              }
-            }
+            "description": "Commands to get an org snapshot."
           }
         }
       }
