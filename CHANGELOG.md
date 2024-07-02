@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/salesforcecli/plugin-signups/compare/2.3.15...2.4.0) (2024-07-02)
+
+### Features
+
+- removed unintended dependency from package.json @W-14636241@ ([66de900](https://github.com/salesforcecli/plugin-signups/commit/66de900a13ad6964a5a0beadf871f7b028d91e63))
+- removing beta marking w-14636241 ([a2b8d0d](https://github.com/salesforcecli/plugin-signups/commit/a2b8d0d05663732a874921d6933a6ddfbf7ff3ea))
+
 ## [2.3.15](https://github.com/salesforcecli/plugin-signups/compare/2.3.14...2.3.15) (2024-06-30)
 
 ### Bug Fixes
