@@ -1,3 +1,9 @@
+# [2.5.0](https://github.com/salesforcecli/plugin-signups/compare/2.4.1...2.5.0) (2024-07-11)
+
+### Features
+
+- correcting label w-14636241 ([6dc7167](https://github.com/salesforcecli/plugin-signups/commit/6dc716792aa6979c3e8ed0bae0ee9c9432c8e08a))
+
 ## [2.4.1](https://github.com/salesforcecli/plugin-signups/compare/2.4.0...2.4.1) (2024-07-06)
 
 ### Bug Fixes
