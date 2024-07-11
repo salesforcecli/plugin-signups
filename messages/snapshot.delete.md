@@ -30,7 +30,7 @@ Don't prompt the user to confirm the deletion.
 
 # prompt.confirm
 
-Are you sure you want to delete the snapshot with name: %s?
+Are you sure you want to delete the snapshot?
 
 # success
 
