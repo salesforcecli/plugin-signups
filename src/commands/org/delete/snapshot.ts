@@ -48,7 +48,6 @@ export class SnapshotDelete extends SfCommand<SaveResult | undefined> {
 
   public async run(): Promise<SaveResult | undefined> {
     const { flags } = await this.parse(SnapshotDelete);
-    const snapshot = flags['snapshot'];
     if (!flags['no-prompt'] && !(await this.confirm({ message: messages.getMessage('prompt.confirm') }))) {
       return;
     }
