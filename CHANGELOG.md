@@ -1,3 +1,9 @@
+## [2.5.18](https://github.com/salesforcecli/plugin-signups/compare/2.5.17...2.5.18) (2024-09-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 3.2.2 to 3.2.3 ([5d58003](https://github.com/salesforcecli/plugin-signups/commit/5d58003c83072b81f2e3a9b52b0d1f5d96dd5be6))
+
 ## [2.5.17](https://github.com/salesforcecli/plugin-signups/compare/2.5.16...2.5.17) (2024-09-21)
 
 ### Bug Fixes
