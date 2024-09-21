@@ -1,3 +1,9 @@
+## [2.5.17](https://github.com/salesforcecli/plugin-signups/compare/2.5.16...2.5.17) (2024-09-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 11.3.7 to 11.3.10 ([afbc6d5](https://github.com/salesforcecli/plugin-signups/commit/afbc6d5815d319f090418b035ef0e8cbc501bcdc))
+
 ## [2.5.16](https://github.com/salesforcecli/plugin-signups/compare/2.5.15...2.5.16) (2024-09-15)
 
 ### Bug Fixes
