@@ -1,7 +1,7 @@
 {
   "name": "@salesforce/plugin-signups",
   "description": "Commands to interact with org shapes",
-  "version": "2.5.22",
+  "version": "2.5.23",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
