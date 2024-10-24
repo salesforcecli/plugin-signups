@@ -12,19 +12,6 @@ import utils, { OrgShapeListResult } from '../../../shared/orgShapeListUtils.js'
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
 
-// default columns for the shape list
-const orgShapeColumns = {
-  alias: {
-    header: 'ALIAS',
-    get: (data: OrgShapeListResult): string => data.alias ?? '',
-  },
-  username: { header: 'USERNAME' },
-  orgId: { header: 'ORG ID' },
-  status: { header: 'SHAPE STATUS' },
-  createdBy: { header: 'CREATED BY' },
-  createdDate: { header: 'CREATED DATE' },
-};
-
 export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
@@ -51,13 +38,22 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
       return orgShapes;
     }
 
-    this.styledHeader('Org Shapes');
-    this.table(
-      orgShapes.map((shape) =>
-        shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape
-      ),
-      orgShapeColumns
-    );
+    this.table({
+      data: orgShapes.map((shape) => ({
+        ALIAS: shape.alias ?? '',
+        USERNAME: shape.username,
+        'ORG ID': shape.orgId,
+        'Shape ID': shape.shapeId,
+        'CREATED BY': shape.createdBy,
+        'CREATED DATE': shape.createdDate,
+        ...(shape.status === 'Active'
+          ? {
+              STATUS: StandardColors.success(shape.status),
+            }
+          : {}),
+      })),
+      title: 'Org Shapes',
+    });
     return orgShapes;
   }
 }

@@ -21,7 +21,7 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.dele
 
 export type OrgShapeDeleteResult = {
   orgId: string;
-} & DeleteAllResult
+} & DeleteAllResult;
 
 export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | undefined> {
   public static readonly summary = messages.getMessage('summary');
@@ -72,12 +72,14 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | unde
       this.styledHeader('Partial Success');
       this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
       this.log('');
-      this.styledHeader('Failures');
-      const columns = {
-        shapeId: { header: 'Shape ID' },
-        message: { header: 'Error Message' },
-      };
-      this.table(deleteRes.failures, columns);
+      this.table({
+        data: deleteRes.failures,
+        columns: [
+          { key: 'shapeId', name: 'Shape ID' },
+          { key: 'message', name: 'Error Message' },
+        ],
+        title: 'Failures',
+      });
     } else if (deleteRes.failures.length === deleteRes.shapeIds.length) {
       setExitCode(1);
     } else {

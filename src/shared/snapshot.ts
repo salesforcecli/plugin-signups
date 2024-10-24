@@ -50,27 +50,6 @@ const dateTimeFormatter = (dateString?: string): string =>
       })
     : '';
 
-const rowDateTimeFormatter = (row: OrgSnapshot, field: keyof OrgSnapshot): string => dateTimeFormatter(row[field]);
-
-const ORG_SNAPSHOT_COLUMNS = {
-  Id: {},
-  SnapshotName: { header: 'Snapshot Name' },
-  Status: {},
-  SourceOrg: { header: 'Source Org Id' },
-  CreatedDate: {
-    header: 'Created Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'CreatedDate'),
-  },
-  LastModifiedDate: {
-    header: 'Last Modified Date',
-    get: (row: OrgSnapshot): string => rowDateTimeFormatter(row, 'LastModifiedDate'),
-  },
-  ExpirationDate: {
-    header: 'Expiration Date',
-    get: (row: OrgSnapshot): string => (row.ExpirationDate ? new Date(row.ExpirationDate).toLocaleDateString() : ''),
-  },
-};
-
 export const invalidTypeErrorHandler = (e: unknown): never => {
   if (e instanceof Error && e.name === 'INVALID_TYPE') {
     e.message = messages.getMessage('snapshotNotEnabled');
@@ -104,8 +83,8 @@ export const queryByNameOrId = async (conn: Connection, nameOrId: string): Promi
 };
 
 export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
-  new Ux().table(
-    Object.entries(snapshotRecord)
+  new Ux().table({
+    data: Object.entries(snapshotRecord)
       .filter(([key]) => key !== 'attributes')
       // remove empty error field
       .filter(([key, value]) => key !== 'Error' || typeof value === 'string')
@@ -117,8 +96,7 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
       }))
       // null/undefined becomes empty string
       .map((row) => (row.Value ? row : { ...row, Value: '' })),
-    { Name: {}, Value: {} }
-  );
+  });
 };
 
 export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
@@ -126,13 +104,18 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
     new Ux().log('No snapshots found');
     return;
   }
-
-  new Ux().table(
+  new Ux().table({
     // we know what columns we want, so filter out the other fields
-    snapshotRecords.map((s) =>
-      Object.fromEntries(Object.entries(s).filter(([key]) => Object.keys(ORG_SNAPSHOT_COLUMNS).includes(key)))
-    ),
-    ORG_SNAPSHOT_COLUMNS,
-    { title: `Org Snapshots [${snapshotRecords.length}]`, 'no-truncate': true }
-  );
+    data: snapshotRecords.map((s) => ({
+      Id: s.Id,
+      'Snapshot Name': s.SnapshotName,
+      Status: s.Status,
+      'Source Org Id': s.SourceOrg,
+      CreatedDate: s.CreatedDate,
+      'Last Modified Date': s.LastModifiedDate,
+      'Expiration Date': s.ExpirationDate ? new Date(s.ExpirationDate).toLocaleDateString() : '',
+    })),
+    title: `Org Snapshots [${snapshotRecords.length}]`,
+    overflow: 'wrap',
+  });
 };
