@@ -40,17 +40,13 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
 
     this.table({
       data: orgShapes.map((shape) => ({
-        ALIAS: shape.alias ?? '',
-        USERNAME: shape.username,
         'ORG ID': shape.orgId,
+        USERNAME: shape.username,
+        ALIAS: shape.alias ?? '',
         'Shape ID': shape.shapeId,
+        'Shape Status': shape.status === 'Active' ? StandardColors.success(shape.status) : shape.status,
         'CREATED BY': shape.createdBy,
         'CREATED DATE': shape.createdDate,
-        ...(shape.status === 'Active'
-          ? {
-              STATUS: StandardColors.success(shape.status),
-            }
-          : {}),
       })),
       title: 'Org Shapes',
     });

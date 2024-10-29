@@ -92,10 +92,11 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
       .map(([key, value]: [string, string]) => ({
         Name: capitalCase(key),
         // format the datetime values
-        Value: ['LastModifiedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value,
-      }))
-      // null/undefined becomes empty string
-      .map((row) => (row.Value ? row : { ...row, Value: '' })),
+        Value: ['LastModifiedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value ?? '',
+      })),
+    // null/undefined becomes empty string
+    // .map((row) => (row.Value ? row : { ...row, Value: '' })),
+    columns: ['Name', 'Value'],
   });
 };
 
@@ -107,12 +108,13 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
   new Ux().table({
     // we know what columns we want, so filter out the other fields
     data: snapshotRecords.map((s) => ({
+      // ...Object.fromEntries(Object.entries(s).filter(([key]) => Object.keys(s).includes(key))),
       Id: s.Id,
       'Snapshot Name': s.SnapshotName,
       Status: s.Status,
       'Source Org Id': s.SourceOrg,
-      CreatedDate: s.CreatedDate,
-      'Last Modified Date': s.LastModifiedDate,
+      'Created Date': dateTimeFormatter(s.CreatedDate),
+      'Last Modified Date': dateTimeFormatter(s.LastModifiedDate),
       'Expiration Date': s.ExpirationDate ? new Date(s.ExpirationDate).toLocaleDateString() : '',
     })),
     title: `Org Snapshots [${snapshotRecords.length}]`,
