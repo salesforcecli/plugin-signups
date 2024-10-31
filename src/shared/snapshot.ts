@@ -92,10 +92,10 @@ export const printSingleRecordTable = (snapshotRecord: OrgSnapshot): void => {
       .map(([key, value]: [string, string]) => ({
         Name: capitalCase(key),
         // format the datetime values
-        Value: ['LastModifiedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value ?? '',
-      })),
-    // null/undefined becomes empty string
-    // .map((row) => (row.Value ? row : { ...row, Value: '' })),
+        Value: ['LastModifiedDate', 'CreatedDate'].includes(key) ? dateTimeFormatter(value) : value,
+      }))
+      // null/undefined becomes empty string
+      .map((row) => (row.Value ? row : { ...row, Value: '' })),
     columns: ['Name', 'Value'],
   });
 };

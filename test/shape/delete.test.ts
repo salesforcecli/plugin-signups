@@ -126,10 +126,12 @@ describe('org:shape:delete', () => {
     expect(uxLogStub.getCalls().some((c) => c.args[0] === 'Successfully deleted org shape for 00D000000000000004.'));
     expect(uxLogStub.getCalls().some((c) => c.args[0] === ''));
     expect(uxStyledHeaderStub.secondCall.args[0]).to.equal('Failures');
-    expect(uxTableStub.firstCall.args[0]).to.deep.equal([{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }]);
-    expect(uxTableStub.firstCall.args[1]).to.deep.equal({
-      shapeId: { header: 'Shape ID' },
-      message: { header: 'Error Message' },
+    expect(uxTableStub.firstCall.args[0]).to.deep.equal({
+      data: [{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }],
+      columns: [
+        { key: 'shapeId', name: 'Shape ID' },
+        { key: 'message', name: 'Error Message' },
+      ],
     });
   });
 

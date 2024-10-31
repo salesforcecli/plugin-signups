@@ -79,12 +79,12 @@ describe('org:shape:list', () => {
     await command.run();
     expect(uxLogStub.notCalled).to.be.true;
     expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Org Shapes');
-    expect((uxTableStub.firstCall.args[0] as OrgShapeListResult[]).length).to.equal(2);
-    expect(uxTableStub.firstCall.args[0]).to.deep.equal(
-      shapes.map((shape) =>
-        shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape
-      )
-    );
+    expect((uxTableStub.firstCall.args[0] as { data: OrgShapeListResult[] }).data.length).to.equal(2);
+    expect(uxTableStub.firstCall.args[0]).to.deep.equal({
+      data: shapes.map((shape) => ({
+        ...(shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape),
+      })),
+    });
   });
 
   it('no devhub org', async () => {

@@ -72,13 +72,13 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | unde
       this.styledHeader('Partial Success');
       this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
       this.log('');
+      this.styledHeader('Failures');
       this.table({
         data: deleteRes.failures,
         columns: [
           { key: 'shapeId', name: 'Shape ID' },
           { key: 'message', name: 'Error Message' },
         ],
-        title: 'Failures',
       });
     } else if (deleteRes.failures.length === deleteRes.shapeIds.length) {
       setExitCode(1);
