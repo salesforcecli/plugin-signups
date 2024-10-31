@@ -1,3 +1,18 @@
+# [2.6.0](https://github.com/salesforcecli/plugin-signups/compare/2.5.23...2.6.0) (2024-10-31)
+
+### Bug Fixes
+
+- erase comment out ([579dddb](https://github.com/salesforcecli/plugin-signups/commit/579dddb3f5ede3b11875cf3165cbb57a6d38fa2c))
+- remove styledheader ([d69bed8](https://github.com/salesforcecli/plugin-signups/commit/d69bed8b706ee7b578c7aeb79a398865f2dacf34))
+- update table ([e206da7](https://github.com/salesforcecli/plugin-signups/commit/e206da75597ec39a97dbb5f6fc78f5f4e788df3f))
+- update tables ([84cf92b](https://github.com/salesforcecli/plugin-signups/commit/84cf92be6334790e4ce5d94301bb4c27c9fef236))
+- update title table ([e3ce783](https://github.com/salesforcecli/plugin-signups/commit/e3ce7830cf4457f13583774e6eac9d10571513f5))
+
+### Features
+
+- update new table ([3cb702c](https://github.com/salesforcecli/plugin-signups/commit/3cb702cb7274ee9dd69dbd9631e77a56a7e14d20))
+- update table ([d3afbdb](https://github.com/salesforcecli/plugin-signups/commit/d3afbdb80beda2b59ee9eb893a40b9a0f1c4d5ae))
+
 ## [2.5.23](https://github.com/salesforcecli/plugin-signups/compare/2.5.22...2.5.23) (2024-10-13)
 
 ### Bug Fixes
