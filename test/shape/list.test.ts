@@ -24,7 +24,6 @@ describe('org:shape:list', () => {
   // stubs
   let uxLogStub: sinon.SinonStub;
   let uxTableStub: sinon.SinonStub;
-  let uxStyledHeaderStub: sinon.SinonStub;
 
   const $$ = new TestContext();
   const testOrg = new MockTestOrgData();
@@ -33,7 +32,6 @@ describe('org:shape:list', () => {
   beforeEach(async () => {
     await config.load();
     uxLogStub = sandbox.stub(SfCommand.prototype, 'log');
-    uxStyledHeaderStub = sandbox.stub(SfCommand.prototype, 'styledHeader');
     uxTableStub = sandbox.stub(SfCommand.prototype, 'table');
   });
 
@@ -78,13 +76,14 @@ describe('org:shape:list', () => {
     const command = new OrgShapeListCommand([], config);
     await command.run();
     expect(uxLogStub.notCalled).to.be.true;
-    expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Org Shapes');
-    expect((uxTableStub.firstCall.args[0] as OrgShapeListResult[]).length).to.equal(2);
-    expect(uxTableStub.firstCall.args[0]).to.deep.equal(
-      shapes.map((shape) =>
-        shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape
-      )
-    );
+    expect((uxTableStub.firstCall.args[0] as { data: OrgShapeListResult[] }).data.length).to.equal(2);
+    expect(uxTableStub.firstCall.args[0]).to.deep.equal({
+      data: shapes.map((shape) => ({
+        ...(shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape),
+      })),
+      title: 'Org Shapes',
+      overflow: 'wrap',
+    });
   });
 
   it('no devhub org', async () => {
