@@ -82,6 +82,7 @@ describe('org:shape:list', () => {
         ...(shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape),
       })),
       title: 'Org Shapes',
+      overflow: 'wrap',
     });
   });
 
