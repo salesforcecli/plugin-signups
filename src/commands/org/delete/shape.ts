@@ -71,7 +71,6 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | unde
 
       this.logSuccess(messages.getMessage('humanSuccess', [orgId]));
       this.log('');
-      this.styledHeader('Failures');
       this.table({
         data: deleteRes.failures,
         columns: [
