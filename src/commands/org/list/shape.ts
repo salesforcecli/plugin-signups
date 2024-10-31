@@ -37,11 +37,12 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
       this.info(messages.getMessage('noOrgShapes'));
       return orgShapes;
     }
-    this.styledHeader('Org Shapes');
+    // this.styledHeader('Org Shapes');
     this.table({
       data: orgShapes.map((shape) => ({
         ...(shape.status === 'Active' ? { ...shape, status: StandardColors.success(shape.status) } : shape),
       })),
+      title: 'Org Shapes',
     });
     return orgShapes;
   }

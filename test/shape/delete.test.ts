@@ -33,12 +33,10 @@ describe('org:shape:delete', () => {
   // stubs
   let uxLogStub: sinon.SinonStub;
   let uxTableStub: sinon.SinonStub;
-  let uxStyledHeaderStub: sinon.SinonStub;
 
   beforeEach(async () => {
     await config.load();
     uxLogStub = sandbox.stub(SfCommand.prototype, 'log');
-    uxStyledHeaderStub = sandbox.stub(SfCommand.prototype, 'styledHeader');
     uxTableStub = sandbox.stub(SfCommand.prototype, 'table');
 
     await $$.stubAuths(testOrg);
@@ -122,16 +120,15 @@ describe('org:shape:delete', () => {
     const command = new OrgShapeDeleteCommand(['--noprompt', '--targetusername', testOrg.username], config);
     await command.run();
 
-    expect(uxStyledHeaderStub.firstCall.args[0]).to.equal('Partial Success');
     expect(uxLogStub.getCalls().some((c) => c.args[0] === 'Successfully deleted org shape for 00D000000000000004.'));
     expect(uxLogStub.getCalls().some((c) => c.args[0] === ''));
-    expect(uxStyledHeaderStub.secondCall.args[0]).to.equal('Failures');
     expect(uxTableStub.firstCall.args[0]).to.deep.equal({
       data: [{ shapeId: '3SR000000000124', message: 'MALFORMED ID' }],
       columns: [
         { key: 'shapeId', name: 'Shape ID' },
         { key: 'message', name: 'Error Message' },
       ],
+      title: 'Failures',
     });
   });
 
