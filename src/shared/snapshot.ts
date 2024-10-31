@@ -106,9 +106,7 @@ export const printRecordTable = (snapshotRecords: OrgSnapshot[]): void => {
     return;
   }
   new Ux().table({
-    // we know what columns we want, so filter out the other fields
     data: snapshotRecords.map((s) => ({
-      // ...Object.fromEntries(Object.entries(s).filter(([key]) => Object.keys(s).includes(key))),
       Id: s.Id,
       'Snapshot Name': s.SnapshotName,
       Status: s.Status,
