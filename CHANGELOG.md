@@ -1,3 +1,9 @@
+## [2.6.29](https://github.com/salesforcecli/plugin-signups/compare/2.6.28...2.6.29) (2025-06-07)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 8.11.4 to 8.12.0 ([429ff01](https://github.com/salesforcecli/plugin-signups/commit/429ff012e4036a97aee1cf9062d9475d84ac592f))
+
 ## [2.6.28](https://github.com/salesforcecli/plugin-signups/compare/2.6.27...2.6.28) (2025-05-18)
 
 ### Bug Fixes
