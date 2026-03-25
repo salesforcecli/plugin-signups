@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ type OrgShape = {
   };
   Status: string;
   CreatedDate: string;
-}
+};
 
 export type OrgShapeListResult = {
   orgId: string;
@@ -39,7 +39,7 @@ export type OrgShapeListResult = {
 export type JsForceError = {
   errorCode: string;
   fields: string[];
-} & Error
+} & Error;
 
 export async function getAllShapesFromOrg(orgAuth: OrgAuthorization): Promise<OrgShapeListResult[]> {
   const org = await Org.create({ aliasOrUsername: orgAuth.username });
