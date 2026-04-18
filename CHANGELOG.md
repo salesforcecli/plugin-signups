@@ -1,3 +1,9 @@
+## [2.6.64](https://github.com/salesforcecli/plugin-signups/compare/2.6.63...2.6.64) (2026-04-18)
+
+### Bug Fixes
+
+- **deps:** bump @oclif/core from 4.10.4 to 4.10.5 ([d41b397](https://github.com/salesforcecli/plugin-signups/commit/d41b397bc0df9e97f056ebf973a475b2057f11fa))
+
 ## [2.6.63](https://github.com/salesforcecli/plugin-signups/compare/2.6.62...2.6.63) (2026-04-18)
 
 ### Bug Fixes
