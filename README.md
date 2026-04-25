@@ -6,11 +6,9 @@
 
 Salesforce CLI plugins are based on the [oclif plugin framework](https://oclif.io/docs/introduction). Read the [plugin developer guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_plugins.meta/sfdx_cli_plugins/cli_plugins_architecture_sf_cli.htm) to learn about Salesforce CLI plugin development.
 
-This repository contains a lot of additional scripts and tools to help with general Salesforce node development and enforce coding standards. You should familiarize yourself with some of the [node developer packages](https://github.com/forcedotcom/sfdx-dev-packages/) used by Salesforce. There is also a default circleci config using the [release management orb](https://github.com/forcedotcom/npm-release-management-orb) standards.
+This repository contains a lot of additional scripts and tools to help with general Salesforce node development and enforce coding standards. There is also a default circleci config using the [release management orb](https://github.com/forcedotcom/npm-release-management-orb) standards.
 
 Additionally, there are some additional tests that the Salesforce CLI will enforce if this plugin is ever bundled with the CLI. These test are included by default under the `posttest` script and it is recommended to keep these tests active in your plugin, regardless if you plan to have it bundled.
-
-# Everything past here is only a suggestion as to what should be in your specific plugin's description
 
 This plugin is bundled with the [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli). For more information on the CLI, read the [getting started guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm).
 
@@ -19,7 +17,7 @@ We always recommend using the latest version of these commands bundled with the 
 ## Install
 
 ```bash
-sfdx plugins:install signups@x.y.z
+sf plugins install signups@x.y.z
 ```
 
 ## Issues
@@ -68,10 +66,10 @@ To use your plugin, run using the local `./bin/dev` or `./bin/dev.cmd` file.
 There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
 
 ```bash
-# Link your plugin to the sfdx cli
-sfdx plugins:link .
+# Link your plugin to the sf cli
+sf plugins link .
 # To verify
-sfdx plugins
+sf plugins
 ```
 
 ## Commands
