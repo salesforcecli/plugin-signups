@@ -210,21 +210,6 @@ describe('snapshot commands', () => {
   });
 
   after(async () => {
-    // Ensure the 3 test snapshots are deleted even if tests failed
-    // This prevents accumulation of test snapshots in the Dev Hub
-    const snapshotsToCleanup = [usernameSnapshot, orgIdSnapshot, aliasSnapshot];
-    for (const snapshot of snapshotsToCleanup) {
-      if (snapshot?.Id) {
-        try {
-          execCmd(`force:org:snapshot:delete -s ${snapshot.Id} --json --no-prompt`, {
-            ensureExitCode: 0,
-          });
-        } catch (error) {
-          // Ignore errors - snapshot may already be deleted or not exist
-        }
-      }
-    }
-
     await session?.zip(undefined, 'artifacts');
     await session?.clean();
   });
