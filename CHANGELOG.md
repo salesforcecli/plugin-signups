@@ -1,3 +1,10 @@
+## [2.6.72](https://github.com/salesforcecli/plugin-signups/compare/2.6.71...2.6.72) (2026-06-16)
+
+### Bug Fixes
+
+- clean up expired snapshot ([ad66d19](https://github.com/salesforcecli/plugin-signups/commit/ad66d193d38e383cd03e392f8f79c00383dea55b))
+- revert the after() ([6e6aa9e](https://github.com/salesforcecli/plugin-signups/commit/6e6aa9e1cae434277415a2077a8665592dc20537))
+
 ## [2.6.71](https://github.com/salesforcecli/plugin-signups/compare/2.6.70...2.6.71) (2026-05-23)
 
 ### Bug Fixes
