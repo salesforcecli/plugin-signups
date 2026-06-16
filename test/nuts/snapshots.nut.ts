@@ -56,6 +56,35 @@ describe('snapshot commands', () => {
     orgId = org.orgId as string;
     orgIdKey = trimTo15(orgId).replace('00D', '');
     scratchUsername = org.username as string;
+
+    // Clean up expired, error, and old InProgress snapshots to prevent hitting the 50 snapshot limit
+    const existingSnapshots = execCmd<OrgSnapshot[]>('force:org:snapshot:list --json', {
+      ensureExitCode: 0,
+    }).jsonOutput?.result as OrgSnapshot[];
+
+    // Delete Expired and Error snapshots immediately
+    // Only delete InProgress snapshots that are > 3 days old (likely stuck)
+    const threeDaysAgo = Date.now() - 3 * 24 * 60 * 60 * 1000;
+    const snapshotsToDelete = existingSnapshots.filter((s) => {
+      if (s.Status === 'Expired' || s.Status === 'Error') {
+        return true;
+      }
+      if (s.Status === 'InProgress') {
+        const createdDate = new Date(s.CreatedDate).getTime();
+        return createdDate < threeDaysAgo;
+      }
+      return false;
+    });
+
+    for (const snapshot of snapshotsToDelete) {
+      try {
+        execCmd(`force:org:snapshot:delete -s ${snapshot.Id} --json --no-prompt`, {
+          ensureExitCode: 0,
+        });
+      } catch (error) {
+        // Ignore errors during cleanup
+      }
+    }
   });
 
   it('creates a new snapshot by username', () => {
@@ -181,6 +210,21 @@ describe('snapshot commands', () => {
   });
 
   after(async () => {
+    // Ensure the 3 test snapshots are deleted even if tests failed
+    // This prevents accumulation of test snapshots in the Dev Hub
+    const snapshotsToCleanup = [usernameSnapshot, orgIdSnapshot, aliasSnapshot];
+    for (const snapshot of snapshotsToCleanup) {
+      if (snapshot?.Id) {
+        try {
+          execCmd(`force:org:snapshot:delete -s ${snapshot.Id} --json --no-prompt`, {
+            ensureExitCode: 0,
+          });
+        } catch (error) {
+          // Ignore errors - snapshot may already be deleted or not exist
+        }
+      }
+    }
+
     await session?.zip(undefined, 'artifacts');
     await session?.clean();
   });
