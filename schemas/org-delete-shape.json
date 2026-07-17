@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/OrgShapeDeleteResult",
+  "definitions": {
+    "OrgShapeDeleteResult": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "shapeIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "failures": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FailureMsg"
+              }
+            },
+            "orgId": {
+              "type": "string"
+            }
+          },
+          "required": ["failures", "orgId", "shapeIds"]
+        },
+        {
+          "not": {}
+        }
+      ]
+    },
+    "FailureMsg": {
+      "type": "object",
+      "properties": {
+        "shapeId": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": ["shapeId", "message"],
+      "additionalProperties": false
+    }
+  }
+}
