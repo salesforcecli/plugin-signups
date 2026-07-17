@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,12 +21,12 @@ import {
   SfCommand,
 } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import { OrgSnapshot, queryAll, printRecordTable } from '../../../shared/snapshot.js';
+import { OrgSnapshots, queryAll, printRecordTable } from '../../../shared/snapshot.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.list');
 
-export class SnapshotList extends SfCommand<OrgSnapshot[]> {
+export class SnapshotList extends SfCommand<OrgSnapshots> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -38,7 +38,7 @@ export class SnapshotList extends SfCommand<OrgSnapshot[]> {
     loglevel,
   };
 
-  public async run(): Promise<OrgSnapshot[]> {
+  public async run(): Promise<OrgSnapshots> {
     const { flags } = await this.parse(SnapshotList);
     const results = await queryAll(flags['target-dev-hub'].getConnection(flags['api-version']));
     if (!this.jsonEnabled()) {

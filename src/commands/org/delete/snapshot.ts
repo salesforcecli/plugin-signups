@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,9 @@ const messages = Messages.loadMessages('@salesforce/plugin-signups', 'snapshot.d
 // jsforce can return SaveError[] or never[]
 const isSaveError = (error: SaveError): error is SaveError => error.message !== undefined;
 
-export class SnapshotDelete extends SfCommand<SaveResult | undefined> {
+export type OptionalSaveResult = SaveResult | undefined;
+
+export class SnapshotDelete extends SfCommand<OptionalSaveResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -55,7 +57,7 @@ export class SnapshotDelete extends SfCommand<SaveResult | undefined> {
     }),
   };
 
-  public async run(): Promise<SaveResult | undefined> {
+  public async run(): Promise<OptionalSaveResult> {
     const { flags } = await this.parse(SnapshotDelete);
     if (!flags['no-prompt'] && !(await this.confirm({ message: messages.getMessage('prompt.confirm') }))) {
       return;

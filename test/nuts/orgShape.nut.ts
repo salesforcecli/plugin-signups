@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,15 +70,17 @@ describe('org:shape commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput?.result as OrgShapeDeleteResult;
+    ).jsonOutput?.result;
+    expect(deleteResult).to.not.be.undefined;
     expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds', 'failures']);
-    expect(deleteResult.shapeIds).to.include(newShapeId);
+    expect(deleteResult!.shapeIds).to.include(newShapeId);
   });
 
   it('finds the shapes as it was before create', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
     }).jsonOutput?.result as OrgShapeListResult[];
+    expect;
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length - 1 : originalShapes.length);
     expect(
       modifiedShapes.some((shape) => {
