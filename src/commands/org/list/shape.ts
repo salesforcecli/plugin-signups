@@ -16,12 +16,12 @@
 
 import { Flags, loglevel, SfCommand, StandardColors } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-import utils, { OrgShapeListResult } from '../../../shared/orgShapeListUtils.js';
+import utils, { OrgShapeListResults } from '../../../shared/orgShapeListUtils.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.list');
 
-export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
+export class OrgShapeListCommand extends SfCommand<OrgShapeListResults> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -38,7 +38,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
 
   // there were no flags being used in the original!
   // eslint-disable-next-line sf-plugin/should-parse-flags
-  public async run(): Promise<OrgShapeListResult[]> {
+  public async run(): Promise<OrgShapeListResults> {
     const { orgShapes, errors } = await utils.getAllOrgShapesFromAuthenticatedOrgs();
     errors.forEach((e) => this.warn(e));
     if (orgShapes.length === 0) {

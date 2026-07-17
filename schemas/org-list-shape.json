@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/OrgShapeListResults",
+  "definitions": {
+    "OrgShapeListResults": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/OrgShapeListResult"
+      }
+    },
+    "OrgShapeListResult": {
+      "type": "object",
+      "properties": {
+        "orgId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "shapeId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string"
+        }
+      },
+      "required": ["orgId", "username", "shapeId", "status", "createdBy", "createdDate"],
+      "additionalProperties": false
+    }
+  }
+}

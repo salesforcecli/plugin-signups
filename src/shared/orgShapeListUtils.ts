@@ -36,6 +36,8 @@ export type OrgShapeListResult = {
   createdDate: string;
 };
 
+export type OrgShapeListResults = OrgShapeListResult[];
+
 export type JsForceError = {
   errorCode: string;
   fields: string[];

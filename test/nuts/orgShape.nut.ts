@@ -70,15 +70,17 @@ describe('org:shape commands', () => {
       {
         ensureExitCode: 0,
       }
-    ).jsonOutput?.result as OrgShapeDeleteResult;
+    ).jsonOutput?.result;
+    expect(deleteResult).to.not.be.undefined;
     expect(deleteResult).to.have.all.keys(['orgId', 'shapeIds', 'failures']);
-    expect(deleteResult.shapeIds).to.include(newShapeId);
+    expect(deleteResult!.shapeIds).to.include(newShapeId);
   });
 
   it('finds the shapes as it was before create', () => {
     const modifiedShapes = execCmd<OrgShapeListResult[]>('force:org:shape:list --json', {
       ensureExitCode: 0,
     }).jsonOutput?.result as OrgShapeListResult[];
+    expect;
     expect(modifiedShapes.length).to.equal(shapeAlreadyExists ? originalShapes.length - 1 : originalShapes.length);
     expect(
       modifiedShapes.some((shape) => {

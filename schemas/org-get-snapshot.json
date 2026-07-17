@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/OrgSnapshot",
+  "definitions": {
+    "OrgSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string"
+        },
+        "CreatedDate": {
+          "type": "string"
+        },
+        "LastModifiedDate": {
+          "type": "string"
+        },
+        "ExpirationDate": {
+          "type": "string"
+        },
+        "Error": {
+          "type": "string"
+        },
+        "SourceOrg": {
+          "type": "string"
+        },
+        "SnapshotName": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Content": {
+          "type": "string"
+        }
+      },
+      "required": ["CreatedDate", "Description", "Id", "LastModifiedDate", "SnapshotName", "SourceOrg", "Status"]
+    }
+  }
+}

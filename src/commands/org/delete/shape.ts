@@ -28,11 +28,13 @@ import utils, { DeleteAllResult } from '../../../shared/deleteUtils.js';
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@salesforce/plugin-signups', 'shape.delete');
 
-export type OrgShapeDeleteResult = {
-  orgId: string;
-} & DeleteAllResult;
+export type OrgShapeDeleteResult =
+  | ({
+      orgId: string;
+    } & DeleteAllResult)
+  | undefined;
 
-export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | undefined> {
+export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -51,7 +53,7 @@ export class OrgShapeDeleteCommand extends SfCommand<OrgShapeDeleteResult | unde
     }),
   };
 
-  public async run(): Promise<OrgShapeDeleteResult | undefined> {
+  public async run(): Promise<OrgShapeDeleteResult> {
     const { flags } = await this.parse(OrgShapeDeleteCommand);
     const username = flags['target-org'].getUsername();
     if (!username) throw new SfError('No username found for target-org');

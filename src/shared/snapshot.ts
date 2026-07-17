@@ -37,6 +37,8 @@ export type OrgSnapshot = OrgSnapshotRequest & {
   Error?: string;
 };
 
+export type OrgSnapshots = OrgSnapshot[];
+
 export const ORG_SNAPSHOT_FIELDS = [
   'Id',
   'SnapshotName',
