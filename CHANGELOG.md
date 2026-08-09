@@ -1,3 +1,9 @@
+## [3.0.3](https://github.com/salesforcecli/plugin-signups/compare/3.0.2...3.0.3) (2026-08-09)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 9.0.0 to 9.1.0 ([a11e8d4](https://github.com/salesforcecli/plugin-signups/commit/a11e8d4b83a565b6f1185abac4066f05a0da5467))
+
 ## [3.0.2](https://github.com/salesforcecli/plugin-signups/compare/3.0.1...3.0.2) (2026-08-08)
 
 ### Bug Fixes
