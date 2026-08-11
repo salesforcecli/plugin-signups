@@ -45,7 +45,7 @@ export class SnapshotCreate extends SfCommand<OrgSnapshot> {
     loglevel,
     'source-org': Flags.string({
       // command doesn't use target-org, so dash-o is fine
-      // eslint-disable-next-line sf-plugin/dash-o
+
       char: 'o',
       summary: messages.getMessage('flags.source-org.summary'),
       required: true,

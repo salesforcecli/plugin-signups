@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/* eslint-disable sf-plugin/no-execcmd-double-quotes */
 
 import path from 'node:path';
 import chaiString from 'chai-string';
@@ -81,7 +80,7 @@ describe('snapshot commands', () => {
         execCmd(`force:org:snapshot:delete -s ${snapshot.Id} --json --no-prompt`, {
           ensureExitCode: 0,
         });
-      } catch (error) {
+      } catch {
         // Ignore errors during cleanup
       }
     }
