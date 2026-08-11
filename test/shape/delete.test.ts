@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* eslint-disable @typescript-eslint/prefer-promise-reject-errors */
 
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

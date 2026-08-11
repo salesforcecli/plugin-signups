@@ -43,7 +43,7 @@ export type DeleteAllResult = {
  * @return List of SR IDs that were deleted
  */
 export const deleteAll = async (conn: Connection, username: string): Promise<DeleteAllResult> => {
-  let shapeIds: string[] = [];
+  let shapeIds: string[];
   const deleteAllResult: DeleteAllResult = {
     shapeIds: [],
     failures: [],

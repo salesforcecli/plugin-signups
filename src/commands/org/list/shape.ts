@@ -37,7 +37,7 @@ export class OrgShapeListCommand extends SfCommand<OrgShapeListResult[]> {
   };
 
   // there were no flags being used in the original!
-  // eslint-disable-next-line sf-plugin/should-parse-flags
+
   public async run(): Promise<OrgShapeListResult[]> {
     const { orgShapes, errors } = await utils.getAllOrgShapesFromAuthenticatedOrgs();
     errors.forEach((e) => this.warn(e));
