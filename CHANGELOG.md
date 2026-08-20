@@ -1,3 +1,9 @@
+## [3.0.5](https://github.com/salesforcecli/plugin-signups/compare/3.0.4...3.0.5) (2026-08-20)
+
+### Bug Fixes
+
+- rejiggered eslint.config.mjs (W-23928423) ([#1069](https://github.com/salesforcecli/plugin-signups/issues/1069)) ([9beb313](https://github.com/salesforcecli/plugin-signups/commit/9beb31374046d3179304aea9abe14059080eff20))
+
 ## [3.0.4](https://github.com/salesforcecli/plugin-signups/compare/3.0.3...3.0.4) (2026-08-15)
 
 ### Bug Fixes
