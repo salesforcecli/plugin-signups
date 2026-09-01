@@ -29,7 +29,7 @@
     "eslint-config-salesforce-typescript": "^6.0.0",
     "eslint-plugin-sf-plugin": "^3.0.0",
     "jsforce": "^2.0.0-beta.28",
-    "oclif": "^4.23.30",
+    "oclif": "^5.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
