@@ -1,3 +1,9 @@
+## [3.0.6](https://github.com/salesforcecli/plugin-signups/compare/3.0.5...3.0.6) (2026-09-01)
+
+### Bug Fixes
+
+- upgrade @oclif/core to v5 @W-23512455@ ([#1081](https://github.com/salesforcecli/plugin-signups/issues/1081)) ([0f98bef](https://github.com/salesforcecli/plugin-signups/commit/0f98befebbc29a12f4352bb4a604de07fe80a09b))
+
 ## [3.0.5](https://github.com/salesforcecli/plugin-signups/compare/3.0.4...3.0.5) (2026-08-20)
 
 ### Bug Fixes
