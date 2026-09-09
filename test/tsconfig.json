@@ -4,6 +4,7 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "lib": ["es2020"]
+    "lib": ["es2020"],
+    "types": ["node", "mocha"]
   }
 }
