@@ -5,7 +5,8 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "rootDir": "src",
-    "lib": ["es2020"]
+    "lib": ["es2020"],
+    "types": ["node", "mocha"]
   },
   "include": ["./src/**/*.ts"]
 }
