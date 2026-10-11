@@ -1,3 +1,9 @@
+## [3.0.10](https://github.com/salesforcecli/plugin-signups/compare/3.0.9...3.0.10) (2026-10-11)
+
+### Bug Fixes
+
+- **deps:** bump @oclif/core from 5.0.0 to 5.1.2 ([6b15533](https://github.com/salesforcecli/plugin-signups/commit/6b15533f1d2dcb1bd5e75d8a4cdf519ed359dc1d))
+
 ## [3.0.9](https://github.com/salesforcecli/plugin-signups/compare/3.0.8...3.0.9) (2026-10-11)
 
 ### Bug Fixes
