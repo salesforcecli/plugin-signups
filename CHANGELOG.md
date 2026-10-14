@@ -1,3 +1,9 @@
+## [3.0.11](https://github.com/salesforcecli/plugin-signups/compare/3.0.10...3.0.11) (2026-10-14)
+
+### Bug Fixes
+
+- **deps:** bump handlebars from 4.7.9 to 4.7.10 ([d7f0d90](https://github.com/salesforcecli/plugin-signups/commit/d7f0d90a59e670c2e45d78a066a57e2036aedff0))
+
 ## [3.0.10](https://github.com/salesforcecli/plugin-signups/compare/3.0.9...3.0.10) (2026-10-11)
 
 ### Bug Fixes
