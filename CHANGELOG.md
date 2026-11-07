@@ -1,3 +1,9 @@
+## [3.0.15](https://github.com/salesforcecli/plugin-signups/compare/3.0.14...3.0.15) (2026-11-07)
+
+### Bug Fixes
+
+- **deps:** bump @oclif/core from 5.1.10 to 5.1.11 ([7edcb65](https://github.com/salesforcecli/plugin-signups/commit/7edcb65fb4517d79542a8f1978219ef87f216116))
+
 ## [3.0.14](https://github.com/salesforcecli/plugin-signups/compare/3.0.13...3.0.14) (2026-11-07)
 
 ### Bug Fixes
